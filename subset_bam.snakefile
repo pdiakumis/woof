@@ -3,7 +3,8 @@ shell.prefix("set -euo pipefail; ")
 
 rule all:
     input:
-        expand('data/mapped/{s}_sort_{chrom}.sam',
+        expand('{bam_dir}/{s}_sort_{chrom}.sam',
+                bam_dir = config['bam_dir'],
                 s = ['A', 'B', 'C'],
                 chrom = ['1', '13', '22', 'X'])
 
