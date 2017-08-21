@@ -84,3 +84,4 @@ where `cluster.json` is:
 * Snakemake docs: <https://snakemake.readthedocs.io/en/stable/>
 * Snakemake code examples: <https://codegists.com/code/snakefile/>
 * Useful rules repo: <https://github.com/percyfal/snakemake-rules>
+* Snakemake on SLURM: <https://hpc.nih.gov/apps/snakemake.html>
