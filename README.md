@@ -7,6 +7,7 @@ Pipelines and random scripts using
 <!-- vim-markdown-toc GFM -->
 * [quick start](#quick-start)
     * [example runs](#example-runs)
+    * [expand](#expand)
 * [resources](#resources)
 
 <!-- vim-markdown-toc -->
@@ -78,6 +79,50 @@ where `cluster.json` is:
 }
 ```
 
+### expand
+Snakemake has a function in `snakemake.io` called `expand` which helps you
+'expand' different
+file lists as in the following:
+
+```
+PLOTFORMATS = ["pdf", "png"]
+DATASETS = ["ds1", "ds2"]
+```
+* `expand("{dataset}/file.txt", dataset = DATASETS)`
+
+Output:
+```
+["ds1/file.txt", "ds2/file.txt"]
+```
+
+* `expand("{dataset}/file.{ext}", dataset=DATASETS, ext=PLOTFORMATS)`
+
+Output:
+```
+["ds1/file.pdf", "ds2/file.pdf", "ds1/file.png", "ds2/file.pdf"]
+```
+
+* `expand(["{dataset}/plot1.{ext}", "{dataset}/plot2.{ext}"], dataset=DATASETS, ext=PLOTFORMATS)`
+
+Output:
+```
+["ds1/plot1.pdf", "ds1/plot2.pdf", "ds2/plot1.pdf", "ds2/plot2.pdf",
+"ds1/plot1.png", "ds1/plot2.png", "ds2/plot1.png", "ds2/plot2.png"]
+```
+
+* `expand("{dataset}/plot1.{ext} {dataset}/plot2.{ext}".split(), zip, dataset=DATASETS, ext=PLOTFORMATS)`
+
+Output:
+```
+["ds1/plot1.pdf", "ds1/plot2.pdf", "ds2/plot1.png", "ds2/plot2.png"]
+```
+
+* `expand("{{dataset}}/plot1.{ext}", ext=PLOTFORMATS)`
+
+Output:
+```
+['{dataset}/plot1.pdf', '{dataset}/plot1.png']
+```
 
 ## resources
 
