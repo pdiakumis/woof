@@ -1,11 +1,20 @@
-data_dir: "../../data/bam_hcc2218"
+data_dir: ../../data/
+out_dir: ../../data/out/
+bam_dir:
+  HCC2218: HCC2218/bam/
+  A5: A5/bam/
+facets:
+  vcf: general/facets/00-common_all_GRCh37.vcf.gz
+  snp-pileup: /data/cephfs/punim0010/extras/pdiakumis/r/3.4.4/pkgs/facets/extcode/snp-pileup
+  vcf_url: ftp://ftp.ncbi.nlm.nih.gov/snp/organisms/human_9606_b150_GRCh37p13/VCF/00-common_all.vcf.gz
+  out_dir: facets/coverage/
 
-samples_hcc2218:
+#-- sample bams --#
+
+samples:
   HCC2218:
     normal: HCC2218BL_S1.bam
     tumor: HCC2218C_S1.bam
-
-samples_a5:
   E019:
     normal: PRJ170040_E019-B01-D-ready.bam
     tumor: PRJ170039_E019-T01-D-ready.bam
