@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+snakemake -s cnv_report.snakefile \
+          -j 30 \
+          -p \
+          --cluster-config cluster.json \
+          --cluster "sbatch \
+          -p {cluster.partition} \
+          -n {cluster.n} \
+          -t {cluster.time} \
+          --mem {cluster.mem}"
