@@ -1,0 +1,88 @@
+data_dir: "../../data/bam_hcc2218"
+
+samples_hcc2218:
+  HCC2218:
+    normal: HCC2218BL_S1.bam
+    tumor: HCC2218C_S1.bam
+
+samples_a5:
+  E019:
+    normal: PRJ170040_E019-B01-D-ready.bam
+    tumor: PRJ170039_E019-T01-D-ready.bam
+  E120:
+    normal: PRJ170029_E120-B01-D-ready.bam
+    tumor: PRJ170028_E120-T01-D-ready.bam
+  E121:
+    normal: PRJ170031_E121-B01-D-ready.bam
+    tumor: PRJ170030_E121-T01-D-ready.bam
+  E123:
+    normal: PRJ170033_E123-B01-D-ready.bam
+    tumor: PRJ170032_E123-T01-D-ready.bam
+  E124:
+    normal: PRJ170193_E124-B01-D-ready.bam
+    tumor: PRJ170192_E124-T01-D-ready.bam
+  E125:
+    normal: PRJ170035_E125-B01-D-ready.bam
+    tumor: PRJ170034_E125-T01-D-ready.bam
+  E129:
+    normal: PRJ180005_E129-B01-D-ready.bam
+    tumor: PRJ180004_E129-T01-D-ready.bam
+  E130:
+    normal: PRJ170164_E130-B01-D-ready.bam
+    tumor: PRJ170163_E130-T01-D-ready.bam
+  E131:
+    normal: PRJ180012_E131-B01-D-ready.bam
+    tumor: PRJ180011_E131-T01-D-ready.bam
+  E133:
+    normal: PRJ170160_E133-B01-D-ready.bam
+    tumor: PRJ170159_E133-T01-D-ready.bam
+  E134:
+    normal: PRJ170180_E134-B01-D-ready.bam
+    tumor: PRJ170179_E134-T01-D-ready.bam
+  E140:
+    normal: PRJ170166_E140-B01-D-ready.bam
+    tumor: PRJ170165_E140-T01-D-ready.bam
+  E141:
+    normal: PRJ170162_E141-B01-D-ready.bam
+    tumor: PRJ170161_E141-T01-D-ready.bam
+  E142:
+    normal: PRJ170182_E142-B01-D-ready.bam
+    tumor: PRJ170181_E142-T01-D-ready.bam
+  E143:
+    normal: PRJ170158_E143-B01-D-ready.bam
+    tumor: PRJ170157_E143-T01-D-ready.bam
+  E144:
+    normal: PRJ170172_E144-B01-D-ready.bam
+    tumor: PRJ170171_E144-T01-D-ready.bam
+  E153:
+    normal: PRJ180010_E153-B01-D-ready.bam
+    tumor: PRJ180009_E153-T01-D-ready.bam
+  E155:
+    normal: PRJ180014_E155-B01-D-ready.bam
+    tumor: PRJ180013_E155-T01-D-ready.bam
+  E156:
+    normal: PRJ170174_E156-B01-D-ready.bam
+    tumor: PRJ170173_E156-T01-D-ready.bam
+  E158:
+    normal: PRJ170176_E158-B01-D-ready.bam
+    tumor: PRJ170175_E158-T01-D-ready.bam
+  E162:
+    normal: PRJ170178_E162-B01-D-ready.bam
+    tumor: PRJ170177_E162-T01-D-ready.bam
+  E163:
+    normal: PRJ170186_E163-B01-D-ready.bam
+    tumor: PRJ170185_E163-T01-D-ready.bam
+  E164:
+    normal: PRJ170168_E164-B01-D-ready.bam
+    tumor: PRJ170167_E164-T01-D-ready.bam
+  E165:
+    normal: PRJ170184_E165-B01-D-ready.bam
+    tumor: PRJ170183_E165-T01-D-ready.bam
+  E168:
+    normal: PRJ170188_E168-B01-D-ready.bam
+    tumor: PRJ170187_E168-T01-D-ready.bam
+  E170:
+    normal: PRJ180007_E170-B01-D-ready.bam
+    tumor: PRJ180006_E170-T01-D-ready.bam
+
+
