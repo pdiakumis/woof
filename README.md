@@ -1,5 +1,5 @@
-# bugpipe
-Pipelines and random scripts using
+# dogpipe
+Woofing workflows using
 [Snakemake](https://snakemake.readthedocs.io/en/stable/index.html).
 
 <h2>Contents</h2>
