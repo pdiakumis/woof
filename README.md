@@ -1,4 +1,4 @@
-# snakes
+# bugpipe
 Pipelines and random scripts using
 [Snakemake](https://snakemake.readthedocs.io/en/stable/index.html).
 
