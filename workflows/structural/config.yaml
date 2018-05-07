@@ -1,5 +1,5 @@
 data_dir: ../../data/
-out_dir: ../../data/out/
+out_dir: /data/cephfs/punim0010/projects/Diakumis_woof/data/out/
 bam_dir:
   HCC2218: HCC2218/bam/
   A5: A5/bam/
@@ -7,7 +7,8 @@ facets:
   vcf: general/facets/00-common_all_GRCh37.vcf.gz
   snp-pileup: /data/cephfs/punim0010/extras/pdiakumis/r/3.4.4/pkgs/facets/extcode/snp-pileup
   vcf_url: ftp://ftp.ncbi.nlm.nih.gov/snp/organisms/human_9606_b150_GRCh37p13/VCF/00-common_all.vcf.gz
-  out_dir: facets/coverage/
+  cov_dir: facets/coverage/
+  results_dir: facets/results/
 
 #-- sample bams --#
 

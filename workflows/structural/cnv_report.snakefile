@@ -1,8 +1,8 @@
 configfile: 'config.yaml'
 
 shell.prefix("set -euo pipefail; ")
-shell.prefix("module load SAMtools; ")
-shell.prefix("module load HTSlib; ")
+#shell.prefix("module load SAMtools; ")
+#shell.prefix("module load HTSlib; ")
 
 
 localrules: all, test
@@ -16,9 +16,7 @@ SAMPLES_A5 = ["E019", "E120", "E121", "E123", "E124", "E125",
 
 rule all:
     input:
-        expand(config["out_dir"] + config["facets"]["out_dir"] + "{project}/{sample}_cov.csv.gz", sample = SAMPLES_HCC2218, project = "HCC2218"),
-        expand(config["out_dir"] + config["facets"]["out_dir"] + "{project}/{sample}_cov.csv.gz", sample = SAMPLES_A5, project = "A5")
-
+        expand(config["out_dir"] + config["facets"]["results_dir"] + "{project}/{sample}/{sample}_cval_{cval}_fit.rds", sample = SAMPLES_A5, project = "A5", cval = 150)
 
 
 rule facets_coverage:
@@ -27,15 +25,28 @@ rule facets_coverage:
         normal = lambda wildcards: config["data_dir"] + config["bam_dir"][wildcards.project] + config["samples"][wildcards.sample]["normal"],
         tumor  = lambda wildcards: config["data_dir"] + config["bam_dir"][wildcards.project] + config["samples"][wildcards.sample]["tumor"]
     output:
-        coverage = config["out_dir"] + config["facets"]["out_dir"] + "{project}/{sample}_cov.csv.gz"
+        snpfile = config["out_dir"] + config["facets"]["cov_dir"] + "{project}/{sample}_cov.csv.gz"
     params:
         pileup = config["facets"]["snp-pileup"]
     shell:
         "{params.pileup} -g -q 30 -Q 30 -r 10,10 "
         "{input.vcf} "
-        "{output.coverage} "
+        "{output.snpfile} "
         "{input.normal} {input.tumor}"
 
+rule facets_run:
+    input:
+        snpfile = config["out_dir"] + config["facets"]["cov_dir"] + "{project}/{sample}_cov.csv.gz"
+    output:
+        fit = config["out_dir"] + config["facets"]["results_dir"] + "{project}/{sample}/{sample}_cval_{cval}_fit.rds"
+    params:
+        outdir = config["out_dir"] + config["facets"]["results_dir"] + "{project}/{sample}",
+        run_facets = "/data/cephfs/punim0010/projects/Diakumis_woof/scripts/structural/run_facets.R"
+    log:
+        log = config["out_dir"] + config["facets"]["results_dir"] + "{project}/{sample}/run_facets.log"
+    shell:
+        "/usr/local/easybuild/software/R/3.5.0-GCC-4.9.2/bin/Rscript {params.run_facets} "
+        "-s {wildcards.sample} -f {input.snpfile} -c {wildcards.cval} -o {params.outdir} 2> {log.log}"
 
 rule test:
     input:

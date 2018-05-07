@@ -1,3 +1,5 @@
+#!/usr/bin/env Rscript
+
 suppressPackageStartupMessages(library(dplyr))
 suppressPackageStartupMessages(library(readr))
 suppressPackageStartupMessages(library(devtools))
@@ -20,10 +22,10 @@ option_list <- list(
 
 opt <- parse_args(OptionParser(option_list = option_list))
 
-opt <- list(samplename = "HCC2218",
-            snpfile = "/data/cephfs/punim0010/projects/Diakumis_woof/data/out/facets/coverage/HCC2218/HCC2218_cov.csv.gz",
-            cval = 150,
-            outdir = "/data/cephfs/punim0010/projects/Diakumis_woof/data/out/facets/results/HCC2218")
+#opt <- list(samplename = "HCC2218",
+#            snpfile = "/data/cephfs/punim0010/projects/Diakumis_woof/data/out/facets/coverage/HCC2218/HCC2218_cov.csv.gz",
+#            cval = 150,
+#            outdir = "/data/cephfs/punim0010/projects/Diakumis_woof/data/out/facets/results/HCC2218")
 
 stopifnot(!is.null(opt$snpfile),
           !is.null(opt$samplename),
