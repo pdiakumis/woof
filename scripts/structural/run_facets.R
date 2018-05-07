@@ -43,7 +43,7 @@ if (!dir.exists(opt$outdir)) {
 }
 
 # Read in SNP allele count file and prepare for next step
-cat(stamp(), "Reading in ", opt$snpfile, "with `readSnpMatrix`\n")
+cat(stamp(), "Reading in", opt$snpfile, "with `readSnpMatrix`\n")
 cov_mat <- readSnpMatrix(opt$snpfile)
 cat(stamp(), "Total of", nrow(cov_mat), "rows in matrix\n")
 
@@ -79,16 +79,18 @@ pdf(paste0(cnv_plotname, ".pdf"))
 plotSample(x = proc, emfit = fit)
 dev.off()
 
-png(paste0(cnv_plotname, ".png"))
-plotSample(x = proc, emfit = fit)
-dev.off()
+# png can't work on linux; trying bitmap via https://biostar.usegalaxy.org/p/9170/
+# Quality is crap so just skipping for now
+# bitmap(paste0(cnv_plotname, ".png"))
+# plotSample(x = proc, emfit = fit)
+# dev.off()
+
+# png(paste0(cnv_plotname, ".png"))
+# plotSample(x = proc, emfit = fit)
+# dev.off()
 
 cat(stamp(), "Plotting Spider in pdf + png format\n")
 pdf(paste0(spider_plotname, ".pdf"))
-logRlogORspider(proc$out, proc$dipLogR)
-dev.off()
-
-png(paste0(spider_plotname, ".png"))
 logRlogORspider(proc$out, proc$dipLogR)
 dev.off()
 
@@ -96,5 +98,5 @@ dev.off()
 cat(stamp(), "Saving `fit` object\n")
 saveRDS(fit, file.path(opt$outdir, paste0(opt$samplename, "_cval_", opt$cval, "_fit.rds")))
 
-cat(stamp(), "Finished Facets analysis")
+cat(stamp(), "Finished Facets analysis\n")
 devtools::session_info()
