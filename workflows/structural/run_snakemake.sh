@@ -9,4 +9,7 @@ snakemake -s cnv_report.snakefile \
           -p {cluster.partition} \
           -n {cluster.n} \
           -t {cluster.time} \
-          --mem {cluster.mem}"
+          --mem {cluster.mem} \
+          --job-name {cluster.name} \
+          --output {cluster.out} \
+          --error {cluster.err}"

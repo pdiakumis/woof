@@ -5,6 +5,9 @@
         "n": 1,
         "partition": "vccc",
         "mem": 15000,
+        "out": "slurm_out/{rule}.{wildcards}.out",
+        "err": "slurm_out/{rule}.{wildcards}.err",
+        "name": "{rule}.{wildcards}"
     },
     "facets_coverage":
     {
