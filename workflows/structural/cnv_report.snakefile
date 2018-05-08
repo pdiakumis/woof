@@ -16,7 +16,7 @@ SAMPLES_A5 = ["E019", "E120", "E121", "E123", "E124", "E125",
 
 rule all:
     input:
-        expand(config["out_dir"] + config["facets"]["results_dir"] + "{project}/{sample}/{sample}_cval_{cval}_fit.rds", sample = SAMPLES_A5, project = "A5", cval = 150)
+        expand(config["out_dir"] + config["facets"]["results_dir"] + "{project}/{sample}/{sample}_cval_{cval}_fit.rds", sample = SAMPLES_A5, project = "A5", cval = 500)
 
 
 rule facets_coverage:
@@ -43,7 +43,7 @@ rule facets_run:
         outdir = config["out_dir"] + config["facets"]["results_dir"] + "{project}/{sample}",
         run_facets = "/data/cephfs/punim0010/projects/Diakumis_woof/scripts/structural/run_facets.R"
     log:
-        log = config["out_dir"] + config["facets"]["results_dir"] + "{project}/{sample}/run_facets.log"
+        log = config["out_dir"] + config["facets"]["results_dir"] + "{project}/{sample}/{sample}_run_facets_cval_{cval}.log"
     shell:
         "/usr/local/easybuild/software/R/3.5.0-GCC-4.9.2/bin/Rscript {params.run_facets} "
         "-s {wildcards.sample} -f {input.snpfile} -c {wildcards.cval} -o {params.outdir} 2> {log.log}"

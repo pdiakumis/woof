@@ -72,9 +72,9 @@ cat(stamp(), "Ploidy is:", fit$ploidy, "\n")
 #     using the EM-algorithm
 
 # Plots
-cnv_plotname <- file.path(opt$outdir, "cnv")
-spider_plotname <- file.path(opt$outdir, "spider")
-
+prefix <- file.path(opt$outdir, paste0(opt$samplename, "_cval_", opt$cval))
+cnv_plotname <- paste0(prefix, "_cnv")
+spider_plotname <- paste0(prefix, "_spider")
 
 cat(stamp(), "Plotting CNVs in pdf + png format\n")
 pdf(paste0(cnv_plotname, ".pdf"))
@@ -98,7 +98,7 @@ dev.off()
 
 # Save Objects
 cat(stamp(), "Saving `fit` object\n")
-saveRDS(fit, file.path(opt$outdir, paste0(opt$samplename, "_cval_", opt$cval, "_fit.rds")))
-
+saveRDS(fit, paste0(prefix, "_fit.rds"))
 cat(stamp(), "Finished Facets analysis\n")
+
 devtools::session_info()
