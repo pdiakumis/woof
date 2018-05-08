@@ -16,7 +16,7 @@ SAMPLES_A5 = ["E019", "E120", "E121", "E123", "E124", "E125",
 
 rule all:
     input:
-        expand(config["out_dir"] + config["facets"]["results_dir"] + "{project}/{sample}/{sample}_cval_{cval}_fit.rds", sample = SAMPLES_A5, project = "A5", cval = 500)
+        expand(config["out_dir"] + config["facets"]["results_dir"] + "{project}/{sample}/{sample}_cval_{cval}_{type}.png", sample = SAMPLES_A5, project = "A5", cval = [150, 500], type = ["cnv", "spider"])
 
 
 rule facets_coverage:
@@ -50,9 +50,9 @@ rule facets_run:
 
 rule pdf2png:
     input:
-        pdf = {sample}.pdf
+        pdf = "{sample}.pdf"
     output:
-        png = {sample}.png
+        png = "{sample}.png"
     shell:
         "module load ImageMagick; convert -antialias -density 300 {input.pdf} {output.png}"
 
