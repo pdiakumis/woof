@@ -48,6 +48,14 @@ rule facets_run:
         "/usr/local/easybuild/software/R/3.5.0-GCC-4.9.2/bin/Rscript {params.run_facets} "
         "-s {wildcards.sample} -f {input.snpfile} -c {wildcards.cval} -o {params.outdir} 2> {log.log}"
 
+rule pdf2png:
+    input:
+        pdf = {sample}.pdf
+    output:
+        png = {sample}.png
+    shell:
+        "module load ImageMagick; convert -antialias -density 300 {input.pdf} {output.png}"
+
 rule test:
     input:
         vcf    = config["data_dir"] + config["facets"]["vcf"],
