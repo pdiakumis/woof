@@ -1,0 +1,110 @@
+---
+title: "UMCCR Facets Summary"
+author: "Peter Diakumis"
+date: "`r format(Sys.time(), '%a %Y-%b-%d')`"
+output:
+  html_document:
+    keep_md: yes
+    theme: readable
+    toc: false
+    toc_float: false
+    code_folding: hide
+  rmdformats::material:
+    highlight: kate
+params:
+  outdir: "x"
+  samplename: "x"
+  cval: 123
+---
+
+```{r load-pkgs, message=FALSE}
+require(dplyr)
+require(magick)
+require(pdftools)
+require(tools)
+require(DT)
+```
+
+
+## Introduction
+
+FACETS (https://github.com/mskcc/facets) is an R package that implements the
+methods described in [Shen and Seshan, 2016](https://www.ncbi.nlm.nih.gov/pubmed/27270079).
+From the vignette:
+
+>  This package is for analyzing allele-specific DNA copy number and clonal heterogeneity
+from high-throughput sequencing including whole genome, whole exome, and some
+targeted cancer gene panels. The method implements a bivariate genome segmentation,
+followed by allele-specific copy number calls. Tumor purity, ploidy, and cellular
+fractions are estimated and reported from the output.
+
+## Parameters
+
+* Sample Name: `r params$samplename`
+* cval: `r params$cval`
+
+
+## Results
+
+### Purity and Ploidy Estimation
+
+
+```{r read-fit}
+fit <- readRDS(file.path(params$outdir, paste0(params$samplename, "_cval_", params$cval, "_fit.rds")))
+if (length(fit$seglen) != nrow(fit$cncf)) {
+  stop("Check out the dimensions of cncf and seglen in the `fit` object")
+}
+cnv_tab <- cbind(fit$cncf, seglen = fit$seglen) %>% 
+  select(seg, chrom, start, end, seglen, everything())
+```
+
+* Purity: `r fit$purity`
+* Ploidy: `r fit$ploidy`
+
+### CNV Plot
+
+```{r cnv-plot}
+plot_type <- "cnv"
+pdf_fname <- file.path(params$outdir,
+                       paste0(params$samplename, "_cval_", params$cval, "_", plot_type, ".pdf"))
+png_fname <- paste0(tools::file_path_sans_ext(pdf_fname), ".png")
+
+# convert to png since size is huge
+# but only if it doesn't exist ;-)
+if (!file.exists(png_fname)) {
+  image_read_pdf(pdf_fname) %>%
+    image_write(png_fname)
+}
+
+knitr::include_graphics(png_fname)
+```
+
+### Spider Plot
+
+```{r spider-plot}
+plot_type <- "spider"
+pdf_fname <- file.path(params$outdir,
+                       paste0(params$samplename, "_cval_", params$cval, "_", plot_type, ".pdf"))
+png_fname <- paste0(tools::file_path_sans_ext(pdf_fname), ".png")
+
+# convert to png since size is huge
+# but only if it doesn't exist ;-)
+if (!file.exists(png_fname)) {
+  image_read_pdf(pdf_fname) %>%
+    image_write(png_fname)
+}
+
+knitr::include_graphics(png_fname)
+```
+
+### CNV Table
+
+```{r cnv-table}
+DT::datatable(data = cnv_tab)
+```
+
+## Session Info
+
+```{r session-info}
+devtools::session_info()
+```
