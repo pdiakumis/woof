@@ -1,11 +1,8 @@
 configfile: 'config.yaml'
 
 shell.prefix("set -euo pipefail; ")
-#shell.prefix("module load SAMtools; ")
-#shell.prefix("module load HTSlib; ")
 
-
-localrules: all, test
+localrules: all
 
 SAMPLES_HCC2218 = ["HCC2218"]
 SAMPLES_A5 = ["E019", "E120", "E121", "E123", "E124", "E125",
@@ -29,6 +26,7 @@ rule facets_coverage:
     params:
         pileup = config["facets"]["snp-pileup"]
     shell:
+        "module load SAMtools; module load HTSlib; "
         "{params.pileup} -g -q 30 -Q 30 -r 10,10 "
         "{input.vcf} "
         "{output.snpfile} "
@@ -50,6 +48,19 @@ rule facets_run:
         "-s {wildcards.sample} -f {input.snpfile} -c {wildcards.cval} -o {params.outdir} 2> {log.log}"
 
 
+rule facets_report:
+    input:
+        fit = config["out_dir"] + config["facets"]["results_dir"] + "{project}/{sample}/{sample}_cval_{cval}_fit.rds"
+    params:
+        outdir = config["out_dir"] + config["facets"]["results_dir"] + "{project}/{sample}",
+    log:
+        log = config["out_dir"] + config["facets"]["results_dir"] + "{project}/{sample}/{sample}_run_facets_cval_{cval}.log"
+    shell:
+        "Rscript ../../templates/structural/render_facets_report.R "
+        "-r ../../templates/structural/facets_report.Rmd "
+        "-s {wildcards.sample} -c {wildcards.cval} -o {params.outdir} 2> {log.log}"
+
+
 rule pdf2png:
     input:
         pdf = "{sample}.pdf"
@@ -57,20 +68,3 @@ rule pdf2png:
         png = "{sample}.png"
     shell:
         "module load ImageMagick; convert -antialias -density 300 {input.pdf} {output.png}"
-
-rule facets_report:
-    shell:
-        "Rscript ../../templates/structural/render_facets_report.R "
-        "-r ../../templates/structural/facets_report.Rmd "
-        "-s {wildcards.sample}
-
-
-rule test:
-    input:
-        vcf    = config["data_dir"] + config["facets"]["vcf"],
-        normal = lambda wildcards: config["data_dir"] + config["bam_dir"][wildcards.project] + config["samples"][wildcards.sample]["normal"],
-        tumor  = lambda wildcards: config["data_dir"] + config["bam_dir"][wildcards.project] + config["samples"][wildcards.sample]["tumor"]
-    output:
-        txt = "out/{project}_{sample}_tmp.txt"
-    shell:
-        "echo 'VCF: {input.vcf}\nTumor: {input.tumor}\nNormal: {input.normal}' > {output.txt}"
