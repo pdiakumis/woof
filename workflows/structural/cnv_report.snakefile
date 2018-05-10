@@ -34,6 +34,7 @@ rule facets_coverage:
         "{output.snpfile} "
         "{input.normal} {input.tumor}"
 
+
 rule facets_run:
     input:
         snpfile = config["out_dir"] + config["facets"]["cov_dir"] + "{project}/{sample}_cov.csv.gz"
@@ -48,6 +49,7 @@ rule facets_run:
         "/usr/local/easybuild/software/R/3.5.0-GCC-4.9.2/bin/Rscript {params.run_facets} "
         "-s {wildcards.sample} -f {input.snpfile} -c {wildcards.cval} -o {params.outdir} 2> {log.log}"
 
+
 rule pdf2png:
     input:
         pdf = "{sample}.pdf"
@@ -55,6 +57,13 @@ rule pdf2png:
         png = "{sample}.png"
     shell:
         "module load ImageMagick; convert -antialias -density 300 {input.pdf} {output.png}"
+
+rule facets_report:
+    shell:
+        "Rscript ../../templates/structural/render_facets_report.R "
+        "-r ../../templates/structural/facets_report.Rmd "
+        "-s {wildcards.sample}
+
 
 rule test:
     input:

@@ -1,7 +1,10 @@
 .DS_Store
-.snakemake
+.Rhistory
 *.swp
+
 data/
 
+.snakemake
 slurm-*.out
 slurm_logs/
+
