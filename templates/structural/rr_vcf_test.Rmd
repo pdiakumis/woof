@@ -1,0 +1,77 @@
+---
+title: "Testing rr vcf functions"
+author: "Peter Diakumis"
+date: "`r format(Sys.time(), '%a %Y-%b-%d')`"
+output: 
+  html_document: 
+    keep_md: yes
+---
+
+```{r load-pkgs}
+require(tidyverse)
+require(vcfR)
+```
+
+* First read in sv-prioritise and manta somatic VCF files. These _should_
+  have the same number of variants. The only difference is in the INFO and
+  FILTER columns.
+
+```{r read-vcf}
+mantaf <- "/Users/pdiakumis/Desktop/projects/umccr/A5/manta/E019-manta.vcf.gz"
+manta <- vcfR::read.vcfR(mantaf)
+svprif <- "/Users/pdiakumis/Desktop/projects/umccr/A5/manta/E019-sv-prioritize-manta.vcf.gz"
+svpri <- vcfR::read.vcfR(svprif)
+```
+
+
+```{r prep-manta}
+
+prep_manta_vcf <- function(vcfr) {
+  # Takes in VCF file which has been read with vcfR::read.vcfR
+  stopifnot(class(vcfr) == "vcfR")
+  
+  # Get CHROM, POS, ID, END, MATEID, SVTYPE, BPI_START etc. from VCF
+  # Instead of POS, we can use BPI_START
+  # Instead of raw END for non-BNDs, we can use BPI_END
+  DF <- vcfr@fix[, c("CHROM", "POS", "ID", "FILTER")] %>% 
+    tibble::as_tibble() %>% 
+    tibble::rowid_to_column(var = "rowid") %>% 
+    dplyr::bind_cols(vcfR::extract_info_tidy(vcfr)) %>%
+    dplyr::mutate(chrom1 = CHROM,
+                  start1 = BPI_START,
+                  end1 = BPI_START,
+                  END = BPI_END) %>%
+    dplyr::select(rowid, chrom1, start1, end1, END, FILTER,
+                  ID, MATEID, SVTYPE, SVLEN)
+  
+  # BNDs
+  df_bnd <- DF %>%
+    dplyr::filter(SVTYPE == "BND") %>%
+    dplyr::bind_cols(., .[match(.$ID, .$MATEID), c("chrom1", "start1")]) %>%
+    dplyr::rename(chrom2 = chrom11, start2 = start11) %>%
+    dplyr::mutate(end2 = start2)
+  
+  # Other
+  df_other <- DF %>%
+    dplyr::filter(SVTYPE != "BND") %>%
+    dplyr::mutate(chrom2 = chrom1, start2 = END, end2 = END)
+  
+  # All together now
+  df_final <- df_other %>% 
+    dplyr::bind_rows(df_bnd) %>%
+    dplyr::select(rowid, chrom1:end1, chrom2:end2, SVTYPE, ID, SVLEN, FILTER) %>%
+    dplyr::arrange(rowid)
+  
+  return(df_final)
+}
+
+x1 <- prep_manta_vcf(manta)
+x2 <- prep_manta_vcf(svpri)
+```
+
+* Just test plots:
+
+```{r plot}
+plot(rnorm(100))
+```
+
