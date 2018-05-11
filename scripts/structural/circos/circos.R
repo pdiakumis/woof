@@ -104,11 +104,11 @@ db <- OmicCircos::segAnglePo(seg.dat = ucsc_chr, seg = seg_name)
 colors <- rainbow(seg_num, alpha = 0.5)
 
 #---- Manta ----
-manta_fname <- "/Users/pdiakumis/Desktop/projects/umccr/colo829-sv-exploration/data/colo_internal/bcbio/COLO829-sv-prioritize-manta.vcf.gz"
-svdat <- readr::read_tsv(manta_fname, comment = "#", col_types = "ciccccccccc",
+mantaf <- "/Users/pdiakumis/Desktop/projects/umccr/A5/manta/E019-manta.vcf.gz"
+svdat <- readr::read_tsv(mantaf, comment = "#", col_types = "ciccccccccc",
                          col_names = c("CHROM", "POS", "ID", "REF", "ALT",
                                        "QUAL", "FILTER", "INFO", "FORMAT",
-                                       "COLO_Normal", "COLO_Tumor"))
+                                       "normal", "tumor"))
 
 linkdat <- gen_link_dat(svdat)
 linkdat_breakends <- linkdat[[1]]
@@ -122,14 +122,14 @@ extra_df <- tibble::tribble( ~chrom, ~start, ~end, ~tcn.em,
                              1,      0,    0,       0,
                              1,      0,    0,       4)
 mapdat <- cnv %>%
-  select(chrom, start, end, tcn.em) %>%
-  bind_rows(extra_df) %>%
-  rename(chr = chrom,
+  dplyr::select(chrom, start, end, tcn.em) %>%
+  dplyr::bind_rows(extra_df) %>%
+  dplyr::rename(chr = chrom,
          CN = tcn.em)
 
 mapdat <- mapdat %>%
-  mutate(
-    col = case_when(
+  dplyr::mutate(
+    col = dplyr::case_when(
       CN == 0 ~ "blue",
       CN == 1 ~ "blue",
       CN == 2 ~ "black",
@@ -139,11 +139,11 @@ mapdat <- mapdat %>%
 
 #---- Circos Plot ----
 
-pdf("~/Desktop/tmp/circos2.pdf",width=7,height=7)
-par(mar=c(2,2,2,2))
-plot(c(1,800), c(1,800), type="n", axes = F, xlab="", ylab="", main="", cex=2);
-circos(R=400, cir=db, type="chr", col=colors, print.chr.lab=T, W=4, scale=T, cex=3)
-circos(R=260, cir=db, W=120, mapping=mapdat, col.v = 4, type="arc", B=T, cutoff=2, lwd=4, col=mapdat$col, scale=T,cex=10)
-circos(R=260, cir=db, W=40, mapping=linkdat_breakends, type="link", lwd=2, col = "grey")
-circos(R=260, cir=db, W=20, mapping=linkdat_samechrom, type="link2", lwd=1, col = c("darkblue","green")[ifelse(linkdat_samechrom$type=="del", 1, 2)])
+pdf("~/Desktop/tmp/circos2.pdf", width = 7, height = 7)
+par(mar = c(2, 2, 2, 2))
+plot(c(1, 800), c(1, 800), type = "n", axes = FALSE, xlab = "", ylab = "", main = "", cex = 2)
+circos(R = 400, cir = db, type = "chr", col = colors, print.chr.lab = TRUE, W = 4, scale = TRUE, cex = 3)
+circos(R = 260, cir = db, W = 120, mapping = mapdat, col.v = 4, type = "arc", B = TRUE, cutoff = 2, lwd = 4, col = mapdat$col, scale = TRUE, cex = 10)
+circos(R = 260, cir = db, W = 40, mapping = linkdat_breakends, type = "link", lwd = 2, col = "grey")
+circos(R = 260, cir = db, W = 20, mapping = linkdat_samechrom, type = "link2", lwd = 1, col = c("darkblue", "green")[ifelse(linkdat_samechrom$type == "del", 1, 2)])
 dev.off()
