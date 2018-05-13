@@ -5,7 +5,6 @@ require(dplyr)
 gen_link_dat <- function(svdat, keep_deletions = TRUE, valid_chroms = c(1:22, "X", "Y")) {
 
   # keep only PASS
-  # TODO: check missing
   svdat <- svdat[svdat$FILTER == "PASS", ]
   ids <- svdat$ID
   pairs1 <- as.list(rep(NA, length(ids)))
@@ -72,8 +71,8 @@ gen_link_dat <- function(svdat, keep_deletions = TRUE, valid_chroms = c(1:22, "X
   }
 
   samechrompairsdf <- data.frame(chr1 = rep(NA, length(pairs2)), po1 = NA, gene1 = NA, chr2 = NA, po2 = NA, gene2 = NA, type = NA)
-  for(i in 1:length(pairs2)){
-    for(j in 1:7){
+  for (i in 1:length(pairs2)) {
+    for (j in 1:7) {
       samechrompairsdf[i, j] <- pairs2[[i]][j]
     }
   }
@@ -104,7 +103,7 @@ db <- OmicCircos::segAnglePo(seg.dat = ucsc_chr, seg = seg_name)
 colors <- rainbow(seg_num, alpha = 0.5)
 
 #---- Manta ----
-mantaf <- "/Users/pdiakumis/Desktop/projects/umccr/A5/manta/E019-manta.vcf.gz"
+mantaf <- "/Users/pdiakumis/Desktop/projects/umccr/A5/manta/E019-sv-prioritize-manta.vcf.gz"
 svdat <- readr::read_tsv(mantaf, comment = "#", col_types = "ciccccccccc",
                          col_names = c("CHROM", "POS", "ID", "REF", "ALT",
                                        "QUAL", "FILTER", "INFO", "FORMAT",

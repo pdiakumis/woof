@@ -7,33 +7,113 @@ output:
     keep_md: yes
 ---
 
+## Analysis 1
+
 ```{r load-pkgs}
 require(tidyverse)
 require(vcfR)
 require(rr)
+require(ggbio)
+require(scales)
+require(GenomicRanges)
+require(glue)
 ```
 
-* First read in sv-prioritise and manta somatic VCF files. These _should_
-  have the same number of variants. The only difference is in the INFO and
-  FILTER columns.
+* Just use the sv-prioritise VCF 
 
-```{r read-vcf}
-mantaf <- "/Users/pdiakumis/Desktop/projects/umccr/A5/manta/E019-manta.vcf.gz"
+```{r prep-manta-vcf}
+samplename <- "Foo"
+mantaf <- "/Users/pdiakumis/Desktop/projects/umccr/A5/manta/E019-sv-prioritize-manta.vcf.gz"
 manta <- vcfR::read.vcfR(mantaf)
-svprif <- "/Users/pdiakumis/Desktop/projects/umccr/A5/manta/E019-sv-prioritize-manta.vcf.gz"
-svpri <- vcfR::read.vcfR(svprif)
+svs <- rr::prep_manta_vcf(manta)
+svs <- svs %>% filter(FILTER == "PASS")
+```
+
+* Ideogram object
+
+```{r gr-ideo}
+# Generates GRanges hg19 or b37 Ideogram object
+gr_ideo <- function(DF) {
+  # check if you have hg19 or b37
+  chr_names_hg19 <- paste0("chr", c(1:22, "X", "Y", "M"))
+  chr_names_b37 <- c(1:22, "X", "Y", "MT")
+
+  stopifnot(all(c("chrom1", "chrom2") %in% colnames(DF)))
+  df_chr <- unique(unlist(DF[c("chrom1", "chrom2")], use.names = FALSE))
+  if (all(df_chr %in% chr_names_b37)) {
+    chr_names = chr_names_b37
+  } else if (all(df_chr %in% chr_names_hg19)) {
+    chr_names = chr_names_hg19
+  } else {
+    stop("ERROR! Can't determine if you have b37 or hg19 chromosomes. Check manually!")
+  }
+
+  chr_lengths <- c(249250621L, 243199373L, 198022430L, 191154276L,
+                   180915260L, 171115067L, 159138663L, 146364022L,
+                   141213431L, 135534747L, 135006516L, 133851895L,
+                   115169878L, 107349540L, 102531392L,  90354753L,
+                   81195210L,  78077248L,   59128983L,  63025520L,
+                   48129895L,  51304566L,  155270560L,  59373566L, 16569L)
+  names(chr_lengths) <- chr_names
+  ideo <- GenomicRanges::GRanges(seqnames = chr_names,
+                  ranges = IRanges::IRanges(start = 1L, width = chr_lengths),
+                  seqlengths = chr_lengths)
+  return(ideo)
+}
+```
+
+* GRanges from input VCF
+
+```{r df2gr}
+# Generates GRanges object for input Df
+df2gr <- function(DF, ideo) {
+  sv_gr <- GenomicRanges::GRanges(
+    seqnames = dplyr::pull(DF, chrom1),
+    ranges = IRanges::IRanges(
+      dplyr::pull(DF, start1),
+      dplyr::pull(DF, end1)),
+    SVTYPE = dplyr::pull(DF, SVTYPE),
+    to_gr = GenomicRanges::GRanges(dplyr::pull(DF, chrom2),
+                                   IRanges::IRanges(dplyr::pull(DF, start2),
+                                                    dplyr::pull(DF, end2))))
+                                                    
+  
+  GenomeInfoDb::seqlevels(sv_gr) <- GenomeInfoDb::seqlevels(ideo)
+  GenomeInfoDb::seqlengths(sv_gr) <- GenomeInfoDb::seqlengths(ideo)
+  GenomeInfoDb::seqlevels(sv_gr$to_gr) <-  GenomeInfoDb::seqlevels(ideo)
+  GenomeInfoDb::seqlengths(sv_gr$to_gr) <- GenomeInfoDb::seqlengths(ideo)
+
+  return(sv_gr)
+}
+```
+
+* Circos from input VCF and Ideogram
+
+```{r}
+# Generates circos plot for Manta input
+manta_plot <- function(gr_sv, gr_ideo, sample_nm) {
+
+  cols <- scales::hue_pal()(length(unique(values(gr_sv)$SVTYPE)))
+
+  p1 <- ggbio() +
+    circle(gr_ideo, geom = "ideo", colour = "gray70", fill = "gray70", trackWidth = 0.1, radius = 3) +
+    circle(gr_ideo, geom = "text", aes(label = seqnames), trackWidth = 1, radius = 3) +
+    circle(gr_sv, geom = "link", linked.to = "to_gr", aes(color = SVTYPE), radius = 2.5, trackWidth = 1) +
+    scale_color_manual(values = cols) +
+    labs(title = glue("{sample_nm} Manta {length(gr_sv)} filtered calls"),
+         subtitle = "Coloured by SVTYPE")
+
+  return(p1)
+}
+```
+
+* Results:
+
+```{r}
+ideo <- gr_ideo(svs)
+gr_sv <- df2gr(svs, ideo)
+manta_plot(gr_sv, ideo, samplename)
 ```
 
 
-```{r prep-manta}
-
-x1 <- rr::prep_manta_vcf(manta)
-x2 <- rr::prep_manta_vcf(svpri)
-```
-
-* Just test plots:
-
-```{r plot}
-plot(rnorm(100))
-```
-
+## Analysis 2
