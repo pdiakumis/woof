@@ -2,7 +2,7 @@
 set -euo pipefail
 
 snakemake -s cnv_report.snakefile \
-          -j 30 \
+          -j 10 \
           -p \
           --cluster-config cluster.json \
           --cluster "sbatch \
