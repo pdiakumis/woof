@@ -2,7 +2,7 @@ require(OmicCircos)
 require(dplyr)
 
 #---- Function ----
-gen_link_dat <- function(svdat, keep_deletions = TRUE, valid_chroms = c(1:22, "X", "Y")) {
+gen_link_dat <- function(svdat, valid_chroms = c(1:22, "X", "Y")) {
 
   # keep only PASS
   svdat <- svdat[svdat$FILTER == "PASS", ]
@@ -25,9 +25,21 @@ gen_link_dat <- function(svdat, keep_deletions = TRUE, valid_chroms = c(1:22, "X
 
     manta_type <- substr(id, 1, 8)
 
-    if (manta_type == "MantaDEL" & keep_deletions) {
+    if (manta_type == "MantaDEL") {
       len <- as.numeric(info_dict["SVLEN"]) * -1
       pairs2[[i]] = c(chrom, pos, gene, chrom, pos + len, gene, "del")
+
+    } else if (manta_type == "MantaINV") {
+      len <- as.numeric(info_dict["SVLEN"])
+      pairs2[[i]] <- c(chrom, pos, gene, chrom, pos + len, gene, "inv")
+
+    } else if (manta_type == "MantaINS") {
+      len <- as.numeric(info_dict["SVLEN"])
+      pairs2[[i]] <- c(chrom, pos, gene, chrom, pos + len, gene, "ins")
+
+    } else if (manta_type == "MantaDUP") {
+      len <- as.numeric(info_dict["SVLEN"])
+      pairs2[[i]] <- c(chrom, pos, gene, chrom, pos + len, gene, "dup")
 
     } else if (manta_type == "MantaBND") {
 
@@ -42,20 +54,8 @@ gen_link_dat <- function(svdat, keep_deletions = TRUE, valid_chroms = c(1:22, "X
         pos2 <- svdat$POS[mate]
         chrom2 <- svdat$CHROM[mate]
 
-        pairs1[[i]] <- c(chrom, pos, gene, chrom2, pos2, gene2)
+        pairs1[[i]] <- c(chrom, pos, gene, chrom2, pos2, gene2, "bnd")
       }
-
-    } else if (manta_type == "MantaINV") {
-      len <- as.numeric(info_dict["SVLEN"])
-      pairs2[[i]] <- c(chrom, pos, gene, chrom, pos + len, gene, "inv")
-
-    } else if (manta_type == "MantaINS") {
-      len <- as.numeric(info_dict["SVLEN"])
-      pairs2[[i]] <- c(chrom, pos, gene, chrom, pos + len, gene, "ins")
-
-    } else if (manta_type == "MantaDUP") {
-      len <- as.numeric(info_dict["SVLEN"])
-      pairs2[[i]] <- c(chrom, pos, gene, chrom, pos + len, gene, "dup")
 
     }
   }
@@ -63,9 +63,9 @@ gen_link_dat <- function(svdat, keep_deletions = TRUE, valid_chroms = c(1:22, "X
   pairs1 <- pairs1[!is.na(pairs1)]
   pairs2 <- pairs2[!is.na(pairs2)]
 
-  pairsdf <- data.frame(chr1 = rep(NA, length(pairs1)), po1 = NA, gene1 = NA, chr2 = NA, po2 = NA, gene2 = NA)
+  pairsdf <- data.frame(chr1 = rep(NA, length(pairs1)), po1 = NA, gene1 = NA, chr2 = NA, po2 = NA, gene2 = NA, type = NA)
   for (i in 1:length(pairs1)) {
-    for (j in 1:6) {
+    for (j in 1:7) {
       pairsdf[i, j] <- pairs1[[i]][j]
     }
   }
@@ -103,26 +103,26 @@ db <- OmicCircos::segAnglePo(seg.dat = ucsc_chr, seg = seg_name)
 colors <- rainbow(seg_num, alpha = 0.5)
 
 #---- Manta ----
-mantaf <- "/Users/pdiakumis/Desktop/projects/umccr/A5/manta/E019-sv-prioritize-manta.vcf.gz"
-svdat <- readr::read_tsv(mantaf, comment = "#", col_types = "ciccccccccc",
+# mantaf1 <- "/Users/pdiakumis/Desktop/projects/umccr/A5/batch2/E128/facets_results/E128_1-sv-prioritize-manta.vcf.gz"
+mantaf1 <- "/Users/pdiakumis/Desktop/projects/umccr/A5/batch2/E128/facets_results/E128_2-sv-prioritize-manta.vcf.gz"
+svdat <- readr::read_tsv(mantaf1, comment = "#", col_types = "ciccccccccc",
                          col_names = c("CHROM", "POS", "ID", "REF", "ALT",
                                        "QUAL", "FILTER", "INFO", "FORMAT",
                                        "normal", "tumor"))
 
+# filter out problematic BND pair
+# grep("MantaBND:102098", svdat$ID)
+# svdat <- svdat %>% filter(!grepl("MantaBND:102098", ID))
 linkdat <- gen_link_dat(svdat)
 linkdat_breakends <- linkdat[[1]]
 linkdat_samechrom <- linkdat[[2]]
 
 #---- Facets ----
-facets_fit <- "~/Desktop/projects/umccr/cnv-callers/facets/reports/colo829/out/cval_150_fit.rds"
+# facets_fit <- "/Users/pdiakumis/Desktop/projects/umccr/A5/batch2/E128/facets_results/E128-1_cval_150_fit.rds"
+facets_fit <- "/Users/pdiakumis/Desktop/projects/umccr/A5/batch2/E128/facets_results/E128-2_cval_150_fit.rds"
 cnv <- readr::read_rds(facets_fit)$cncf
-extra_df <- tibble::tribble( ~chrom, ~start, ~end, ~tcn.em,
-                             #-----|-------|-----|--------|
-                             1,      0,    0,       0,
-                             1,      0,    0,       4)
 mapdat <- cnv %>%
   dplyr::select(chrom, start, end, tcn.em) %>%
-  dplyr::bind_rows(extra_df) %>%
   dplyr::rename(chr = chrom,
          CN = tcn.em)
 
@@ -138,7 +138,7 @@ mapdat <- mapdat %>%
 
 #---- Circos Plot ----
 
-pdf("~/Desktop/tmp/circos2.pdf", width = 7, height = 7)
+pdf("~/Desktop/projects/umccr/A5/batch2/E128/facets_results/E128-2_circos.pdf", width = 5, height = 5)
 par(mar = c(2, 2, 2, 2))
 plot(c(1, 800), c(1, 800), type = "n", axes = FALSE, xlab = "", ylab = "", main = "", cex = 2)
 circos(R = 400, cir = db, type = "chr", col = colors, print.chr.lab = TRUE, W = 4, scale = TRUE, cex = 3)
@@ -146,3 +146,4 @@ circos(R = 260, cir = db, W = 120, mapping = mapdat, col.v = 4, type = "arc", B 
 circos(R = 260, cir = db, W = 40, mapping = linkdat_breakends, type = "link", lwd = 2, col = "grey")
 circos(R = 260, cir = db, W = 20, mapping = linkdat_samechrom, type = "link2", lwd = 1, col = c("darkblue", "green")[ifelse(linkdat_samechrom$type == "del", 1, 2)])
 dev.off()
+
