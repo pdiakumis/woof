@@ -1,4 +1,4 @@
-# dogpipe
+# woof
 Woofing workflows using
 [Snakemake](https://snakemake.readthedocs.io/en/stable/index.html).
 
