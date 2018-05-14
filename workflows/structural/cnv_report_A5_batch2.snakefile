@@ -11,7 +11,8 @@ SAMPLES = [ "E126", "E127", "E128-1", "E128-2", "E132-1", "E132-2", "E135",
 
 rule all:
     input:
-        expand(config["out_dir"] + config["facets"]["cov_dir"] + "{project}/{sample}_cov.csv.gz", project = "A5_batch2", sample = SAMPLES)
+        expand(config["out_dir"] + config["facets"]["results_dir"] + "{project}/{sample}/{sample}_cval_{cval}_fit.rds", project = "A5_batch2", sample = SAMPLES, cval = 150),
+        expand(config["out_dir"] + config["facets"]["results_dir"] + "{project}/{sample}/{sample}_cval_{cval}_{type}.png", project = "A5_batch2", sample = SAMPLES, cval = 150, type = ["cnv", "spider"])
 
 
 

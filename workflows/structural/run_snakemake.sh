@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-snakemake -s cnv_report_A5_batch2.snakefile \
-          -j 30 \
+snakemake -s cnv_report.snakefile \
+          -j 50 \
           -p \
           --cluster-config cluster.json \
           --cluster "sbatch \

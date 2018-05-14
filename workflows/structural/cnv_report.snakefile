@@ -5,18 +5,20 @@ shell.prefix("set -euo pipefail; ")
 localrules: all
 
 SAMPLES_HCC2218 = ["HCC2218"]
-SAMPLES_A5_batch1 = ["E019", "E120", "E121", "E123", "E124", "E125",
-              "E129", "E130", "E131", "E133", "E134", "E140",
-              "E141", "E142", "E143", "E144", "E153", "E155",
-              "E156", "E158", "E162", "E163", "E164", "E165",
-              "E168", "E170",
-              "E122-1", "E122-2", "E146-1", "E146-2", "E159-1", "E159-2", "E159-3", "E159-4", "E169-1", "E169-2"]
-SAMPLES_GATM = ["GATM-RAF1"]
+SAMPLES_A5_batch1 = ["E019", "E120", "E121", "E123", "E124", "E125", "E129",
+                     "E130", "E131", "E133", "E134", "E140", "E141", "E142",
+                     "E143", "E144", "E153", "E155", "E156", "E158", "E162",
+                     "E163", "E164", "E165", "E168", "E170",
+                     "E122-1", "E122-2", "E146-1", "E146-2",
+                     "E159-1", "E159-2", "E159-3", "E159-4",
+                     "E169-1", "E169-2"]
+
 
 rule all:
     input:
-        expand(config["out_dir"] + config["facets"]["cov_dir"] + "{project}/{sample}_cov.csv.gz", project = "A5_batch1", sample = SAMPLES_A5_batch1),
-        expand(config["out_dir"] + config["facets"]["results_dir"] + "{project}/{sample}/{sample}_cval_{cval}_fit.rds", project = "A5_batch1", sample = SAMPLES_A5_batch1)
+        expand(config["out_dir"] + config["facets"]["results_dir"] + "{project}/{sample}/{sample}_cval_{cval}_fit.rds", project = "A5_batch1", sample = SAMPLES_A5_batch1, cval = 150),
+        expand(config["out_dir"] + config["facets"]["results_dir"] + "{project}/{sample}/{sample}_cval_{cval}_{type}.png", project = "A5_batch1", sample = SAMPLES_A5_batch1, cval = 150, type = ["cnv", "spider"])
+
 
 
 
