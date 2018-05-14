@@ -4,27 +4,22 @@ shell.prefix("set -euo pipefail; ")
 
 localrules: all
 
-SAMPLES_HCC2218 = ["HCC2218"]
-SAMPLES_A5_batch1 = ["E019", "E120", "E121", "E123", "E124", "E125",
-              "E129", "E130", "E131", "E133", "E134", "E140",
-              "E141", "E142", "E143", "E144", "E153", "E155",
-              "E156", "E158", "E162", "E163", "E164", "E165",
-              "E168", "E170",
-              "E122-1", "E122-2", "E146-1", "E146-2", "E159-1", "E159-2", "E159-3", "E159-4", "E169-1", "E169-2"]
-SAMPLES_GATM = ["GATM-RAF1"]
+SAMPLES = [ "E126", "E127", "E128-1", "E128-2", "E132-1", "E132-2", "E135",
+            "E136", "E138", "E143-1", "E143-2", "E145", "E147", "E148",
+            "E149", "E150", "E152", "E154", "E157", "E160", "E161",
+            "E166", "E167-1", "E167-2", "E171"]
 
 rule all:
     input:
-        expand(config["out_dir"] + config["facets"]["cov_dir"] + "{project}/{sample}_cov.csv.gz", project = "A5_batch1", sample = SAMPLES_A5_batch1),
-        expand(config["out_dir"] + config["facets"]["results_dir"] + "{project}/{sample}/{sample}_cval_{cval}_fit.rds", project = "A5_batch1", sample = SAMPLES_A5_batch1)
+        expand(config["out_dir"] + config["facets"]["cov_dir"] + "{project}/{sample}_cov.csv.gz", project = "A5_batch2", sample = SAMPLES)
 
 
 
 rule facets_coverage:
     input:
         vcf    = config["data_dir"] + config["facets"]["vcf"],
-        normal = lambda wildcards: config["bam_dir"][wildcards.project] + config["samples_A5_batch1"][wildcards.sample]["normal"]["bam"],
-        tumor  = lambda wildcards: config["bam_dir"][wildcards.project] + config["samples_A5_batch1"][wildcards.sample]["tumor"]["bam"]
+        normal = lambda wildcards: config["bam_dir"][wildcards.project] + config["samples_A5_batch2"][wildcards.sample]["normal"]["bam"],
+        tumor  = lambda wildcards: config["bam_dir"][wildcards.project] + config["samples_A5_batch2"][wildcards.sample]["tumor"]["bam"]
     output:
         snpfile = config["out_dir"] + config["facets"]["cov_dir"] + "{project}/{sample}_cov.csv.gz"
     params:
