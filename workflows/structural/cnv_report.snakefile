@@ -5,22 +5,25 @@ shell.prefix("set -euo pipefail; ")
 localrules: all
 
 SAMPLES_HCC2218 = ["HCC2218"]
-SAMPLES_A5 = ["E019", "E120", "E121", "E123", "E124", "E125",
+SAMPLES_A5_batch1 = ["E019", "E120", "E121", "E123", "E124", "E125",
               "E129", "E130", "E131", "E133", "E134", "E140",
               "E141", "E142", "E143", "E144", "E153", "E155",
               "E156", "E158", "E162", "E163", "E164", "E165",
-              "E168", "E170"]
+              "E168", "E170",
+              "E122-1", "E122-2", "E146-1", "E146-2", "E159-1", "E159-2", "E159-3", "E159-4", "E169-1", "E169-2"]
+SAMPLES_GATM = ["GATM-RAF1"]
 
 rule all:
     input:
-        expand(config["out_dir"] + config["facets"]["results_dir"] + "{project}/{sample}/{sample}_cval_{cval}_{type}.png", sample = SAMPLES_A5, project = "A5", cval = [150, 500], type = ["cnv", "spider"])
+        expand(config["out_dir"] + config["facets"]["cov_dir"] + "{project}/{sample}_cov.csv.gz", project = "A5_batch1", sample = SAMPLES_A5_batch1)
+
 
 
 rule facets_coverage:
     input:
         vcf    = config["data_dir"] + config["facets"]["vcf"],
-        normal = lambda wildcards: config["data_dir"] + config["bam_dir"][wildcards.project] + config["samples"][wildcards.sample]["normal"],
-        tumor  = lambda wildcards: config["data_dir"] + config["bam_dir"][wildcards.project] + config["samples"][wildcards.sample]["tumor"]
+        normal = lambda wildcards: config["bam_dir"][wildcards.project] + config["samples_A5_batch1"][wildcards.sample]["normal"]["bam"],
+        tumor  = lambda wildcards: config["bam_dir"][wildcards.project] + config["samples_A5_batch1"][wildcards.sample]["tumor"]["bam"]
     output:
         snpfile = config["out_dir"] + config["facets"]["cov_dir"] + "{project}/{sample}_cov.csv.gz"
     params:

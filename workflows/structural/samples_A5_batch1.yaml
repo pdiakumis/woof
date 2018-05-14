@@ -1,4 +1,4 @@
-samples:
+samples_A5_batch1:
   E019:
     normal:
       bam: PRJ170040_E019-B01-D/PRJ170040_E019-B01-D-ready.bam
