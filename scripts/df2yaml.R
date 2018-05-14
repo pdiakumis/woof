@@ -45,27 +45,49 @@ s1 %>%
   select(folder, batch, phenotype, type) %>%
   group_by(batch) %>%
   mutate(new_batch = get_new_batch(batch, type)) %>%
-  cSplit(splitCols = "new_batch", sep = ";", direction = "long") %>%
-  arrange(new_batch, type) %>%
-  as_tibble() -> s1
+  cSplit(splitCols = "new_batch", sep = ";", direction = "long", type.convert = FALSE) %>%
+  as_tibble() %>%
+  arrange(new_batch, type) -> s1
 
 # For each folder, get the BAM and VCF file
 # We can just ignore the normal VCF file
 (f1 <- s1$folder[1])
 list.files(file.path(a5_1, f1), pattern = "bam$")
-list.files(file.path(a5_1, f1), pattern = "manta.vcf.gz$")
+list.files(file.path(a5_1, f1), pattern = "sv-prioritize-manta.vcf.gz$")
 
-s1 %>%
-  mutate(bam = list.files(file.path(a5_1, folder), pattern = "bam$"))
+bams <- vector("character", length = nrow(s1))
+vcfs <- vector("character", length = nrow(s1))
 
-#### Down to here!
-
-sample_list <- vector(mode = "list", length = nrow(bams))
-for (i in 1:nrow(bams)) {
-  sample_list[[i]] <- list(normal = bams$normal[i],
-                           tumor  = bams$tumor[i])
+for (i in seq_len(nrow(s1))) {
+  bams[i] <- list.files(file.path(a5_1, s1$folder[i]), pattern = "ready.bam$")
+  vcfs[i] <- list.files(file.path(a5_1, s1$folder[i]), pattern = "sv-prioritize-manta.vcf.gz$")
 }
-names(sample_list) <- bams$sample_id
+
+s1 <- s1 %>%
+  mutate(bam = bams,
+         vcf = vcfs) %>%
+  mutate(bam = paste(folder, bam, sep = "/"),
+         vcf = paste(folder, vcf, sep = "/")) %>%
+  select(new_batch, type, bam, vcf) %>%
+  gather(file_type, path, -c(new_batch, type)) %>%
+  unite(temp, type, file_type) %>%
+  spread(temp, path)
+
+sample_list <- vector(mode = "list", length = nrow(s1))
+
+
+for (i in 1:nrow(s1)) {
+  sample_list[[i]] <- list(
+    normal = list(
+      bam = s1$normal_bam[i],
+      vcf = s1$normal_vcf[i]),
+    tumor = list(
+      bam = s1$tumor_bam[i],
+      vcf = s1$tumor_vcf[i])
+  )
+}
+names(sample_list) <- s1$new_batch
+
 sample_list <- list(samples = sample_list)
 cat(yaml::as.yaml(sample_list)) # awesome
-write(as.yaml(sample_list), file = "../workflows/cnv/samples.yaml")
+write(as.yaml(sample_list), file = "../workflows/structural/samples_A5_batch1.yaml")
