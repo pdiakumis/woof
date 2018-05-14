@@ -22,11 +22,14 @@ require(glue)
 * Just use the sv-prioritise VCF 
 
 ```{r prep-manta-vcf}
-samplename <- "Foo"
-mantaf <- "/Users/pdiakumis/Desktop/projects/umccr/A5/manta/E019-sv-prioritize-manta.vcf.gz"
-manta <- vcfR::read.vcfR(mantaf)
-svs <- rr::prep_manta_vcf(manta)
-svs <- svs %>% filter(FILTER == "PASS")
+samplename <- "GATM-RAF1"
+svprif <- "/Users/pdiakumis/Desktop/projects/umccr/GATM-RAF1/manta_vcf/GATM-RAF1__PRJ180265_DNA015740T-sv-prioritize-manta-pass.vcf.gz"
+svpri <- vcfR::read.vcfR(svprif)
+
+svs <- rr::prep_manta_vcf(svpri)
+# filter out problematic BND pair
+grep("MantaBND:102098", svs$ID)
+svs <- svs %>% filter(!grepl("MantaBND:102098", ID))
 ```
 
 * Ideogram object
@@ -115,5 +118,3 @@ gr_sv <- df2gr(svs, ideo)
 manta_plot(gr_sv, ideo, samplename)
 ```
 
-
-## Analysis 2
