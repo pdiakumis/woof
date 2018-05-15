@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-snakemake -s cnv_report.snakefile \
-          -j 50 \
+snakemake -s Snakefile \
+          -j 30 \
           -p \
-          --cluster-config cluster.json \
+          --cluster-config spartan.json \
           --cluster "sbatch \
           -p {cluster.partition} \
           -n {cluster.n} \
