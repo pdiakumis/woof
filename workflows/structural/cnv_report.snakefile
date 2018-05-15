@@ -5,6 +5,7 @@ shell.prefix("set -euo pipefail; ")
 localrules: all
 
 SAMPLES_HCC2218 = ["HCC2218"]
+
 SAMPLES_A5_batch1 = ["E019", "E120", "E121", "E123", "E124", "E125", "E129",
                      "E130", "E131", "E133", "E134", "E140", "E141", "E142",
                      "E143", "E144", "E153", "E155", "E156", "E158", "E162",
@@ -13,24 +14,27 @@ SAMPLES_A5_batch1 = ["E019", "E120", "E121", "E123", "E124", "E125", "E129",
                      "E159-1", "E159-2", "E159-3", "E159-4",
                      "E169-1", "E169-2"]
 
+SAMPLES_A5_batch2 = [ "E126", "E127", "E128-1", "E128-2", "E132-1", "E132-2", "E135",
+                      "E136", "E138", "E143-1", "E143-2", "E145", "E147", "E148",
+                      "E149", "E150", "E152", "E154", "E157", "E160", "E161",
+                      "E166", "E167-1", "E167-2", "E171"]
+
 
 rule all:
     input:
-        expand(config["out_dir"] + config["facets"]["results_dir"] + "{project}/{sample}/{sample}_cval_{cval}_fit.rds", project = "A5_batch1", sample = SAMPLES_A5_batch1, cval = 150),
-        expand(config["out_dir"] + config["facets"]["results_dir"] + "{project}/{sample}/{sample}_cval_{cval}_{type}.png", project = "A5_batch1", sample = SAMPLES_A5_batch1, cval = 150, type = ["cnv", "spider"])
-
-
+        expand(config["out_dir"] + config["facets"]["results_dir"] + "{project}/{sample}/{sample}_cval_{cval}_fit.rds", project = ["A5_batch1", "A5_batch2"], sample = [SAMPLES_A5_batch1, SAMPLES_A5_batch2], cval = 150),
+        expand(config["out_dir"] + config["facets"]["results_dir"] + "{project}/{sample}/{sample}_cval_{cval}_{type}.png", project = ["A5_batch1", "A5_batch2"], sample = [SAMPLES_A5_batch1, SAMPLES_A5_batch2], cval = 150, type = ["cnv", "spider"])
 
 
 rule facets_coverage:
     input:
-        vcf    = config["data_dir"] + config["facets"]["vcf"],
-        normal = lambda wildcards: config["bam_dir"][wildcards.project] + config["samples_A5_batch1"][wildcards.sample]["normal"]["bam"],
-        tumor  = lambda wildcards: config["bam_dir"][wildcards.project] + config["samples_A5_batch1"][wildcards.sample]["tumor"]["bam"]
+        vcf    = config["data_dir"] + config["tools"]["facets"]["vcf"],
+        normal = lambda wildcards: config["bam_dir"][wildcards.project] + config["samples"][wildcards.project][wildcards.sample]["normal"]["bam"],
+        tumor  = lambda wildcards: config["bam_dir"][wildcards.project] + config["samples"][wildcards.project][wildcards.sample]["tumor"]["bam"]
     output:
-        snpfile = config["out_dir"] + config["facets"]["cov_dir"] + "{project}/{sample}_cov.csv.gz"
+        snpfile = config["out_dir"] + config["tools"]["facets"]["cov_dir"] + "{project}/{sample}_cov.csv.gz"
     params:
-        pileup = config["facets"]["snp-pileup"]
+        pileup = config["tools"]["facets"]["snp-pileup"]
     shell:
         "module load SAMtools; module load HTSlib; "
         "{params.pileup} -g -q 30 -Q 30 -r 10,10 "
@@ -41,14 +45,14 @@ rule facets_coverage:
 
 rule facets_run:
     input:
-        snpfile = config["out_dir"] + config["facets"]["cov_dir"] + "{project}/{sample}_cov.csv.gz"
+        snpfile = config["out_dir"] + config["tools"]["facets"]["cov_dir"] + "{project}/{sample}_cov.csv.gz"
     output:
-        fit = config["out_dir"] + config["facets"]["results_dir"] + "{project}/{sample}/{sample}_cval_{cval}_fit.rds"
+        fit = config["out_dir"] + config["tools"]["facets"]["results_dir"] + "{project}/{sample}/{sample}_cval_{cval}_fit.rds"
     params:
-        outdir = config["out_dir"] + config["facets"]["results_dir"] + "{project}/{sample}",
+        outdir = config["out_dir"] + config["tools"]["facets"]["results_dir"] + "{project}/{sample}",
         run_facets = "/data/cephfs/punim0010/projects/Diakumis_woof/scripts/structural/run_facets.R"
     log:
-        log = config["out_dir"] + config["facets"]["results_dir"] + "{project}/{sample}/{sample}_run_facets_cval_{cval}.log"
+        log = config["out_dir"] + config["tools"]["facets"]["results_dir"] + "{project}/{sample}/{sample}_run_facets_cval_{cval}.log"
     shell:
         "/usr/local/easybuild/software/R/3.5.0-GCC-4.9.2/bin/Rscript {params.run_facets} "
         "-s {wildcards.sample} -f {input.snpfile} -c {wildcards.cval} -o {params.outdir} 2> {log.log}"
@@ -69,8 +73,8 @@ rule facets_report:
 
 rule pdf2png:
     input:
-        pdf = "{sample}.pdf"
+        pdf = "{path_A}.pdf"
     output:
-        png = "{sample}.png"
+        png = "{path_A}.png"
     shell:
         "module load ImageMagick; convert -antialias -density 300 {input.pdf} {output.png}"
