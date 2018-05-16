@@ -4,22 +4,19 @@ suppressPackageStartupMessages(library(OmicCircos))
 suppressPackageStartupMessages(library(dplyr))
 suppressPackageStartupMessages(library(optparse))
 
-# RScript -s <sample name> -f <snp file> -c <cval> -o <output dir>
+# RScript -f <facets fit rds> -m <manta tsv> -o <output prefix>
 optlist <- list(
   make_option(c("-f", "--facets"), action = "store", type = "character", default = NULL,
-              help = "Input R RDS object containing Facets fit list"),
-  make_option(c("-i", "--manta"), action = "store", type = "character", default = NULL,
-              help = "Input TSV file containing Manta SV information"),
+              metavar = "<facets.rds>",
+              help = "Input R RDS object containing Facets fit list [required]"),
+  make_option(c("-m", "--manta"), action = "store", type = "character", default = NULL,
+              metavar = "<manta_svs.tsv>",
+              help = "Input TSV file containing Manta SV information [required]"),
   make_option(c("-o", "--output"), action = "store", type = "character", default = NULL,
-              help = "Output file prefix")
-)
+              metavar = "<output_prefix>",
+              help = "Output file prefix [required]"))
 
 opt <- optparse::parse_args(optparse::OptionParser(option_list = optlist))
-
-opt <- list(manta = "~/Desktop/tmp/E019-manta_svs.tsv",
-            facets = "~/Desktop/projects/umccr/A5/batch1/E019/E019_cval_150_fit.rds",
-            output = "~/Desktop/tmp/E019_circos")
-
 stopifnot(file.exists(opt$manta), file.exists(opt$facets), !is.null(opt$output))
 
 
@@ -73,7 +70,7 @@ seg_num <- length(seg_name)
 
 # Prepare angles + colors
 db <- OmicCircos::segAnglePo(seg.dat = ucsc_chr, seg = seg_name)
-colors <- rainbow(seg_num, alpha = 0.5)
+chr_colors <- rainbow(seg_num, alpha = 0.5)
 
 #---- Manta ----#
 svs <- read_svs(opt$manta) %>%
@@ -108,13 +105,15 @@ facets_cnv <- readRDS(facets_fname)$cncf %>%
 
 #---- Circos Plot ----
 
+options(warn = -1)
 pdf(paste0(opt$output, ".pdf"), width = 7, height = 7)
 par(mar = c(.5, .5, .5, .5))
 plot(c(1, 800), c(1, 800), type = "n", axes = FALSE, xlab = "", ylab = "", main = "")
 
-circos(R = 400, cir = db, type = "chr", col = colors, print.chr.lab = TRUE, W = 4)
+circos(R = 400, cir = db, type = "chr", col = chr_colors, print.chr.lab = TRUE, W = 4)
 circos(R = 260, cir = db, type = "arc", W = 120, mapping = facets_cnv, col.v = 4, B = TRUE, lwd = 5, col = facets_cnv$col, scale = FALSE)
 
+# turn off warnings because in their code they take max/min of character matrix...
 circos(R = 260, cir = db, type = "link", W = 40, mapping = svs_bnd, lwd = 2, col = "grey")
 circos(R = 260, cir = db, type = "link2", W = 20, mapping = svs_other, lwd = 1, col = svs_other$col)
 dev.off()
