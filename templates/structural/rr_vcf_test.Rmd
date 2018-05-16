@@ -34,7 +34,7 @@ read_svs <- function(fname) {
   
   DF <- 
     readr::read_tsv(
-      file = "~/Desktop/tmp/E019-manta_svs.tsv",
+      file = fname,
       na = c(".", "", "NA"),
       col_names = c("chrom", "bpi_start", "bpi_end", "id", "mateid", "svtype", "filter"), 
       col_types = "ciicccc") %>% 
@@ -100,15 +100,20 @@ svs <- svs %>%
   dplyr::mutate(varnum = paste0("var", rowid),
                 varnum2 = varnum) %>% 
   dplyr::select(chrom1, start1, varnum,
-                chrom2, start2, varnum2, svtype)
+                chrom2, start2, varnum2, svtype) %>% 
+  dplyr::mutate(col = dplyr::case_when(
+      svtype == "DEL" ~ "red",
+      svtype == "DUP" ~ "green",
+      svtype == "INS" ~ "purple",
+      svtype == "INV" ~ "orange",
+      TRUE    ~ "pink"))
 
-svs_bnd <- svs %>% filter(svtype == "BND")
-svs_other <- svs %>% filter(svtype != "BND")
+svs_bnd <- svs %>% filter(svtype == "BND") %>% as.data.frame()
+svs_other <- svs %>% filter(svtype != "BND") %>% as.data.frame()
 
 #---- Facets ----#
-facets_fit <- "~/Desktop/projects/umccr/A5/batch1/E019/E019_cval_150_fit.rds"
-cnv <- readr::read_rds(facets_fit)$cncf
-mapdat <- cnv %>%
+facets_fname <- "~/Desktop/projects/umccr/A5/batch1/E019/E019_cval_150_fit.rds"
+facets_cnv <- readr::read_rds(facets_fname)$cncf %>% 
   dplyr::select(chrom, start, end, tcn.em) %>%
   dplyr::rename(chr = chrom,
                 CN = tcn.em) %>% 
@@ -122,15 +127,15 @@ mapdat <- cnv %>%
 
 #---- Circos Plot ----
 
-pdf("~/Desktop/projects/umccr/A5/batch2/E128/facets_results/E128-2_circos.pdf", width = 5, height = 5)
+png("~/Desktop/tmp/circos1.png", width = 1000, height = 1000)
 par(mar = c(2, 2, 2, 2))
-plot(c(1, 800), c(1, 800), type = "n", axes = FALSE, xlab = "", ylab = "", main = "")
+plot(c(1, 850), c(1, 850), type = "n", axes = FALSE, xlab = "", ylab = "", main = "")
 
 circos(R = 400, cir = db, type = "chr", col = colors, print.chr.lab = TRUE, W = 4, scale = TRUE, cex = 3)
-circos(R = 260, cir = db, type = "arc", W = 120, mapping = mapdat, col.v = 4, B = TRUE, cutoff = 2, lwd = 4, col = mapdat$col, scale = TRUE, cex = 10)
+circos(R = 260, cir = db, type = "arc", W = 120, mapping = facets_cnv, col.v = 4, B = TRUE, cutoff = 2, lwd = 4, col = facets_cnv$col, scale = TRUE, cex = 10)
 
-circos(R = 260, cir = db, type = "link", W = 40, mapping = svs[svs$svtype == "BND", ], lwd = 2, col = "grey")
-circos(R = 260, cir = db, type = "link2", W = 20, mapping = linkdat_samechrom, lwd = 1, col = c("darkblue", "green")[ifelse(linkdat_samechrom$type == "del", 1, 2)])
+circos(R = 260, cir = db, type = "link", W = 40, mapping = svs_bnd, lwd = 2, col = "grey")
+circos(R = 260, cir = db, type = "link2", W = 20, mapping = svs_other, lwd = 1, col = svs_other$col)
 dev.off()
 ```
 
