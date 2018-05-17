@@ -21,431 +21,431 @@ samples:
     E019:
       normal:
         bam: PRJ170040_E019-B01-D/PRJ170040_E019-B01-D-ready.bam
-        vcf: PRJ170040_E019-B01-D/PRJ170040_E019-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170040_E019-B01-D/PRJ170040_E019-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ170039_E019-T01-D/PRJ170039_E019-T01-D-ready.bam
-        vcf: PRJ170039_E019-T01-D/E019-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170039_E019-T01-D/E019-manta.vcf.gz
     E120:
       normal:
         bam: PRJ170029_E120-B01-D/PRJ170029_E120-B01-D-ready.bam
-        vcf: PRJ170029_E120-B01-D/PRJ170029_E120-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170029_E120-B01-D/PRJ170029_E120-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ170028_E120-T01-D/PRJ170028_E120-T01-D-ready.bam
-        vcf: PRJ170028_E120-T01-D/E120-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170028_E120-T01-D/E120-manta.vcf.gz
     E121:
       normal:
         bam: PRJ170031_E121-B01-D/PRJ170031_E121-B01-D-ready.bam
-        vcf: PRJ170031_E121-B01-D/PRJ170031_E121-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170031_E121-B01-D/PRJ170031_E121-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ170030_E121-T01-D/PRJ170030_E121-T01-D-ready.bam
-        vcf: PRJ170030_E121-T01-D/E121-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170030_E121-T01-D/E121-manta.vcf.gz
     E122-1:
       normal:
         bam: PRJ170038_E122-B01-D/PRJ170038_E122-B01-D-ready.bam
-        vcf: PRJ170038_E122-B01-D/PRJ170038_E122-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170038_E122-B01-D/PRJ170038_E122-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ170036_E122-T01-D/PRJ170036_E122-T01-D-ready.bam
-        vcf: PRJ170036_E122-T01-D/E122_1-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170036_E122-T01-D/E122_1-manta.vcf.gz
     E122-2:
       normal:
         bam: PRJ170038_E122-B01-D/PRJ170038_E122-B01-D-ready.bam
-        vcf: PRJ170038_E122-B01-D/PRJ170038_E122-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170038_E122-B01-D/PRJ170038_E122-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ170037_E122-T02-D/PRJ170037_E122-T02-D-ready.bam
-        vcf: PRJ170037_E122-T02-D/E122_2-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170037_E122-T02-D/E122_2-manta.vcf.gz
     E123:
       normal:
         bam: PRJ170033_E123-B01-D/PRJ170033_E123-B01-D-ready.bam
-        vcf: PRJ170033_E123-B01-D/PRJ170033_E123-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170033_E123-B01-D/PRJ170033_E123-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ170032_E123-T01-D/PRJ170032_E123-T01-D-ready.bam
-        vcf: PRJ170032_E123-T01-D/E123-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170032_E123-T01-D/E123-manta.vcf.gz
     E124:
       normal:
         bam: PRJ170193_E124-B01-D/PRJ170193_E124-B01-D-ready.bam
-        vcf: PRJ170193_E124-B01-D/PRJ170193_E124-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170193_E124-B01-D/PRJ170193_E124-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ170192_E124-T01-D/PRJ170192_E124-T01-D-ready.bam
-        vcf: PRJ170192_E124-T01-D/E124-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170192_E124-T01-D/E124-manta.vcf.gz
     E125:
       normal:
         bam: PRJ170035_E125-B01-D/PRJ170035_E125-B01-D-ready.bam
-        vcf: PRJ170035_E125-B01-D/PRJ170035_E125-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170035_E125-B01-D/PRJ170035_E125-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ170034_E125-T01-D/PRJ170034_E125-T01-D-ready.bam
-        vcf: PRJ170034_E125-T01-D/E125-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170034_E125-T01-D/E125-manta.vcf.gz
     E129:
       normal:
         bam: PRJ180005_E129-B01-D/PRJ180005_E129-B01-D-ready.bam
-        vcf: PRJ180005_E129-B01-D/PRJ180005_E129-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180005_E129-B01-D/PRJ180005_E129-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ180004_E129-T01-D/PRJ180004_E129-T01-D-ready.bam
-        vcf: PRJ180004_E129-T01-D/E129-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180004_E129-T01-D/E129-manta.vcf.gz
     E130:
       normal:
         bam: PRJ170164_E130-B01-D/PRJ170164_E130-B01-D-ready.bam
-        vcf: PRJ170164_E130-B01-D/PRJ170164_E130-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170164_E130-B01-D/PRJ170164_E130-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ170163_E130-T01-D/PRJ170163_E130-T01-D-ready.bam
-        vcf: PRJ170163_E130-T01-D/E130-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170163_E130-T01-D/E130-manta.vcf.gz
     E131:
       normal:
         bam: PRJ180012_E131-B01-D/PRJ180012_E131-B01-D-ready.bam
-        vcf: PRJ180012_E131-B01-D/PRJ180012_E131-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180012_E131-B01-D/PRJ180012_E131-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ180011_E131-T01-D/PRJ180011_E131-T01-D-ready.bam
-        vcf: PRJ180011_E131-T01-D/E131-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180011_E131-T01-D/E131-manta.vcf.gz
     E133:
       normal:
         bam: PRJ170160_E133-B01-D/PRJ170160_E133-B01-D-ready.bam
-        vcf: PRJ170160_E133-B01-D/PRJ170160_E133-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170160_E133-B01-D/PRJ170160_E133-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ170159_E133-T01-D/PRJ170159_E133-T01-D-ready.bam
-        vcf: PRJ170159_E133-T01-D/E133-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170159_E133-T01-D/E133-manta.vcf.gz
     E134:
       normal:
         bam: PRJ170180_E134-B01-D/PRJ170180_E134-B01-D-ready.bam
-        vcf: PRJ170180_E134-B01-D/PRJ170180_E134-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170180_E134-B01-D/PRJ170180_E134-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ170179_E134-T01-D/PRJ170179_E134-T01-D-ready.bam
-        vcf: PRJ170179_E134-T01-D/E134-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170179_E134-T01-D/E134-manta.vcf.gz
     E140:
       normal:
         bam: PRJ170166_E140-B01-D/PRJ170166_E140-B01-D-ready.bam
-        vcf: PRJ170166_E140-B01-D/PRJ170166_E140-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170166_E140-B01-D/PRJ170166_E140-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ170165_E140-T01-D/PRJ170165_E140-T01-D-ready.bam
-        vcf: PRJ170165_E140-T01-D/E140-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170165_E140-T01-D/E140-manta.vcf.gz
     E141:
       normal:
         bam: PRJ170162_E141-B01-D/PRJ170162_E141-B01-D-ready.bam
-        vcf: PRJ170162_E141-B01-D/PRJ170162_E141-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170162_E141-B01-D/PRJ170162_E141-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ170161_E141-T01-D/PRJ170161_E141-T01-D-ready.bam
-        vcf: PRJ170161_E141-T01-D/E141-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170161_E141-T01-D/E141-manta.vcf.gz
     E142:
       normal:
         bam: PRJ170182_E142-B01-D/PRJ170182_E142-B01-D-ready.bam
-        vcf: PRJ170182_E142-B01-D/PRJ170182_E142-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170182_E142-B01-D/PRJ170182_E142-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ170181_E142-T01-D/PRJ170181_E142-T01-D-ready.bam
-        vcf: PRJ170181_E142-T01-D/E142-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170181_E142-T01-D/E142-manta.vcf.gz
     E143:
       normal:
         bam: PRJ170158_E143-B01-D/PRJ170158_E143-B01-D-ready.bam
-        vcf: PRJ170158_E143-B01-D/PRJ170158_E143-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170158_E143-B01-D/PRJ170158_E143-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ170157_E143-T01-D/PRJ170157_E143-T01-D-ready.bam
-        vcf: PRJ170157_E143-T01-D/E143-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170157_E143-T01-D/E143-manta.vcf.gz
     E144:
       normal:
         bam: PRJ170172_E144-B01-D/PRJ170172_E144-B01-D-ready.bam
-        vcf: PRJ170172_E144-B01-D/PRJ170172_E144-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170172_E144-B01-D/PRJ170172_E144-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ170171_E144-T01-D/PRJ170171_E144-T01-D-ready.bam
-        vcf: PRJ170171_E144-T01-D/E144-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170171_E144-T01-D/E144-manta.vcf.gz
     E146-1:
       normal:
         bam: PRJ170170_E146-B01-D/PRJ170170_E146-B01-D-ready.bam
-        vcf: PRJ170170_E146-B01-D/PRJ170170_E146-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170170_E146-B01-D/PRJ170170_E146-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ170169_E146-T01-D/PRJ170169_E146-T01-D-ready.bam
-        vcf: PRJ170169_E146-T01-D/E146_1-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170169_E146-T01-D/E146_1-manta.vcf.gz
     E146-2:
       normal:
         bam: PRJ170170_E146-B01-D/PRJ170170_E146-B01-D-ready.bam
-        vcf: PRJ170170_E146-B01-D/PRJ170170_E146-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170170_E146-B01-D/PRJ170170_E146-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ180008_E146-T02-D/PRJ180008_E146-T02-D-ready.bam
-        vcf: PRJ180008_E146-T02-D/E146_2-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180008_E146-T02-D/E146_2-manta.vcf.gz
     E153:
       normal:
         bam: PRJ180010_E153-B01-D/PRJ180010_E153-B01-D-ready.bam
-        vcf: PRJ180010_E153-B01-D/PRJ180010_E153-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180010_E153-B01-D/PRJ180010_E153-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ180009_E153-T01-D/PRJ180009_E153-T01-D-ready.bam
-        vcf: PRJ180009_E153-T01-D/E153-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180009_E153-T01-D/E153-manta.vcf.gz
     E155:
       normal:
         bam: PRJ180014_E155-B01-D/PRJ180014_E155-B01-D-ready.bam
-        vcf: PRJ180014_E155-B01-D/PRJ180014_E155-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180014_E155-B01-D/PRJ180014_E155-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ180013_E155-T01-D/PRJ180013_E155-T01-D-ready.bam
-        vcf: PRJ180013_E155-T01-D/E155-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180013_E155-T01-D/E155-manta.vcf.gz
     E156:
       normal:
         bam: PRJ170174_E156-B01-D/PRJ170174_E156-B01-D-ready.bam
-        vcf: PRJ170174_E156-B01-D/PRJ170174_E156-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170174_E156-B01-D/PRJ170174_E156-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ170173_E156-T01-D/PRJ170173_E156-T01-D-ready.bam
-        vcf: PRJ170173_E156-T01-D/E156-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170173_E156-T01-D/E156-manta.vcf.gz
     E158:
       normal:
         bam: PRJ170176_E158-B01-D/PRJ170176_E158-B01-D-ready.bam
-        vcf: PRJ170176_E158-B01-D/PRJ170176_E158-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170176_E158-B01-D/PRJ170176_E158-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ170175_E158-T01-D/PRJ170175_E158-T01-D-ready.bam
-        vcf: PRJ170175_E158-T01-D/E158-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170175_E158-T01-D/E158-manta.vcf.gz
     E159-1:
       normal:
         bam: PRJ170191_E159-B01-D/PRJ170191_E159-B01-D-ready.bam
-        vcf: PRJ170191_E159-B01-D/PRJ170191_E159-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170191_E159-B01-D/PRJ170191_E159-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ170189_E159-T01-D/PRJ170189_E159-T01-D-ready.bam
-        vcf: PRJ170189_E159-T01-D/E159_1-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170189_E159-T01-D/E159_1-manta.vcf.gz
     E159-2:
       normal:
         bam: PRJ170191_E159-B01-D/PRJ170191_E159-B01-D-ready.bam
-        vcf: PRJ170191_E159-B01-D/PRJ170191_E159-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170191_E159-B01-D/PRJ170191_E159-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ170190_E159-T02-D/PRJ170190_E159-T02-D-ready.bam
-        vcf: PRJ170190_E159-T02-D/E159_2-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170190_E159-T02-D/E159_2-manta.vcf.gz
     E159-3:
       normal:
         bam: PRJ170191_E159-B01-D/PRJ170191_E159-B01-D-ready.bam
-        vcf: PRJ170191_E159-B01-D/PRJ170191_E159-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170191_E159-B01-D/PRJ170191_E159-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ180015_E159-T03-D/PRJ180015_E159-T03-D-ready.bam
-        vcf: PRJ180015_E159-T03-D/E159_3-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180015_E159-T03-D/E159_3-manta.vcf.gz
     E159-4:
       normal:
         bam: PRJ170191_E159-B01-D/PRJ170191_E159-B01-D-ready.bam
-        vcf: PRJ170191_E159-B01-D/PRJ170191_E159-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170191_E159-B01-D/PRJ170191_E159-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ180016_E159-T04-D/PRJ180016_E159-T04-D-ready.bam
-        vcf: PRJ180016_E159-T04-D/E159_4-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180016_E159-T04-D/E159_4-manta.vcf.gz
     E162:
       normal:
         bam: PRJ170178_E162-B01-D/PRJ170178_E162-B01-D-ready.bam
-        vcf: PRJ170178_E162-B01-D/PRJ170178_E162-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170178_E162-B01-D/PRJ170178_E162-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ170177_E162-T01-D/PRJ170177_E162-T01-D-ready.bam
-        vcf: PRJ170177_E162-T01-D/E162-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170177_E162-T01-D/E162-manta.vcf.gz
     E163:
       normal:
         bam: PRJ170186_E163-B01-D/PRJ170186_E163-B01-D-ready.bam
-        vcf: PRJ170186_E163-B01-D/PRJ170186_E163-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170186_E163-B01-D/PRJ170186_E163-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ170185_E163-T01-D/PRJ170185_E163-T01-D-ready.bam
-        vcf: PRJ170185_E163-T01-D/E163-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170185_E163-T01-D/E163-manta.vcf.gz
     E164:
       normal:
         bam: PRJ170168_E164-B01-D/PRJ170168_E164-B01-D-ready.bam
-        vcf: PRJ170168_E164-B01-D/PRJ170168_E164-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170168_E164-B01-D/PRJ170168_E164-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ170167_E164-T01-D/PRJ170167_E164-T01-D-ready.bam
-        vcf: PRJ170167_E164-T01-D/E164-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170167_E164-T01-D/E164-manta.vcf.gz
     E165:
       normal:
         bam: PRJ170184_E165-B01-D/PRJ170184_E165-B01-D-ready.bam
-        vcf: PRJ170184_E165-B01-D/PRJ170184_E165-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170184_E165-B01-D/PRJ170184_E165-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ170183_E165-T01-D/PRJ170183_E165-T01-D-ready.bam
-        vcf: PRJ170183_E165-T01-D/E165-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170183_E165-T01-D/E165-manta.vcf.gz
     E168:
       normal:
         bam: PRJ170188_E168-B01-D/PRJ170188_E168-B01-D-ready.bam
-        vcf: PRJ170188_E168-B01-D/PRJ170188_E168-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170188_E168-B01-D/PRJ170188_E168-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ170187_E168-T01-D/PRJ170187_E168-T01-D-ready.bam
-        vcf: PRJ170187_E168-T01-D/E168-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170187_E168-T01-D/E168-manta.vcf.gz
     E169-1:
       normal:
         bam: PRJ180003_E169-B01-D/PRJ180003_E169-B01-D-ready.bam
-        vcf: PRJ180003_E169-B01-D/PRJ180003_E169-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180003_E169-B01-D/PRJ180003_E169-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ180001_E169-T01-D/PRJ180001_E169-T01-D-ready.bam
-        vcf: PRJ180001_E169-T01-D/E169_1-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180001_E169-T01-D/E169_1-manta.vcf.gz
     E169-2:
       normal:
         bam: PRJ180003_E169-B01-D/PRJ180003_E169-B01-D-ready.bam
-        vcf: PRJ180003_E169-B01-D/PRJ180003_E169-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180003_E169-B01-D/PRJ180003_E169-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ180002_E169-T02-D/PRJ180002_E169-T02-D-ready.bam
-        vcf: PRJ180002_E169-T02-D/E169_2-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180002_E169-T02-D/E169_2-manta.vcf.gz
     E170:
       normal:
         bam: PRJ180007_E170-B01-D/PRJ180007_E170-B01-D-ready.bam
-        vcf: PRJ180007_E170-B01-D/PRJ180007_E170-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180007_E170-B01-D/PRJ180007_E170-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ180006_E170-T01-D/PRJ180006_E170-T01-D-ready.bam
-        vcf: PRJ180006_E170-T01-D/E170-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180006_E170-T01-D/E170-manta.vcf.gz
   
   A5_batch2:
     E126:
       normal:
         bam: PRJ180018_E126-B01-D/PRJ180018_E126-B01-D-ready.bam
-        vcf: PRJ180018_E126-B01-D/PRJ180018_E126-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180018_E126-B01-D/PRJ180018_E126-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ180017_E126-T01-D/PRJ180017_E126-T01-D-ready.bam
-        vcf: PRJ180017_E126-T01-D/E126-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180017_E126-T01-D/E126-manta.vcf.gz
     E127:
       normal:
         bam: PRJ180063_E127-B01-D/PRJ180063_E127-B01-D-ready.bam
-        vcf: PRJ180063_E127-B01-D/PRJ180063_E127-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180063_E127-B01-D/PRJ180063_E127-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ180062_E127-T01-D/PRJ180062_E127-T01-D-ready.bam
-        vcf: PRJ180062_E127-T01-D/E127-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180062_E127-T01-D/E127-manta.vcf.gz
     E128-1:
       normal:
         bam: PRJ180039_E128-B01-D/PRJ180039_E128-B01-D-ready.bam
-        vcf: PRJ180039_E128-B01-D/PRJ180039_E128-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180039_E128-B01-D/PRJ180039_E128-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ180037_E128-T01-D/PRJ180037_E128-T01-D-ready.bam
-        vcf: PRJ180037_E128-T01-D/E128_1-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180037_E128-T01-D/E128_1-manta.vcf.gz
     E128-2:
       normal:
         bam: PRJ180039_E128-B01-D/PRJ180039_E128-B01-D-ready.bam
-        vcf: PRJ180039_E128-B01-D/PRJ180039_E128-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180039_E128-B01-D/PRJ180039_E128-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ180038_E128-T02-D/PRJ180038_E128-T02-D-ready.bam
-        vcf: PRJ180038_E128-T02-D/E128_2-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180038_E128-T02-D/E128_2-manta.vcf.gz
     E132-1:
       normal:
         bam: PRJ180020_E132-B01-D/PRJ180020_E132-B01-D-ready.bam
-        vcf: PRJ180020_E132-B01-D/PRJ180020_E132-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180020_E132-B01-D/PRJ180020_E132-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ180019_E132-T01-D/PRJ180019_E132-T01-D-ready.bam
-        vcf: PRJ180019_E132-T01-D/E132_1-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180019_E132-T01-D/E132_1-manta.vcf.gz
     E132-2:
       normal:
         bam: PRJ180020_E132-B01-D/PRJ180020_E132-B01-D-ready.bam
-        vcf: PRJ180020_E132-B01-D/PRJ180020_E132-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180020_E132-B01-D/PRJ180020_E132-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ180053_E132-T02-D/PRJ180053_E132-T02-D-ready.bam
-        vcf: PRJ180053_E132-T02-D/E132_2-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180053_E132-T02-D/E132_2-manta.vcf.gz
     E135:
       normal:
         bam: PRJ180030_E135-B01-D/PRJ180030_E135-B01-D-ready.bam
-        vcf: PRJ180030_E135-B01-D/PRJ180030_E135-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180030_E135-B01-D/PRJ180030_E135-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ180029_E135-T01-D/PRJ180029_E135-T01-D-ready.bam
-        vcf: PRJ180029_E135-T01-D/E135-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180029_E135-T01-D/E135-manta.vcf.gz
     E136:
       normal:
         bam: PRJ180041_E136-B01-D/PRJ180041_E136-B01-D-ready.bam
-        vcf: PRJ180041_E136-B01-D/PRJ180041_E136-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180041_E136-B01-D/PRJ180041_E136-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ180040_E136-T01-D/PRJ180040_E136-T01-D-ready.bam
-        vcf: PRJ180040_E136-T01-D/E136-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180040_E136-T01-D/E136-manta.vcf.gz
     E138:
       normal:
         bam: PRJ180050_E138-B01-D/PRJ180050_E138-B01-D-ready.bam
-        vcf: PRJ180050_E138-B01-D/PRJ180050_E138-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180050_E138-B01-D/PRJ180050_E138-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ180049_E138-T01-D/PRJ180049_E138-T01-D-ready.bam
-        vcf: PRJ180049_E138-T01-D/E138-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180049_E138-T01-D/E138-manta.vcf.gz
     E143-1:
       normal:
         bam: PRJ170158_E143-B01-D/PRJ170158_E143-B01-D-ready.bam
-        vcf: PRJ170158_E143-B01-D/PRJ170158_E143-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170158_E143-B01-D/PRJ170158_E143-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ180044_E143-T02-D/PRJ180044_E143-T02-D-ready.bam
-        vcf: PRJ180044_E143-T02-D/E143_1-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180044_E143-T02-D/E143_1-manta.vcf.gz
     E143-2:
       normal:
         bam: PRJ170158_E143-B01-D/PRJ170158_E143-B01-D-ready.bam
-        vcf: PRJ170158_E143-B01-D/PRJ170158_E143-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ170158_E143-B01-D/PRJ170158_E143-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ180045_E143-T03-D/PRJ180045_E143-T03-D-ready.bam
-        vcf: PRJ180045_E143-T03-D/E143_2-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180045_E143-T03-D/E143_2-manta.vcf.gz
     E145:
       normal:
         bam: PRJ180036_E145-B01-D/PRJ180036_E145-B01-D-ready.bam
-        vcf: PRJ180036_E145-B01-D/PRJ180036_E145-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180036_E145-B01-D/PRJ180036_E145-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ180035_E145-T01-D/PRJ180035_E145-T01-D-ready.bam
-        vcf: PRJ180035_E145-T01-D/E145-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180035_E145-T01-D/E145-manta.vcf.gz
     E147:
       normal:
         bam: PRJ180055_E147-B01-D/PRJ180055_E147-B01-D-ready.bam
-        vcf: PRJ180055_E147-B01-D/PRJ180055_E147-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180055_E147-B01-D/PRJ180055_E147-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ180054_E147-T01-D/PRJ180054_E147-T01-D-ready.bam
-        vcf: PRJ180054_E147-T01-D/E147-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180054_E147-T01-D/E147-manta.vcf.gz
     E148:
       normal:
         bam: PRJ180052_E148-B01-D/PRJ180052_E148-B01-D-ready.bam
-        vcf: PRJ180052_E148-B01-D/PRJ180052_E148-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180052_E148-B01-D/PRJ180052_E148-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ180051_E148-T01-D/PRJ180051_E148-T01-D-ready.bam
-        vcf: PRJ180051_E148-T01-D/E148-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180051_E148-T01-D/E148-manta.vcf.gz
     E149:
       normal:
         bam: PRJ180057_E149-B01-D/PRJ180057_E149-B01-D-ready.bam
-        vcf: PRJ180057_E149-B01-D/PRJ180057_E149-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180057_E149-B01-D/PRJ180057_E149-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ180056_E149-T01-D/PRJ180056_E149-T01-D-ready.bam
-        vcf: PRJ180056_E149-T01-D/E149-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180056_E149-T01-D/E149-manta.vcf.gz
     E150:
       normal:
         bam: PRJ180024_E150-B01-D/PRJ180024_E150-B01-D-ready.bam
-        vcf: PRJ180024_E150-B01-D/PRJ180024_E150-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180024_E150-B01-D/PRJ180024_E150-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ180023_E150-T01-D/PRJ180023_E150-T01-D-ready.bam
-        vcf: PRJ180023_E150-T01-D/E150-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180023_E150-T01-D/E150-manta.vcf.gz
     E152:
       normal:
         bam: PRJ180043_E152-B01-D/PRJ180043_E152-B01-D-ready.bam
-        vcf: PRJ180043_E152-B01-D/PRJ180043_E152-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180043_E152-B01-D/PRJ180043_E152-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ180042_E152-T01-D/PRJ180042_E152-T01-D-ready.bam
-        vcf: PRJ180042_E152-T01-D/E152-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180042_E152-T01-D/E152-manta.vcf.gz
     E154:
       normal:
         bam: PRJ180022_E154-B01-D/PRJ180022_E154-B01-D-ready.bam
-        vcf: PRJ180022_E154-B01-D/PRJ180022_E154-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180022_E154-B01-D/PRJ180022_E154-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ180021_E154-T01-D/PRJ180021_E154-T01-D-ready.bam
-        vcf: PRJ180021_E154-T01-D/E154-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180021_E154-T01-D/E154-manta.vcf.gz
     E157:
       normal:
         bam: PRJ180028_E157-B01-D/PRJ180028_E157-B01-D-ready.bam
-        vcf: PRJ180028_E157-B01-D/PRJ180028_E157-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180028_E157-B01-D/PRJ180028_E157-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ180027_E157-T01-D/PRJ180027_E157-T01-D-ready.bam
-        vcf: PRJ180027_E157-T01-D/E157-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180027_E157-T01-D/E157-manta.vcf.gz
     E160:
       normal:
         bam: PRJ180061_E160-B01-D/PRJ180061_E160-B01-D-ready.bam
-        vcf: PRJ180061_E160-B01-D/PRJ180061_E160-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180061_E160-B01-D/PRJ180061_E160-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ180060_E160-T01-D/PRJ180060_E160-T01-D-ready.bam
-        vcf: PRJ180060_E160-T01-D/E160-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180060_E160-T01-D/E160-manta.vcf.gz
     E161:
       normal:
         bam: PRJ180059_E161-B01-D/PRJ180059_E161-B01-D-ready.bam
-        vcf: PRJ180059_E161-B01-D/PRJ180059_E161-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180059_E161-B01-D/PRJ180059_E161-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ180058_E161-T01-D/PRJ180058_E161-T01-D-ready.bam
-        vcf: PRJ180058_E161-T01-D/E161-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180058_E161-T01-D/E161-manta.vcf.gz
     E166:
       normal:
         bam: PRJ180034_E166-B01-D/PRJ180034_E166-B01-D-ready.bam
-        vcf: PRJ180034_E166-B01-D/PRJ180034_E166-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180034_E166-B01-D/PRJ180034_E166-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ180033_E166-T01-D/PRJ180033_E166-T01-D-ready.bam
-        vcf: PRJ180033_E166-T01-D/E166-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180033_E166-T01-D/E166-manta.vcf.gz
     E167-1:
       normal:
         bam: PRJ180048_E167-B01-D/PRJ180048_E167-B01-D-ready.bam
-        vcf: PRJ180048_E167-B01-D/PRJ180048_E167-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180048_E167-B01-D/PRJ180048_E167-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ180046_E167-T01-D/PRJ180046_E167-T01-D-ready.bam
-        vcf: PRJ180046_E167-T01-D/E167_1-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180046_E167-T01-D/E167_1-manta.vcf.gz
     E167-2:
       normal:
         bam: PRJ180048_E167-B01-D/PRJ180048_E167-B01-D-ready.bam
-        vcf: PRJ180048_E167-B01-D/PRJ180048_E167-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180048_E167-B01-D/PRJ180048_E167-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ180047_E167-T02-D/PRJ180047_E167-T02-D-ready.bam
-        vcf: PRJ180047_E167-T02-D/E167_2-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180047_E167-T02-D/E167_2-manta.vcf.gz
     E171:
       normal:
         bam: PRJ180026_E171-B01-D/PRJ180026_E171-B01-D-ready.bam
-        vcf: PRJ180026_E171-B01-D/PRJ180026_E171-B01-D-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180026_E171-B01-D/PRJ180026_E171-B01-D-manta.vcf.gz
       tumor:
         bam: PRJ180025_E171-T01-D/PRJ180025_E171-T01-D-ready.bam
-        vcf: PRJ180025_E171-T01-D/E171-sv-prioritize-manta.vcf.gz
+        vcf: PRJ180025_E171-T01-D/E171-manta.vcf.gz
 
 

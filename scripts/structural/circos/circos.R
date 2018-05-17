@@ -12,12 +12,12 @@ optlist <- list(
   make_option(c("-m", "--manta"), action = "store", type = "character", default = NULL,
               metavar = "<manta_svs.tsv>",
               help = "Input TSV file containing Manta SV information [required]"),
-  make_option(c("-o", "--output"), action = "store", type = "character", default = NULL,
-              metavar = "<output_prefix>",
-              help = "Output file prefix [required]"))
+  make_option(c("-o", "--outpdf"), action = "store", type = "character", default = NULL,
+              metavar = "<out.pdf>",
+              help = "Output pdf name [required]"))
 
 opt <- optparse::parse_args(optparse::OptionParser(option_list = optlist))
-stopifnot(file.exists(opt$manta), file.exists(opt$facets), !is.null(opt$output))
+stopifnot(file.exists(opt$manta), file.exists(opt$facets), !is.null(opt$outpdf))
 
 
 read_svs <- function(fname) {
@@ -106,7 +106,7 @@ facets_cnv <- readRDS(facets_fname)$cncf %>%
 #---- Circos Plot ----
 
 options(warn = -1)
-pdf(paste0(opt$output, ".pdf"), width = 7, height = 7)
+pdf(opt$outpdf, width = 7, height = 7)
 par(mar = c(.5, .5, .5, .5))
 plot(c(1, 800), c(1, 800), type = "n", axes = FALSE, xlab = "", ylab = "", main = "")
 
