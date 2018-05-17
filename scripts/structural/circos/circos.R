@@ -17,6 +17,12 @@ optlist <- list(
               help = "Output pdf name [required]"))
 
 opt <- optparse::parse_args(optparse::OptionParser(option_list = optlist))
+## for debugging
+#opt <- list(
+#  facets = "/data/cephfs/punim0010/projects/Diakumis_woof/data/out/facets/results/A5_batch1/E131/E131_cval_150_fit.rds",
+#  manta = "/data/cephfs/punim0010/projects/Diakumis_woof/workflows/structural/tmp/E131_cval_150_manta_svs.tsv",
+#  outpdf = "/data/cephfs/punim0010/projects/Diakumis_woof/workflows/structural/tmp/E131_cval_150_manta_svs.pdf"
+#)
 stopifnot(file.exists(opt$manta), file.exists(opt$facets), !is.null(opt$outpdf))
 
 
@@ -105,6 +111,7 @@ facets_cnv <- readRDS(facets_fname)$cncf %>%
 
 #---- Circos Plot ----
 
+# turn off warnings because in their code they take max/min of character matrix...
 options(warn = -1)
 pdf(opt$outpdf, width = 7, height = 7)
 par(mar = c(.5, .5, .5, .5))
@@ -113,7 +120,11 @@ plot(c(1, 800), c(1, 800), type = "n", axes = FALSE, xlab = "", ylab = "", main 
 circos(R = 400, cir = db, type = "chr", col = chr_colors, print.chr.lab = TRUE, W = 4)
 circos(R = 260, cir = db, type = "arc", W = 120, mapping = facets_cnv, col.v = 4, B = TRUE, lwd = 5, col = facets_cnv$col, scale = FALSE)
 
-# turn off warnings because in their code they take max/min of character matrix...
-circos(R = 260, cir = db, type = "link", W = 40, mapping = svs_bnd, lwd = 2, col = "grey")
-circos(R = 260, cir = db, type = "link2", W = 20, mapping = svs_other, lwd = 1, col = svs_other$col)
+# some cases where no BNDs or other SVs PASS.
+if (nrow(svs_bnd) > 0) {
+  circos(R = 260, cir = db, type = "link", W = 40, mapping = svs_bnd, lwd = 2, col = "grey")
+}
+if (nrow(svs_other) > 0) {
+  circos(R = 260, cir = db, type = "link2", W = 20, mapping = svs_other, lwd = 1, col = svs_other$col)
+}
 dev.off()
