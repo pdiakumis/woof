@@ -21,12 +21,8 @@ SAMPLES_A5_batch2 = ["E126", "E127", "E128-1", "E128-2", "E132-1", "E132-2", "E1
 
 rule all:
     input:
-        expand(config["out_dir"] + config["tools"]["facets"]["results_dir"] + "{project}/{sample}/{sample}_cval_{cval}_fit.rds", project = "A5_batch1", sample = SAMPLES_A5_batch1, cval = 150),
-        expand(config["out_dir"] + config["tools"]["facets"]["results_dir"] + "{project}/{sample}/{sample}_cval_{cval}_fit.rds", project = "A5_batch2", sample = SAMPLES_A5_batch2, cval = 150),
-        expand(config["out_dir"] + config["tools"]["facets"]["results_dir"] + "{project}/{sample}/{sample}_cval_{cval}_{type}.png", project = "A5_batch1", sample = SAMPLES_A5_batch1, cval = 150, type = ["cnv", "spider"]),
-        expand(config["out_dir"] + config["tools"]["facets"]["results_dir"] + "{project}/{sample}/{sample}_cval_{cval}_{type}.png", project = "A5_batch2", sample = SAMPLES_A5_batch2, cval = 150, type = ["cnv", "spider"]),
-        expand(config["out_dir"] + config["tools"]["facets"]["results_dir"] + "{project}/{sample}/{sample}_cval_{cval}_manta_facets_circos.pdf", project = "A5_batch1", sample = SAMPLES_A5_batch1, cval = 150),
-        expand(config["out_dir"] + config["tools"]["facets"]["results_dir"] + "{project}/{sample}/{sample}_cval_{cval}_manta_facets_circos.pdf", project = "A5_batch2", sample = SAMPLES_A5_batch2, cval = 150)
+        expand(config["out_dir"] + config["tools"]["facets"]["results_dir"] + "{project}/{sample}/{sample}_cval_{cval}_fit_segs.tsv", project = "A5_batch1", sample = SAMPLES_A5_batch1, cval = 150),
+        expand(config["out_dir"] + config["tools"]["facets"]["results_dir"] + "{project}/{sample}/{sample}_cval_{cval}_fit_segs.tsv", project = "A5_batch2", sample = SAMPLES_A5_batch2, cval = 150)
 
 
 
@@ -73,6 +69,18 @@ rule facets_circos:
         "bcftools query -f \"%CHROM\t%INFO/BPI_START\t%INFO/BPI_END\t%ID\t%INFO/MATEID\t%INFO/SVTYPE\t%FILTER\n\" {input.manta_vcf} > {output.manta_tsv}; "
         "/usr/local/easybuild/software/R/3.5.0-GCC-4.9.2/bin/Rscript ../../scripts/structural/circos/circos.R "
         "-f {input.fit} -m {output.manta_tsv} -o {output.facets_circos}"
+
+rule facets_fit2tsv:
+    input:
+        fit = config["out_dir"] + config["tools"]["facets"]["results_dir"] + "{project}/{sample}/{sample}_cval_{cval}_fit.rds"
+    output:
+        segs = config["out_dir"] + config["tools"]["facets"]["results_dir"] + "{project}/{sample}/{sample}_cval_{cval}_fit_segs.tsv",
+        purply = config["out_dir"] + config["tools"]["facets"]["results_dir"] + "{project}/{sample}/{sample}_cval_{cval}_fit_purply.tsv"
+    shell:
+        "/usr/local/easybuild/software/R/3.5.0-GCC-4.9.2/bin/Rscript ../../scripts/structural/facets_fit2tsv.R "
+        "-f {input.fit}"
+
+
 
 
 rule facets_report:
