@@ -21,8 +21,7 @@ SAMPLES_A5_batch2 = ["E126", "E127", "E128-1", "E128-2", "E132-1", "E132-2", "E1
 
 rule all:
     input:
-        expand(config["out_dir"] + config["tools"]["facets"]["results_dir"] + "{project}/{sample}/{sample}_cval_{cval}_fit_segs.tsv", project = "A5_batch1", sample = SAMPLES_A5_batch1, cval = 150),
-        expand(config["out_dir"] + config["tools"]["facets"]["results_dir"] + "{project}/{sample}/{sample}_cval_{cval}_fit_segs.tsv", project = "A5_batch2", sample = SAMPLES_A5_batch2, cval = 150)
+        expand(config["out_dir"] + config["tools"]["telseq"]["results_dir"] + "{project}/{sample}_telseq.tsv", project = "A5_batch1", sample = SAMPLES_A5_batch1[:5])
 
 
 
@@ -103,3 +102,12 @@ rule pdf2png:
         png = "{path_A}.png"
     shell:
         "module load ImageMagick; convert -antialias -density 300 {input.pdf} {output.png}"
+
+
+rule telseq_run:
+    input:
+        tumor_bam = lambda wildcards: config["bam_dir"][wildcards.project] + config["samples"][wildcards.project][wildcards.sample]["tumor"]["bam"]
+    output:
+        telseq = config["out_dir"] + config["tools"]["telseq"]["results_dir"] + "{project}/{sample}_telseq.tsv"
+    shell:
+        "telseq -k 9 -r 150 -m -o {output.telseq} {input.tumor_bam}"
