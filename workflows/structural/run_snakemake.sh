@@ -2,7 +2,7 @@
 set -euo pipefail
 
 snakemake -s Snakefile \
-          -j 30 \
+          -j 40 \
           -p \
           --cluster-config spartan.json \
           --cluster "sbatch \

@@ -21,7 +21,9 @@ SAMPLES_A5_batch2 = ["E126", "E127", "E128-1", "E128-2", "E132-1", "E132-2", "E1
 
 rule all:
     input:
-        expand(config["out_dir"] + config["tools"]["telseq"]["results_dir"] + "{project}/{sample}_telseq.tsv", project = "A5_batch1", sample = SAMPLES_A5_batch1[:5])
+        expand(config["out_dir"] + config["tools"]["telseq"]["results_dir"] + "{project}/{sample}_telseq.tsv", project = "A5_batch1", sample = SAMPLES_A5_batch1),
+        expand(config["out_dir"] + config["tools"]["telseq"]["results_dir"] + "{project}/{sample}_telseq.tsv", project = "A5_batch2", sample = SAMPLES_A5_batch2)
+
 
 
 
@@ -110,4 +112,4 @@ rule telseq_run:
     output:
         telseq = config["out_dir"] + config["tools"]["telseq"]["results_dir"] + "{project}/{sample}_telseq.tsv"
     shell:
-        "telseq -k 9 -r 150 -m -o {output.telseq} {input.tumor_bam}"
+        "telseq -k 9 -r 150 -u -o {output.telseq} {input.tumor_bam}"
