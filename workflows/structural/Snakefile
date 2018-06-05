@@ -10,14 +10,14 @@ SAMPLES_A5_batch1 = ["E019", "E120", "E121", "E123", "E124", "E125", "E129",
                      "E130", "E131", "E133", "E134", "E140", "E141", "E142",
                      "E143", "E144", "E153", "E155", "E156", "E158", "E162",
                      "E163", "E164", "E165", "E168", "E170",
-                     "E122-1", "E122-2", "E146-1", "E146-2",
-                     "E159-1", "E159-2", "E159-3", "E159-4",
-                     "E169-1", "E169-2"]
+                     "E122-1", "E146-1", 
+                     "E159-1", 
+                     "E169-1"]
 
-SAMPLES_A5_batch2 = ["E126", "E127", "E128-1", "E128-2", "E132-1", "E132-2", "E135",
-                     "E136", "E138", "E143-1", "E143-2", "E145", "E147", "E148",
+SAMPLES_A5_batch2 = ["E126", "E127", "E128-1", "E132-1", "E135",
+                     "E136", "E138", "E145", "E147", "E148",
                      "E149", "E150", "E152", "E154", "E157", "E160", "E161",
-                     "E166", "E167-1", "E167-2", "E171"]
+                     "E166", "E167-1", "E171"]
 
 rule all:
     input:
@@ -108,8 +108,8 @@ rule pdf2png:
 
 rule telseq_run:
     input:
-        tumor_bam = lambda wildcards: config["bam_dir"][wildcards.project] + config["samples"][wildcards.project][wildcards.sample]["tumor"]["bam"]
+        bam = lambda wildcards: config["bam_dir"][wildcards.project] + config["samples"][wildcards.project][wildcards.sample]["normal"]["bam"]
     output:
         telseq = config["out_dir"] + config["tools"]["telseq"]["results_dir"] + "{project}/{sample}_telseq.tsv"
     shell:
-        "telseq -k 9 -r 150 -u -o {output.telseq} {input.tumor_bam}"
+        "telseq -k 9 -r 150 -u -o {output.telseq} {input.bam}"
