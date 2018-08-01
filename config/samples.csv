@@ -1,4 +1,5 @@
-batch,bam_normal,bam_tumor,vcf_sv,vcf_snp
-batch1,sample1_B.bam,sample1_T.bam,batch1_manta.vcf.gz,batch1_ensemble.vcf.gz
-batch2,sample2_B.bam,sample2_T.bam,batch2_manta.vcf.gz,batch2_ensemble.vcf.gz
-batch3,sample3_B.bam,sample3_T.bam,batch3_manta.vcf.gz,batch3_ensemble.vcf.gz
+batch,bam_path,alias,phenotype
+batch1,/path/to/bam1,sample1_N,normal
+batch1,/path/to/bam2,sample1_T,tumor
+batch2,/path/to/bam3,sample2_N,normal
+batch2,/path/to/bam4,sample2_T,tumor

@@ -1,6 +1,7 @@
 .DS_Store
 .Rhistory
 *.swp
+.vscode/
 
 data/
 
@@ -8,3 +9,5 @@ data/
 slurm-*.out
 slurm_logs/
 
+__pycache__/
+*.egg-info/

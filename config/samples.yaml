@@ -1,22 +1,15 @@
 batch1:
   normal:
-    bam: sample1_B.bam
+    bam: /path/to/bam1
+    alias: sample1_N
   tumor:
-    bam: sample1_T.bam
-    vcf_snp: batch1_ensemble.vcf.gz
-    vcf_sv: batch1_manta.vcf.gz
+    bam: /path/to/bam2
+    alias: sample1_T
 batch2:
   normal:
-    bam: sample2_B.bam
+    bam: /path/to/bam3
+    alias: sample2_N
   tumor:
-    bam: sample2_T.bam
-    vcf_snp: batch2_ensemble.vcf.gz
-    vcf_sv: batch2_manta.vcf.gz
-batch3:
-  normal:
-    bam: sample3_B.bam
-  tumor:
-    bam: sample3_T.bam
-    vcf_snp: batch3_ensemble.vcf.gz
-    vcf_sv: batch3_manta.vcf.gz
+    bam: /path/to/bam4
+    alias: sample2_T
 
