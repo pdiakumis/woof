@@ -4,9 +4,11 @@ import socket
 import re
 import sys
 import yaml
+import json
 
 from snakemake.utils import update_config
 from woof import WOOF_ROOT
+
 
 def critical(msg):
     sys.stderr.write(msg + '\n')
@@ -38,7 +40,9 @@ else:
 
 hpc_dict = hpc_dict[hostname]
 config = {}
-config['HPC'] = hpc_dict
-config['woof_root'] = WOOF_ROOT
-config['woof_final'] = join(WOOF_ROOT, "final")
 config['samples'] = yaml.load(open(join(WOOF_ROOT, 'config/samples.yaml')))
+config['HPC'] = hpc_dict
+config['woof'] = {}
+config['woof']['root'] = WOOF_ROOT
+config['woof']['final'] = join(WOOF_ROOT, "final") # can change this via command line if needed
+config['woof']['tool'] = {}

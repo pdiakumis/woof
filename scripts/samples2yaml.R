@@ -1,6 +1,7 @@
 require(dplyr)
 require(readr)
 require(purrr)
+require(tidyr)
 require(yaml)
 
 # batch | bam_path | alias | phenotype
@@ -69,19 +70,23 @@ samp_m <- samp %>%
   unite(var, phenotype, key) %>%
   spread(var, value)
 
+
+
+
 sample_list <- vector(mode = "list", length = nrow(samp_m))
+names(sample_list) <- samp_m$batch
 
 for (i in 1:nrow(samp_m)) {
-  sample_list[[i]] <- list(
-    normal = list(
-      bam = samp_m$normal_bam_path[i],
-      alias = samp_m$normal_alias[i]),
-    tumor = list(
-      bam = samp_m$tumor_bam_path[i],
-      alias = samp_m$tumor_alias[i])
-  )
+
+  alias_tumor <- samp_m$tumor_alias[i]
+  alias_normal <- samp_m$normal_alias[i]
+  bam_tumor <- samp_m$tumor_bam_path[i]
+  bam_normal <- samp_m$normal_bam_path[i]
+  mini_list <- list(list(bam = bam_tumor, name = alias_tumor, phenotype = "tumor"),
+                    list(bam = bam_normal, name = alias_normal, phenotype = "normal"))
+  names(mini_list) <- c(alias_tumor, alias_normal)
+  sample_list[[i]] <-  mini_list
 }
-names(sample_list) <- samp_m$batch
 
 cat(yaml::as.yaml(sample_list)) # awesome
 write(as.yaml(sample_list), file = "../config/samples.yaml")

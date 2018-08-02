@@ -1,5 +1,3 @@
 batch,bam_path,alias,phenotype
-batch1,/path/to/bam1,sample1_N,normal
-batch1,/path/to/bam2,sample1_T,tumor
-batch2,/path/to/bam3,sample2_N,normal
-batch2,/path/to/bam4,sample2_T,tumor
+batch1,/data/cephfs/punim0010/projects/Diakumis_HCC2218/bcbio/final/HCC2218BL/HCC2218BL-ready,HCC2218_N,normal
+batch1,/data/cephfs/punim0010/projects/Diakumis_HCC2218/bcbio/final/HCC2218C/HCC2218C-ready,HCC2218_T,tumor
