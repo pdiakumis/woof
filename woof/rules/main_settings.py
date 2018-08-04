@@ -8,6 +8,7 @@ import json
 
 from snakemake.utils import update_config
 from woof import WOOF_ROOT
+from woof.utils import pheno, alias_from_pheno, bam_from_pheno
 
 
 def critical(msg):
@@ -21,11 +22,11 @@ def get_hostname():
 hpc_dict = {
     'SPARTAN' : {
         'extras' : '/data/cephfs/punim0010/extras',
-        'woof_data' : '/data/cephfs/punim0010/extras/woof'
+        'woof_data' : '/data/cephfs/punim0010/extras/woof/data'
         },
     'RAIJIN' : {
         'extras' : '/g/data3/gx8/extras',
-        'woof_data' : '/g/data3/gx8/extras/woof'
+        'woof_data' : '/g/data3/gx8/extras/woof/data'
         }
 }
 
@@ -43,6 +44,6 @@ config = {}
 config['samples'] = yaml.load(open(join(WOOF_ROOT, 'config/samples.yaml')))
 config['HPC'] = hpc_dict
 config['woof'] = {}
-config['woof']['root'] = WOOF_ROOT
-config['woof']['final'] = join(WOOF_ROOT, "final") # can change this via command line if needed
-config['woof']['tool'] = {}
+config['woof']['root_dir'] = WOOF_ROOT
+config['woof']['final_dir'] = join(WOOF_ROOT, "final") # can change this via command line if needed
+config['tools'] = {}
