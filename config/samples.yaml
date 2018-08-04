@@ -1,4 +1,4 @@
-batch1:
+HCC2218:
   HCC2218_T:
     bam: /data/cephfs/punim0010/projects/Diakumis_HCC2218/bcbio/final/HCC2218C/HCC2218C-ready
     name: HCC2218_T

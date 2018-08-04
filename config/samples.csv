@@ -1,3 +1,3 @@
 batch,bam_path,alias,phenotype
-batch1,/data/cephfs/punim0010/projects/Diakumis_HCC2218/bcbio/final/HCC2218BL/HCC2218BL-ready,HCC2218_N,normal
-batch1,/data/cephfs/punim0010/projects/Diakumis_HCC2218/bcbio/final/HCC2218C/HCC2218C-ready,HCC2218_T,tumor
+HCC2218,/data/cephfs/punim0010/projects/Diakumis_HCC2218/bcbio/final/HCC2218BL/HCC2218BL-ready,HCC2218_N,normal
+HCC2218,/data/cephfs/punim0010/projects/Diakumis_HCC2218/bcbio/final/HCC2218C/HCC2218C-ready,HCC2218_T,tumor
