@@ -20,11 +20,13 @@ WOOF_RULES = join(WOOF_ROOT, 'woof/rules')
 hpc_dict = {
     'SPARTAN' : {
         'extras' : '/data/cephfs/punim0010/extras',
-        'woof_data' : '/data/cephfs/punim0010/extras/woof/data'
+        'woof_data' : '/data/cephfs/punim0010/extras/woof/data',
+        'java' : 'Java/9.0.4',
         },
     'RAIJIN' : {
         'extras' : '/g/data3/gx8/extras',
-        'woof_data' : '/g/data3/gx8/extras/woof/data'
+        'woof_data' : '/g/data3/gx8/extras/woof/data',
+        'java' : 'java/jdk1.8.0_60',
         }
 }
 
