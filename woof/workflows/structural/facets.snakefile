@@ -12,6 +12,6 @@ include: join(WOOF_RULES, "facets/facets.smk")
 rule all:
     input:
         expand(
-            join(config['tools']['facets']['run']['outdir'], '{batch}/{batch}_cval_{cval}_segs.tsv'),
+            join(config['tools']['facets']['run']['outdir'], '{batch}/{batch}_cval_{cval}_report.html'),
             batch = config['samples'].keys(),
             cval = "150")

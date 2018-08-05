@@ -4,6 +4,7 @@
 .vscode/
 
 data/
+final/
 
 .snakemake
 slurm-*.out

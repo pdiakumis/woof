@@ -8,3 +8,4 @@ dependencies:
   - graphviz
   - pyyaml
   - samtools>=1.3.1
+  - pandoc
