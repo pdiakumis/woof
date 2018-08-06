@@ -1,21 +1,18 @@
-include: '../main_settings.py'
+include: 'samtools_settings.py'
 
+config['tools']['samtools']['idxstats'] = {
+    'outdir' : join(config['tools']['samtools']['outdir'], 'idxstats'),
+}
 
-config['woof']['tool']['samtools_idxstats'] = join(config['woof']['final'], 'qc/samtools_idxstats')
-
-
-rule all:
-    input:
-        expand(
-            join(config['woof']['tool']['samtools_idxstats'], "{batch}", "{alias}_idxstats.txt"),
-            batch = config['samples'].keys(),
-            alias = config['samples']['batch1'].keys())
 
 rule samtools_idxstats:
-    """Run samtools idxstats"""
     input:
-        bam = lambda wc: config['samples'][wc.batch][wc.alias]['bam'] + '.bam'
+        bam = lambda wc: woof.utils.bam_from_alias(config, wc.batch, wc.alias) + '.bam'
     output:
-        txt = join(config['woof']['tool']['samtools_idxstats'], "{batch}",  "{alias}_idxstats.txt")
+        txt = join(config['tools']['samtools']['idxstats']['outdir'],
+        '{batch}/{alias}_idxstats.txt')
+    conda:
+        'env_samtools.yaml'
     shell:
-        "samtools idxstats {input.bam} > {output.txt}"
+        'samtools idxstats {input.bam} > {output.txt}'
+
