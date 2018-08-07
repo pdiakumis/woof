@@ -7,7 +7,7 @@ config['tools']['samtools']['idxstats'] = {
 
 rule samtools_idxstats:
     input:
-        bam = lambda wc: woof.utils.bam_from_alias(config, wc.batch, wc.alias) + '.bam'
+        bam = lambda wc: bam_from_alias(config, wc.batch, wc.alias) + '.bam'
     output:
         txt = join(config['tools']['samtools']['idxstats']['outdir'],
         '{batch}/{alias}_idxstats.txt')
