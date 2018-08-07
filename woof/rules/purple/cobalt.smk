@@ -15,14 +15,14 @@ rule :
     params:
         normal_alias = lambda wc: alias_from_pheno(config, wc.batch, 'normal'),
         tumor_alias = lambda wc: alias_from_pheno(config, wc.batch, 'tumor'),
-        java = config['HPC']['java'],
         gc = config['tools']['purple']['hmf_data']['gc_profile'],
         outdir = join(config['tools']['purple']['cobalt']['outdir'], '{batch}'),
         jar = config['tools']['purple']['cobalt']['jar']
     log:
-        log = join(config['tools']['purple']['cobalt']['outdir'], '{batch}/{batch}.{tumor_alias}_cobalt.log')
+        log = join(config['woof']['final_dir'], 'logs', '{batch}/{tumor_alias}_cobalt.log')
     threads: 24
     shell:
+        'module load R; '
         'java -jar {params.jar} '
         '-reference {params.normal_alias} '
         '-reference_bam {input.normal_bam} '
@@ -31,4 +31,3 @@ rule :
         '-threads {threads} '
         '-gc_profile {params.gc} '
         '-output_dir {params.outdir} > {log.log} 2>&1'
-        #'module load {params.java} ; '
