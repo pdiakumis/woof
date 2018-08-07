@@ -13,7 +13,7 @@ rule amber_pileup:
         snp_bed = config['tools']['purple']['hmf_data']['snp_bed'],
         fasta = config['HPC']['ref_fasta']
     log:
-        log = join(config['woof']['final_dir'], 'logs', '{batch}/{alias}_amber.log')
+        log = join(config['woof']['final_dir'], 'logs', '{batch}/{alias}_amber-pileup.log')
     threads: 24
     shell:
         'sambamba mpileup '

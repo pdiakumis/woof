@@ -7,9 +7,9 @@ shell.prefix("set -euo pipefail; ")
 
 localrules: all
 
-include: join(WOOF_RULES, "samtools/samtools_idxstats.smk")
 include: join(WOOF_RULES, "purple/cobalt.smk")
 include: join(WOOF_RULES, "purple/pileup.smk")
+include: join(WOOF_RULES, "purple/amber.smk")
 
 #batches = config['samples'].keys()
 batches = [*config['samples']]
@@ -27,8 +27,9 @@ rule all:
             batch = batches_rep,
             alias = list(chain(*aliases))),
         expand(
-            join(config['tools']['samtools']['idxstats']['outdir'], '{batch}/{alias}_idxstats.txt'), zip,
-            batch = batches_rep,
-            alias = list(chain(*aliases)))
+            join(config['tools']['purple']['amber']['outdir'], '{batch}', '{tumor_alias}.amber.baf'),
+            batch = batches,
+            tumor_alias = [alias_from_pheno(config, b, 'tumor') for b in batches]
+        )
 
 
