@@ -5,3 +5,7 @@ channels:
 dependencies:
   - python>=3.6
   - snakemake=5.2.1
+  - samtools=1.9
+  - ncurses=5.9           # for samtools - see https://github.com/bioconda/bioconda-recipes/issues/8210
+  - java-jdk=8.0.112
+  - sambamba=0.6.6        # for purple-amber pileup

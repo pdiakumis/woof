@@ -11,8 +11,6 @@ rule samtools_idxstats:
     output:
         txt = join(config['tools']['samtools']['idxstats']['outdir'],
         '{batch}/{alias}_idxstats.txt')
-    conda:
-        'env_samtools.yaml'
     shell:
         'samtools idxstats {input.bam} > {output.txt}'
 

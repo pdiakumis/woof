@@ -21,9 +21,8 @@ rule :
         jar = config['tools']['purple']['cobalt']['jar']
     log:
         log = join(config['tools']['purple']['cobalt']['outdir'], '{batch}/{batch}.{tumor_alias}_cobalt.log')
-    threads: 30
+    threads: 24
     shell:
-        'module load {params.java} ; '
         'java -jar {params.jar} '
         '-reference {params.normal_alias} '
         '-reference_bam {input.normal_bam} '
@@ -32,3 +31,4 @@ rule :
         '-threads {threads} '
         '-gc_profile {params.gc} '
         '-output_dir {params.outdir} > {log.log} 2>&1'
+        #'module load {params.java} ; '
