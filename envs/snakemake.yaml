@@ -3,9 +3,13 @@ channels:
   - conda-forge
   - defaults
 dependencies:
+  - bcftools=1.9
+  - circos=0.69.6         # for circos
+  - java-jdk=8.0.92       # for purple
+  - libgd=2.2.5           # for circos
+  - ncurses=5.9           # for samtools - see https://github.com/bioconda/bioconda-recipes/issues/8210
+  - perl=5.22.0           # for circos
   - python>=3.6
   - snakemake=5.2.1
   - samtools=1.9
-  - ncurses=5.9           # for samtools - see https://github.com/bioconda/bioconda-recipes/issues/8210
-  - java-jdk=8.0.92       # for purple
   - sambamba=0.6.6        # for amber pileup
