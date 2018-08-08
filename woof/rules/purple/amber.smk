@@ -1,7 +1,7 @@
 include: 'purple_settings.py'
 
 config['tools']['purple']['amber'] = {
-    'jar' : join(config['tools']['purple']['hmf_data']['dir'], 'amber-1.5.jar'),
+    'jar' : join(config['tools']['purple']['hmf_data']['dir'], 'amber-1.6.jar'),
 }
 
 
