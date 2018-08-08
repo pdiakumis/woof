@@ -1,14 +1,11 @@
 include: 'purple_settings.py'
 
-config['tools']['purple']['amber_pileup'] = {
-    'outdir' : join(config['tools']['purple']['outdir'], 'amber'),
-}
 
 rule amber_pileup:
     input:
         bam = lambda wc: bam_from_alias(config, wc.batch, wc.alias) + '.bam'
     output:
-        mpileup = join(config['tools']['purple']['amber_pileup']['outdir'], '{batch}/{alias}.mpileup')
+        mpileup = join(config['tools']['purple']['outdir'], '{batch}', 'amber/{alias}.mpileup')
     params:
         snp_bed = config['tools']['purple']['hmf_data']['snp_bed'],
         fasta = config['HPC']['ref_fasta']

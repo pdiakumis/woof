@@ -1,20 +1,19 @@
 include: 'purple_settings.py'
 
 config['tools']['purple']['amber'] = {
-    'outdir' : join(config['tools']['purple']['outdir'], 'amber'),
     'jar' : join(config['tools']['purple']['hmf_data']['dir'], 'amber-1.5.jar'),
 }
 
 
 rule amber_run:
     input:
-        normal_mpileup = lambda wc: join(config['tools']['purple']['amber_pileup']['outdir'], wc.batch, alias_from_pheno(config, wc.batch, 'normal') + '.mpileup'),
-        tumor_mpileup = lambda wc: join(config['tools']['purple']['amber_pileup']['outdir'], wc.batch, alias_from_pheno(config, wc.batch, 'tumor') + '.mpileup')
+        normal_mpileup = lambda wc: join(config['tools']['purple']['outdir'], wc.batch, 'amber', alias_from_pheno(config, wc.batch, 'normal') + '.mpileup'),
+        tumor_mpileup = lambda wc: join(config['tools']['purple']['outdir'], wc.batch, 'amber', alias_from_pheno(config, wc.batch, 'tumor') + '.mpileup')
     output:
-        tumor_amber = join(config['tools']['purple']['amber']['outdir'], '{batch}', '{tumor_alias}.amber.baf')
+        tumor_amber = join(config['tools']['purple']['outdir'], '{batch}', 'amber/{tumor_alias}.amber.baf')
     params:
         tumor_alias = lambda wc: alias_from_pheno(config, wc.batch, 'tumor'),
-        outdir = join(config['tools']['purple']['amber']['outdir'], '{batch}'),
+        outdir = join(config['tools']['purple']['outdir'], '{batch}', 'amber'),
         jar = config['tools']['purple']['amber']['jar']
     log:
         log = join(config['woof']['final_dir'], 'logs', '{batch}/{tumor_alias}_amber.log')

@@ -1,7 +1,6 @@
 include: 'purple_settings.py'
 
 config['tools']['purple']['cobalt'] = {
-    'outdir' : join(config['tools']['purple']['outdir'], 'cobalt'),
     'jar' : join(config['tools']['purple']['hmf_data']['dir'], 'cobalt-1.4.jar')
 }
 
@@ -11,12 +10,12 @@ rule :
         normal_bam = lambda wc: bam_from_pheno(config, wc.batch, 'normal') + '.bam',
         tumor_bam = lambda wc: bam_from_pheno(config, wc.batch, 'tumor') + '.bam'
     output:
-        tumor_cobalt = join(config['tools']['purple']['cobalt']['outdir'], '{batch}', '{tumor_alias}.cobalt')
+        tumor_cobalt = join(config['tools']['purple']['outdir'], '{batch}', 'cobalt/{tumor_alias}.cobalt')
     params:
         normal_alias = lambda wc: alias_from_pheno(config, wc.batch, 'normal'),
         tumor_alias = lambda wc: alias_from_pheno(config, wc.batch, 'tumor'),
         gc = config['tools']['purple']['hmf_data']['gc_profile'],
-        outdir = join(config['tools']['purple']['cobalt']['outdir'], '{batch}'),
+        outdir = join(config['tools']['purple']['outdir'], '{batch}', 'cobalt'),
         jar = config['tools']['purple']['cobalt']['jar']
     log:
         log = join(config['woof']['final_dir'], 'logs', '{batch}/{tumor_alias}_cobalt.log')
