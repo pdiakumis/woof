@@ -1,10 +1,10 @@
 HCC2218:
-  HCC2218_T:
+  HCC2218C:
     bam: /data/cephfs/punim0010/projects/Diakumis_HCC2218/bcbio/final/HCC2218C/HCC2218C-ready
-    name: HCC2218_T
+    name: HCC2218C
     phenotype: tumor
-  HCC2218_N:
+  HCC2218BL:
     bam: /data/cephfs/punim0010/projects/Diakumis_HCC2218/bcbio/final/HCC2218BL/HCC2218BL-ready
-    name: HCC2218_N
+    name: HCC2218BL
     phenotype: normal
 
