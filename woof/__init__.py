@@ -27,7 +27,9 @@ hpc_dict = {
         'extras' : '/g/data3/gx8/extras',
         'woof_data' : '/g/data3/gx8/extras/woof/data',
         'ref_fasta' : '/g/data3/gx8/local/development/bcbio/genomes/Hsapiens/GRCh37/seq/GRCh37.fa'
-        }
+        },
+    'peter' : {
+        },
 }
 
 hostname = get_hostname()
@@ -36,6 +38,8 @@ if re.match(r'spartan*', hostname):
     hostname = 'SPARTAN'
 elif re.match(r'^raijin|(r\d\d\d\d$)', hostname):
     hostname = 'RAIJIN'
+elif re.match(r'^5180L-133629-M.local$', hostname):
+    hostname = 'peter'
 else:
     critical(f'ERROR: could not detect location by hostname {hostname}')
 
