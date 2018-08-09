@@ -5,7 +5,7 @@ config['tools']['purple']['cobalt'] = {
 }
 
 
-rule :
+rule cobalt_run:
     input:
         normal_bam = lambda wc: bam_from_pheno(config, wc.batch, 'normal') + '.bam',
         tumor_bam = lambda wc: bam_from_pheno(config, wc.batch, 'tumor') + '.bam'
