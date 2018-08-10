@@ -21,10 +21,10 @@ option_list <- list(
 opt <- parse_args(OptionParser(option_list = option_list))
 
 # For interactive run, use following template
-opt <- list(batchname = "HCC2218",
-           snpfile = "/data/cephfs/punim0010/projects/Diakumis_HCC2218/woof/final/structural/facets/pileup/HCC2218.pileup.csv.gz",
-           cval = 150,
-           outdir = "/data/cephfs/punim0010/projects/Diakumis_HCC2218/woof/final/structural/facets/results")
+#opt <- list(batchname = "HCC2218",
+#           snpfile = "/data/cephfs/punim0010/projects/Diakumis_HCC2218/woof/final/structural/facets/pileup/HCC2218.pileup.csv.gz",
+#           cval = 150,
+#           outdir = "/data/cephfs/punim0010/projects/Diakumis_HCC2218/woof/final/structural/facets/results")
 
 stopifnot(!is.null(opt$snpfile),
           !is.null(opt$batchname),
