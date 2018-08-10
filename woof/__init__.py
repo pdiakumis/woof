@@ -46,6 +46,7 @@ else:
 hpc_dict = hpc_dict[hostname]
 config = {}
 config['samples'] = yaml.load(open(join(WOOF_ROOT, 'config/samples.yaml')))
+config['bcbio'] = yaml.load(open(join(WOOF_ROOT, 'config/bcbio.yaml')))
 config['HPC'] = hpc_dict
 config['woof'] = {}
 
@@ -53,3 +54,4 @@ config['woof']['root_dir'] = WOOF_ROOT
 config['woof']['rules_dir'] = WOOF_RULES
 config['woof']['final_dir'] = join(WOOF_ROOT, 'final') # can change this via command line if needed
 config['tools'] = {}
+

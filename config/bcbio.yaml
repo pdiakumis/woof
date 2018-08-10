@@ -1,0 +1,6 @@
+HCC2218:
+  manta_sv: /path/to/batch-manta.vcf.gz
+  ensemble_snv: /path/to/batch-ensemble-annotated.vcf.gz
+batch2:
+  manta_sv: /path/to/batch-manta.vcf.gz
+  ensemble_snv: /path/to/batch-ensemble-annotated.vcf.gz
