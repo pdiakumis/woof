@@ -1,7 +1,7 @@
 include: 'purple_settings.py'
 
 config['tools']['purple']['purple'] = {
-    'jar' : join(config['tools']['purple']['hmf_data']['dir'], 'purple-2.10.jar'),
+    'jar' : join(config['tools']['purple']['hmf_data']['dir'], 'purple-2.14.jar'),
 }
 
 rule purple_run:
@@ -22,6 +22,7 @@ rule purple_run:
     log:
         log = join(config['woof']['final_dir'], 'logs', '{batch}/{tumor_alias}_purple.log')
     shell:
+        'echo "[$(date)] start {rule} with wildcards: {wildcards}" > {log.log}; '
         'circos_path=$(which circos); '
         'java -jar {params.jar} '
         '-run_dir {params.rundir} '
@@ -30,5 +31,6 @@ rule purple_run:
         '-tumor_sample {params.tumor_alias} '
         '-threads {threads} '
         '-gc_profile {params.gc} '
-        '-circos ${{circos_path}} > {log.log} 2>&1'
+        '-circos ${{circos_path}} >> {log.log} 2>&1 ;'
+        'echo "[$(date)] end {rule} with wildcards: {wildcards}" >> {log.log}; '
         #'-structural_vcf {params.manta_vcf} '
