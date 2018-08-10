@@ -13,10 +13,12 @@ rule amber_pileup:
         log = join(config['woof']['final_dir'], 'logs', '{batch}/{alias}_amber-pileup.log')
     threads: 24
     shell:
+        'echo "[$(date)] start {rule} with wildcards: {wildcards}" > {log.log}; '
         'sambamba mpileup '
         '-t {threads} '
         '-L {params.snp_bed} '
         '{input.bam} '
         '--samtools -q 1 '
         '-f {params.fasta} '
-        '> {output.mpileup} 2> {log.log}'
+        '> {output.mpileup} 2>> {log.log}; '
+        'echo "[$(date)] end {rule} with wildcards: {wildcards}" >> {log.log}; '

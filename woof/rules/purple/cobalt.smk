@@ -21,6 +21,7 @@ rule cobalt_run:
         log = join(config['woof']['final_dir'], 'logs', '{batch}/{tumor_alias}_cobalt.log')
     threads: 24
     shell:
+        'echo "[$(date)] start {rule} with wildcards: {wildcards}" > {log.log}; '
         'module load R; '
         'java -jar {params.jar} '
         '-reference {params.normal_alias} '
@@ -29,4 +30,5 @@ rule cobalt_run:
         '-tumor_bam {input.tumor_bam} '
         '-threads {threads} '
         '-gc_profile {params.gc} '
-        '-output_dir {params.outdir} > {log.log} 2>&1'
+        '-output_dir {params.outdir} >> {log.log} 2>&1 ; '
+        'echo "[$(date)] end {rule} with wildcards: {wildcards}" >> {log.log}; '
