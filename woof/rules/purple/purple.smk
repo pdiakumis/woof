@@ -16,7 +16,9 @@ rule purple_run:
         jar = config['tools']['purple']['purple']['jar'],
         tumor_alias = lambda wc: alias_from_pheno(config, wc.batch, 'tumor'),
         normal_alias = lambda wc: alias_from_pheno(config, wc.batch, 'normal'),
-        gc = config['tools']['purple']['hmf_data']['gc_profile']
+        gc = config['tools']['purple']['hmf_data']['gc_profile'],
+        manta_sv = lambda wc: config['bcbio'][wc.batch]['manta_sv'],
+        ensemble_snv = lambda wc: config['bcbio'][wc.batch]['ensemble_snv']
     threads:
         4
     log:
@@ -31,6 +33,7 @@ rule purple_run:
         '-tumor_sample {params.tumor_alias} '
         '-threads {threads} '
         '-gc_profile {params.gc} '
+        '-structural_vcf {params.manta_sv} '
+        '-somatic_vcf {params.ensemble_snv} '
         '-circos ${{circos_path}} >> {log.log} 2>&1 ;'
         'echo "[$(date)] end {rule} with wildcards: {wildcards}" >> {log.log}; '
-        #'-structural_vcf {params.manta_vcf} '

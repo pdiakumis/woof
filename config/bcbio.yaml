@@ -1,6 +1,6 @@
 HCC2218:
-  manta_sv: /path/to/batch-manta.vcf.gz
-  ensemble_snv: /path/to/batch-ensemble-annotated.vcf.gz
+  manta_sv: /g/data3/gx8/extras/woof/data/HCC2218/HCC2218-manta.vcf.gz
+  ensemble_snv: /g/data3/gx8/extras/woof/data/HCC2218/HCC2218-ensemble-annotated.vcf.gz
 batch2:
   manta_sv: /path/to/batch-manta.vcf.gz
   ensemble_snv: /path/to/batch-ensemble-annotated.vcf.gz
