@@ -14,10 +14,16 @@ rule facets_pileup:
     output:
         pileup = join(config['tools']['facets']['pileup']['outdir'], '{batch}.pileup.csv.gz')
     params:
-        pileup_cmd = config['tools']['facets']['pileup']['command']
+        pileup_cmd = config['tools']['facets']['pileup']['command'],
+        htslib = config['HPC']['htslib_module']
+    log:
+        log = join(config['woof']['final_dir'], 'logs', '{batch}/{batch}_facets_pileup.log')
     shell:
-        'module load HTSlib; '
+        'echo "[$(date)] start {rule} with wildcards: {wildcards}" > {log.log}; '
+        'module load {params.htslib}; '
         '{params.pileup_cmd} -g -q 30 -Q 30 -r 10,10 '
         '{input.vcf} '
         '{output.pileup} '
-        '{input.normal_bam} {input.tumor_bam}'
+        '{input.normal_bam} {input.tumor_bam} '
+        ' >> {log.log} 2>&1 ; '
+        'echo "[$(date)] end {rule} with wildcards: {wildcards}" >> {log.log}; '
