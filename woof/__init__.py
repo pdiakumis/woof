@@ -27,7 +27,7 @@ hpc_dict = {
     'RAIJIN' : {
         'extras' : '/g/data3/gx8/extras',
         'woof_data' : '/g/data3/gx8/extras/woof/data',
-        'ref_fasta' : '/g/data3/gx8/local/development/bcbio/genomes/Hsapiens/GRCh37/seq/GRCh37.fa'
+        'ref_fasta' : '/g/data3/gx8/local/development/bcbio/genomes/Hsapiens/GRCh37/seq/GRCh37.fa',
         'htslib_module' : 'htslib',
         },
     'peter' : {
