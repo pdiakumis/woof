@@ -12,28 +12,13 @@ include: join(WOOF_RULES, "purple/pileup.smk")
 include: join(WOOF_RULES, "purple/amber.smk")
 include: join(WOOF_RULES, "purple/purple.smk")
 
-#batches = config['samples'].keys()
-batches = [*config['samples']]
-batches_rep = [b for b in batches for i in range(2)] # repeat each element twice
-aliases = [aliases_from_batch(config, b) for b in batches]
+batches = config['samples'].keys()
 
 rule all:
     input:
         expand(
-            join(config['tools']['purple']['outdir'], '{batch}', 'cobalt/{tumor_alias}.cobalt'),
-            batch = batches,
-            tumor_alias = [alias_from_pheno(config, b, 'tumor') for b in batches]),
-        expand(
-            join(config['tools']['purple']['outdir'], '{batch}', 'amber/{alias}.mpileup'), zip,
-            batch = batches_rep,
-            alias = list(chain(*aliases))),
-        expand(
-            join(config['tools']['purple']['outdir'], '{batch}', 'amber/{tumor_alias}.amber.baf'),
-            batch = batches,
-            tumor_alias = [alias_from_pheno(config, b, 'tumor') for b in batches]
-        ),
-        expand(
             join(config['tools']['purple']['outdir'], '{batch}', 'purple/{tumor_alias}.purple.cnv'),
+            zip,
             batch = batches,
             tumor_alias = [alias_from_pheno(config, b, 'tumor') for b in batches]
         )

@@ -22,19 +22,16 @@ hpc_dict = {
         'extras' : '/data/cephfs/punim0010/extras',
         'woof_data' : '/data/cephfs/punim0010/extras/woof/data',
         'ref_fasta' : '/data/cephfs/punim0010/local/development/bcbio/genomes/Hsapiens/GRCh37/seq/GRCh37.fa',
-        'htslib_module' : 'HTSlib',
         },
     'RAIJIN' : {
         'extras' : '/g/data3/gx8/extras',
         'woof_data' : '/g/data3/gx8/extras/woof/data',
         'ref_fasta' : '/g/data3/gx8/local/development/bcbio/genomes/Hsapiens/GRCh37/seq/GRCh37.fa',
-        'htslib_module' : 'htslib',
         },
     'peter' : {
         'extras' : '/Users/pdiakumis/extras',
         'woof_data' : '/Users/pdiakumis/extras/woof/data',
         'ref_fasta' : '/Users/pdiakumis/extras/woof/data/genomes/Hsapiens/GRCh37/seq/GRCh37.fa',
-        'htslib_module' : 'htslib',
         },
 }
 

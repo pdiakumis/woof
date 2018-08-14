@@ -17,10 +17,11 @@ dependencies:
   - samtools=1.9
   - sambamba=0.6.6                                 # for amber pileup
   - r-base=3.4.1
-  - r-facets=0.5.2
   - r-devtools=1.13.6
-  - r-tidyverse=1.1.1
-  - r-rmarkdown=1.9
   - r-dt=0.4
-  - bioconductor-genomicranges=1.30.3
+  - r-facets=0.5.2
+  - r-optparse=1.4.4
+  - r-rmarkdown=1.9
+  - r-tidyverse=1.1.1
   - bioconductor-copynumber=1.18.0                 # for hmftools
+  - bioconductor-genomicranges=1.30.3

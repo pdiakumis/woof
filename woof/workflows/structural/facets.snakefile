@@ -9,9 +9,11 @@ localrules: all
 include: join(WOOF_RULES, "facets/pileup.smk")
 include: join(WOOF_RULES, "facets/facets.smk")
 
+batches = config['samples'].keys()
+
 rule all:
     input:
         expand(
             join(config['tools']['facets']['run']['outdir'], '{batch}/{batch}_cval_{cval}_report.html'),
-            batch = config['samples'].keys(),
-            cval = "150")
+            batch = batches,
+            cval = ["150", "500", "1000"])

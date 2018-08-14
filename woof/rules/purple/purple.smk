@@ -35,5 +35,5 @@ rule purple_run:
         '-gc_profile {params.gc} '
         '-structural_vcf {params.manta_sv} '
         '-somatic_vcf {params.ensemble_snv} '
-        '-circos ${{circos_path}} >> {log.log} 2>&1 ;'
+        '-circos ${{circos_path}} >> {log.log} 2>&1; '
         'echo "[$(date)] end {rule} with wildcards: {wildcards}" >> {log.log}; '

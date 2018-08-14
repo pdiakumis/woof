@@ -23,6 +23,7 @@ require(dplyr)
 require(readr)
 require(devtools)
 require(DT)
+require(facets) # just for version info
 ```
 
 ```{r set-params-interactive, eval=FALSE, echo=FALSE}
@@ -31,16 +32,11 @@ params <- list(batchname = "HCC2218", cval = "150", results_dir = "/data/cephfs/
 
 ```{r funcs}
 cnv_tab <- function(cnv) {
-  bigmark_col <- function(x) {
-    format(x, big.mark = ",", scientific = FALSE)
-  }
   
-  DT::datatable(cnv %>%
-                  dplyr::mutate_if(is.numeric, bigmark_col),  
-                options = list( 
-                  columnDefs = list(list(className = 'dt-right', targets = c(3, 4)))),
-                filter = "top",
-                rownames = FALSE)
+  d <- DT::datatable(cnv, filter = "top", rownames = FALSE)
+  d <- formatCurrency(d, 'start', currency = "", interval = 3, mark = ",", digits = 0)
+  d <- formatCurrency(d, 'end', currency = "", interval = 3, mark = ",", digits = 0)
+  d
 }
 ```
 
@@ -86,14 +82,6 @@ knitr::kable(purply)
 
 ```{r cnv-plot, out.width = "100%"}
 plot_type <- "cnv"
-fname <- file.path(results_dir, paste0(prefix, "_", plot_type, ".png"))
-knitr::include_graphics(fname)
-```
-
-### Spider Plot
-
-```{r spider-plot, out.width = "80%"}
-plot_type <- "spider"
 fname <- file.path(results_dir, paste0(prefix, "_", plot_type, ".png"))
 knitr::include_graphics(fname)
 ```
