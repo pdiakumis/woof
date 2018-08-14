@@ -1,6 +1,5 @@
 #!/usr/bin/env Rscript
 
-suppressPackageStartupMessages(library(rock))
 suppressPackageStartupMessages(library(devtools))
 suppressPackageStartupMessages(library(facets))
 suppressPackageStartupMessages(library(optparse))
@@ -32,6 +31,9 @@ stopifnot(!is.null(opt$snpfile),
           !is.null(opt$outdir))
 
 
+stamp <- function() {
+      cat("[", format(Sys.time(), usetz = TRUE), "]", sep = "")
+}
 
 cat(stamp(), "Starting Facets analysis\n")
 cat(stamp(), paste0("Arguments specified:\n",
@@ -74,10 +76,17 @@ cat(stamp(), "Ploidy is:", fit$ploidy, "\n")
 #   - cf.em, tcn.em, lcn.em are the estimates by the mixture model optimized
 #     using the EM-algorithm
 
-# Plots
+# Save files
 prefix <- file.path(opt$outdir, paste0(opt$batchname, "_cval_", opt$cval))
+cat(stamp(), "Saving stuff\n")
+purity_ploidy <- c(purity = fit$purity, ploidy = fit$ploidy, dipLogR = fit$dipLogR, loglik = fit$loglik)
+write.table(as.data.frame(t(purity_ploidy)), paste0(prefix, "_purply.tsv"), row.names = FALSE, sep = "\t", quote = FALSE)
+
+cncf <- fit$cncf
+write.table(cncf, paste0(prefix, "_segs.tsv"), row.names = FALSE, sep = "\t", quote = FALSE)
+
+# Plots
 cnv_plotname <- paste0(prefix, "_cnv")
-spider_plotname <- paste0(prefix, "_spider")
 
 cat(stamp(), "Plotting CNVs in pdf + png format\n")
 pdf(paste0(cnv_plotname, ".pdf"))
@@ -88,22 +97,6 @@ png(paste0(cnv_plotname, ".png"))
 plotSample(x = proc, emfit = fit)
 dev.off()
 
-cat(stamp(), "Plotting Spider in pdf + png format\n")
-pdf(paste0(spider_plotname, ".pdf"))
-logRlogORspider(proc$out, proc$dipLogR)
-dev.off()
-
-png(paste0(spider_plotname, ".png"))
-logRlogORspider(proc$out, proc$dipLogR)
-dev.off()
-
-# Save files
-cat(stamp(), "Saving stuff\n")
-purity_ploidy <- c(purity = fit$purity, ploidy = fit$ploidy, dipLogR = fit$dipLogR, loglik = fit$loglik)
-write.table(as.data.frame(t(purity_ploidy)), paste0(prefix, "_purply.tsv"), row.names = FALSE, sep = "\t", quote = FALSE)
-
-cncf <- fit$cncf
-write.table(cncf, paste0(prefix, "_segs.tsv"), row.names = FALSE, sep = "\t", quote = FALSE)
 cat(stamp(), "Finished Facets analysis\n")
 
 devtools::session_info()
