@@ -31,6 +31,10 @@ hpc_dict = {
         'htslib_module' : 'htslib',
         },
     'peter' : {
+        'extras' : '/Users/pdiakumis/extras',
+        'woof_data' : '/Users/pdiakumis/extras/woof/data',
+        'ref_fasta' : '/Users/pdiakumis/extras/woof/data/genomes/Hsapiens/GRCh37/seq/GRCh37.fa',
+        'htslib_module' : 'htslib',
         },
 }
 
