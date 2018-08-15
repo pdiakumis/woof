@@ -11,7 +11,7 @@ rule amber_pileup:
         fasta = config['HPC']['ref_fasta']
     log:
         log = join(config['woof']['final_dir'], 'logs', '{batch}/{alias}_amber-pileup.log')
-    threads: 24
+    threads: 32
     shell:
         'echo "[$(date)] start {rule} with wildcards: {wildcards}" > {log.log}; '
         'sambamba mpileup '

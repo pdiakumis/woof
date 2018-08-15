@@ -19,10 +19,9 @@ rule amber_run:
         log = join(config['woof']['final_dir'], 'logs', '{batch}/{tumor_alias}_amber.log')
     shell:
         'echo "[$(date)] start {rule} with wildcards: {wildcards}" > {log.log}; '
-        'module load R; '
         'java -jar {params.jar} '
         '-sample {params.tumor_alias} '
         '-reference {input.normal_mpileup} '
         '-tumor {input.tumor_mpileup} '
-        '-output_dir {params.outdir} >> {log.log} 2>&1 ;'
+        '-output_dir {params.outdir} >> {log.log} 2>&1; '
         'echo "[$(date)] end {rule} with wildcards: {wildcards}" >> {log.log}; '

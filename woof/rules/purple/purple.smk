@@ -17,7 +17,7 @@ rule purple_run:
         tumor_alias = lambda wc: alias_from_pheno(config, wc.batch, 'tumor'),
         normal_alias = lambda wc: alias_from_pheno(config, wc.batch, 'normal'),
         gc = config['tools']['purple']['hmf_data']['gc_profile'],
-        manta_sv = lambda wc: config['bcbio'][wc.batch]['manta_sv'],
+        manta_sv = lambda wc: config['bcbio'][wc.batch]['manta_svpri'],
         ensemble_snv = lambda wc: config['bcbio'][wc.batch]['ensemble_snv']
     threads:
         4
