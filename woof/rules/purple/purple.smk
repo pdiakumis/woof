@@ -7,7 +7,8 @@ config['tools']['purple']['purple'] = {
 rule purple_run:
     input:
         cobalt_dummy = lambda wc: join(config['tools']['purple']['outdir'], wc.batch, 'cobalt', alias_from_pheno(config, wc.batch, 'tumor') + '.cobalt'),
-        amber_dummy = lambda wc: join(config['tools']['purple']['outdir'], wc.batch, 'amber', alias_from_pheno(config, wc.batch, 'tumor') + '.amber.baf')
+        amber_dummy = lambda wc: join(config['tools']['purple']['outdir'], wc.batch, 'amber', alias_from_pheno(config, wc.batch, 'tumor') + '.amber.baf'),
+        manta_sv_filtered = lambda wc: join(config['tools']['purple']['outdir'], wc.batch, 'purple', alias_from_pheno(config, wc.batch, 'tumor') + '.manta_filtered.vcf')
     output:
         segs = join(config['tools']['purple']['outdir'], '{batch}', 'purple/{tumor_alias}.purple.cnv')
     params:
@@ -17,8 +18,7 @@ rule purple_run:
         tumor_alias = lambda wc: alias_from_pheno(config, wc.batch, 'tumor'),
         normal_alias = lambda wc: alias_from_pheno(config, wc.batch, 'normal'),
         gc = config['tools']['purple']['hmf_data']['gc_profile'],
-        manta_sv = lambda wc: config['bcbio'][wc.batch]['manta_svpri'],
-        ensemble_snv = lambda wc: config['bcbio'][wc.batch]['ensemble_snv']
+        ensemble_snv = lambda wc: config['bcbio'][wc.batch]['ensemble']
     threads:
         4
     log:
@@ -33,7 +33,7 @@ rule purple_run:
         '-tumor_sample {params.tumor_alias} '
         '-threads {threads} '
         '-gc_profile {params.gc} '
-        '-structural_vcf {params.manta_sv} '
+        '-structural_vcf {input.manta_sv_filtered} '
         '-somatic_vcf {params.ensemble_snv} '
         '-circos ${{circos_path}} >> {log.log} 2>&1; '
         'echo "[$(date)] end {rule} with wildcards: {wildcards}" >> {log.log}; '

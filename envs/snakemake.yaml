@@ -13,6 +13,7 @@ dependencies:
   - pandoc=2.2.2
   - perl=5.22.0                                    # for circos
   - python>=3.6
+  - pythonpy=0.4.2
   - snakemake=5.2.1
   - samtools=1.9
   - sambamba=0.6.6                                 # for amber pileup
