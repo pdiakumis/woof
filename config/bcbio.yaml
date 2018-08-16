@@ -1,6 +1,16 @@
-HCC2218:
-  manta_sv: /g/data3/gx8/extras/woof/data/HCC2218/HCC2218-manta.vcf.gz
-  ensemble_snv: /g/data3/gx8/extras/woof/data/HCC2218/HCC2218-ensemble-annotated.vcf.gz
-batch2:
-  manta_sv: /path/to/batch-manta.vcf.gz
-  ensemble_snv: /path/to/batch-ensemble-annotated.vcf.gz
+Colo829:
+  manta_svpri: /g/data3/gx8/data/10X/TruSeq/bcbio_original/final/Colo829/COLO829_100pc-batch-sv-prioritize-manta.vcf.gz
+  ensemble: /g/data3/gx8/data/10X/TruSeq/bcbio_original/final/2018-07-15_10X-Collaboration_WGS-merged/COLO829_100pc-batch-ensemble-annotated.vcf.gz
+Colo829_20pc:
+  manta_svpri: /g/data3/gx8/data/10X/TruSeq/bcbio_original/final/Colo829_20pc/COLO829_20pc-batch-sv-prioritize-manta.vcf.gz
+  ensemble: /g/data3/gx8/data/10X/TruSeq/bcbio_original/final/2018-07-15_10X-Collaboration_WGS-merged/COLO829_20pc-batch-ensemble-annotated.vcf.gz
+Colo829_40pc:
+  manta_svpri: /g/data3/gx8/data/10X/TruSeq/bcbio_original/final/Colo829_40pc/COLO829_40pc-batch-sv-prioritize-manta.vcf.gz
+  ensemble: /g/data3/gx8/data/10X/TruSeq/bcbio_original/final/2018-07-15_10X-Collaboration_WGS-merged/COLO829_40pc-batch-ensemble-annotated.vcf.gz
+Colo829_60pc:
+  manta_svpri: /g/data3/gx8/data/10X/TruSeq/bcbio_original/final/Colo829_60pc/COLO829_60pc-batch-sv-prioritize-manta.vcf.gz
+  ensemble: /g/data3/gx8/data/10X/TruSeq/bcbio_original/final/2018-07-15_10X-Collaboration_WGS-merged/COLO829_60pc-batch-ensemble-annotated.vcf.gz
+Colo829_80pc:
+  manta_svpri: /g/data3/gx8/data/10X/TruSeq/bcbio_original/final/Colo829_80pc/COLO829_80pc-batch-sv-prioritize-manta.vcf.gz
+  ensemble: /g/data3/gx8/data/10X/TruSeq/bcbio_original/final/2018-07-15_10X-Collaboration_WGS-merged/COLO829_80pc-batch-ensemble-annotated.vcf.gz
+

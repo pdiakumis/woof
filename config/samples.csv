@@ -1,3 +1,11 @@
 batch,bam_path,alias,phenotype
-HCC2218,/data/cephfs/punim0010/projects/Diakumis_HCC2218/bcbio/final/HCC2218BL/HCC2218BL-ready,HCC2218BL,normal
-HCC2218,/data/cephfs/punim0010/projects/Diakumis_HCC2218/bcbio/final/HCC2218C/HCC2218C-ready,HCC2218C,tumor
+Colo829_20pc,/g/data3/gx8/data/10X/TruSeq/bcbio_original/final/Colo829_20pc/Colo829_20pc-ready,Colo829_20pc,tumor
+Colo829_20pc,/g/data3/gx8/data/10X/TruSeq/bcbio_original/final/Colo829_B/Colo829_B-ready,Colo829_B,normal
+Colo829_40pc,/g/data3/gx8/data/10X/TruSeq/bcbio_original/final/Colo829_40pc/Colo829_40pc-ready,Colo829_40pc,tumor
+Colo829_40pc,/g/data3/gx8/data/10X/TruSeq/bcbio_original/final/Colo829_B/Colo829_B-ready,Colo829_B,normal
+Colo829_60pc,/g/data3/gx8/data/10X/TruSeq/bcbio_original/final/Colo829_60pc/Colo829_60pc-ready,Colo829_60pc,tumor
+Colo829_60pc,/g/data3/gx8/data/10X/TruSeq/bcbio_original/final/Colo829_B/Colo829_B-ready,Colo829_B,normal
+Colo829_80pc,/g/data3/gx8/data/10X/TruSeq/bcbio_original/final/Colo829_80pc/Colo829_80pc-ready,Colo829_80pc,tumor
+Colo829_80pc,/g/data3/gx8/data/10X/TruSeq/bcbio_original/final/Colo829_B/Colo829_B-ready,Colo829_B,normal
+Colo829,/g/data3/gx8/data/10X/TruSeq/bcbio_original/final/Colo829/Colo829-ready,Colo829,tumor
+Colo829,/g/data3/gx8/data/10X/TruSeq/bcbio_original/final/Colo829_B/Colo829_B-ready,Colo829_B,normal

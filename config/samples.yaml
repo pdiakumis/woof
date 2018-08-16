@@ -1,10 +1,46 @@
-HCC2218:
-  HCC2218C:
-    bam: /data/cephfs/punim0010/projects/Diakumis_HCC2218/bcbio/final/HCC2218C/HCC2218C-ready
-    name: HCC2218C
+Colo829:
+  Colo829:
+    bam: /g/data3/gx8/data/10X/TruSeq/bcbio_original/final/Colo829/Colo829-ready
+    name: Colo829
     phenotype: tumor
-  HCC2218BL:
-    bam: /data/cephfs/punim0010/projects/Diakumis_HCC2218/bcbio/final/HCC2218BL/HCC2218BL-ready
-    name: HCC2218BL
+  Colo829_B:
+    bam: /g/data3/gx8/data/10X/TruSeq/bcbio_original/final/Colo829_B/Colo829_B-ready
+    name: Colo829_B
+    phenotype: normal
+Colo829_20pc:
+  Colo829_20pc:
+    bam: /g/data3/gx8/data/10X/TruSeq/bcbio_original/final/Colo829_20pc/Colo829_20pc-ready
+    name: Colo829_20pc
+    phenotype: tumor
+  Colo829_B:
+    bam: /g/data3/gx8/data/10X/TruSeq/bcbio_original/final/Colo829_B/Colo829_B-ready
+    name: Colo829_B
+    phenotype: normal
+Colo829_40pc:
+  Colo829_40pc:
+    bam: /g/data3/gx8/data/10X/TruSeq/bcbio_original/final/Colo829_40pc/Colo829_40pc-ready
+    name: Colo829_40pc
+    phenotype: tumor
+  Colo829_B:
+    bam: /g/data3/gx8/data/10X/TruSeq/bcbio_original/final/Colo829_B/Colo829_B-ready
+    name: Colo829_B
+    phenotype: normal
+Colo829_60pc:
+  Colo829_60pc:
+    bam: /g/data3/gx8/data/10X/TruSeq/bcbio_original/final/Colo829_60pc/Colo829_60pc-ready
+    name: Colo829_60pc
+    phenotype: tumor
+  Colo829_B:
+    bam: /g/data3/gx8/data/10X/TruSeq/bcbio_original/final/Colo829_B/Colo829_B-ready
+    name: Colo829_B
+    phenotype: normal
+Colo829_80pc:
+  Colo829_80pc:
+    bam: /g/data3/gx8/data/10X/TruSeq/bcbio_original/final/Colo829_80pc/Colo829_80pc-ready
+    name: Colo829_80pc
+    phenotype: tumor
+  Colo829_B:
+    bam: /g/data3/gx8/data/10X/TruSeq/bcbio_original/final/Colo829_B/Colo829_B-ready
+    name: Colo829_B
     phenotype: normal
 
