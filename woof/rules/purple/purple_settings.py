@@ -1,5 +1,3 @@
-include: '../main_settings.py'
-
 config['tools']['purple'] = {
     'outdir' : join(config['woof']['final_dir'], 'structural/purple'),
     'hmf_data' : {

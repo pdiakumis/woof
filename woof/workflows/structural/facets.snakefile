@@ -6,6 +6,8 @@ shell.prefix("set -euo pipefail; ")
 
 localrules: all
 
+include: "../main_settings.py"
+
 include: join(WOOF_RULES, "facets/pileup.smk")
 include: join(WOOF_RULES, "facets/facets.smk")
 

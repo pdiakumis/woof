@@ -1,11 +1,12 @@
 import os
 from os.path import join, abspath, dirname, pardir, isfile, exists
 from woof import WOOF_RULES
-from itertools import chain
 
 shell.prefix("set -euo pipefail; ")
 
 localrules: all
+
+include: "../main_settings.py"
 
 include: join(WOOF_RULES, "purple/cobalt.smk")
 include: join(WOOF_RULES, "purple/pileup.smk")
