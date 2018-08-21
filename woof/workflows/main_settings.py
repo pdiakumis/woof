@@ -6,5 +6,5 @@ from woof.utils import pheno, alias_from_pheno, bam_from_pheno, aliases_from_bat
 
 
 config['woof']['final_dir'] = join(WOOF_ROOT, 'final')
-config['samples'] = yaml.load(open(join(WOOF_ROOT, 'config/samples_locally.yaml')))
-config['bcbio'] = yaml.load(open(join(WOOF_ROOT, 'config/bcbio_locally.yaml')))
+config['samples'] = yaml.load(open(join(WOOF_ROOT, 'config/samples.yaml')))
+config['bcbio'] = yaml.load(open(join(WOOF_ROOT, 'config/bcbio.yaml')))
