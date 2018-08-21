@@ -13,4 +13,8 @@ Colo829_60pc:
 Colo829_80pc:
   manta_svpri: /g/data3/gx8/data/10X/TruSeq/bcbio_original/final/Colo829_80pc/COLO829_80pc-batch-sv-prioritize-manta.vcf.gz
   ensemble: /g/data3/gx8/data/10X/TruSeq/bcbio_original/final/2018-07-15_10X-Collaboration_WGS-merged/COLO829_80pc-batch-ensemble-annotated.vcf.gz
+Colo829_TGEN:
+  manta_svpri: /g/data3/gx8/data/10X/Reference/GRCh37/final/COLO829T/COLO829-sv-prioritize-manta.vcf.gz
+  ensemble: /g/data3/gx8/data/10X/Reference/GRCh37/final/2018-04-21_COLO829/COLO829-ensemble-annotated.vcf.gz
+
 

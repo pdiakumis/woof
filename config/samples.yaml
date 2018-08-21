@@ -43,4 +43,14 @@ Colo829_80pc:
     bam: /g/data3/gx8/data/10X/TruSeq/bcbio_original/final/Colo829_B/Colo829_B-ready
     name: Colo829_B
     phenotype: normal
+Colo829_TGEN:
+  COLO829T:
+    bam: /g/data3/gx8/data/10X/Reference/GRCh37/final/COLO829T/COLO829T-ready
+    name: COLO829T
+    phenotype: tumor
+  COLO829BL:
+    bam: /g/data3/gx8/data/10X/Reference/GRCh37/final/COLO829BL/COLO829BL-ready
+    name: COLO829BL
+    phenotype: normal
+
 
