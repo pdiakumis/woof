@@ -16,5 +16,9 @@ Colo829_80pc:
 Colo829_TGEN:
   manta_svpri: /g/data3/gx8/data/10X/Reference/GRCh37/final/COLO829T/COLO829-sv-prioritize-manta.vcf.gz
   ensemble: /g/data3/gx8/data/10X/Reference/GRCh37/final/2018-04-21_COLO829/COLO829-ensemble-annotated.vcf.gz
-
-
+MON3:
+  manta_svpri: /g/data3/gx8/projects/Croagh-KRAS-wt/2018-08-15T1051_Research-Croagh-KRAS-wt_WGS-merged/umccrised_spartan/MON3__PRJ180359_MON3-T/structural/MON3__PRJ180359_MON3-T-sv-prioritize-manta-filter.vcf
+  ensemble: /g/data3/gx8/projects/Croagh-KRAS-wt/2018-08-15T1051_Research-Croagh-KRAS-wt_WGS-merged/final/2018-08-18_2018-08-15T1051_Research-Croagh-KRAS-wt_WGS-merged/MON3-ensemble-annotated.vcf.gz
+MON6:
+  manta_svpri: /g/data3/gx8/projects/Croagh-KRAS-wt/2018-08-15T1051_Research-Croagh-KRAS-wt_WGS-merged/umccrised_spartan/MON6__PRJ180362_MON6-T/structural/MON6__PRJ180362_MON6-T-sv-prioritize-manta-filter.vcf
+  ensemble: /g/data3/gx8/projects/Croagh-KRAS-wt/2018-08-15T1051_Research-Croagh-KRAS-wt_WGS-merged/final/2018-08-18_2018-08-15T1051_Research-Croagh-KRAS-wt_WGS-merged/MON6-ensemble-annotated.vcf.gz
