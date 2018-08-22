@@ -53,20 +53,20 @@ Colo829_TGEN:
     name: COLO829BL
     phenotype: normal
 MON3:
-  MON3_T:
+  PRJ180359_MON3-T:
     bam: /g/data3/gx8/projects/Croagh-KRAS-wt/2018-08-15T1051_Research-Croagh-KRAS-wt_WGS-merged/final/PRJ180359_MON3-T/PRJ180359_MON3-T-ready
     name: PRJ180359_MON3-T
     phenotype: tumor
-  MON3_B:
+  PRJ180351_MON3-B:
     bam: /g/data3/gx8/projects/Croagh-KRAS-wt/2018-08-15T1051_Research-Croagh-KRAS-wt_WGS-merged/final/PRJ180351_MON3-B/PRJ180351_MON3-B-ready
     name: PRJ180351_MON3-B
     phenotype: normal
 MON6:
-  MON6_T:
+  PRJ180362_MON6-T:
     bam: /g/data3/gx8/projects/Croagh-KRAS-wt/2018-08-15T1051_Research-Croagh-KRAS-wt_WGS-merged/final/PRJ180362_MON6-T/PRJ180362_MON6-T-ready
     name: PRJ180362_MON6-T
     phenotype: tumor
-  MON6_B:
+  PRJ180354_MON6-B:
     bam: /g/data3/gx8/projects/Croagh-KRAS-wt/2018-08-15T1051_Research-Croagh-KRAS-wt_WGS-merged/final/PRJ180354_MON6-B/PRJ180354_MON6-B-ready
     name: PRJ180354_MON6-B
     phenotype: normal
