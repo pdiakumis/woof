@@ -39,7 +39,7 @@ hostname = get_hostname()
 
 if re.match(r'spartan*', hostname):
     hostname = 'SPARTAN'
-elif re.match(r'^raijin|(r\d\d\d\d$)', hostname):
+elif re.match(r'^raijin|(r\d+$)', hostname):
     hostname = 'RAIJIN'
 elif re.match(r'^5180L-133629-M.local$', hostname):
     hostname = 'peter'
