@@ -1,72 +1,46 @@
-Colo829:
-  Colo829:
-    bam: /g/data3/gx8/data/10X/TruSeq/bcbio_original/final/Colo829/Colo829-ready
-    name: Colo829
+insilico_COLO829_100pc:
+  insilico_COLO829_100pc:
+    bam: /g/data/gx8/projects/Hsu_WGS_Validation/colo829-merged/final/insilico_COLO829_100pc/insilico_COLO829_100pc-ready
+    name: insilico_COLO829_100pc
     phenotype: tumor
-  Colo829_B:
-    bam: /g/data3/gx8/data/10X/TruSeq/bcbio_original/final/Colo829_B/Colo829_B-ready
-    name: Colo829_B
+  insilico_COLO829BL:
+    bam: /g/data/gx8/projects/Hsu_WGS_Validation/colo829-merged/final/insilico_COLO829BL/insilico_COLO829BL-ready
+    name: insilico_COLO829BL
     phenotype: normal
-Colo829_20pc:
-  Colo829_20pc:
-    bam: /g/data3/gx8/data/10X/TruSeq/bcbio_original/final/Colo829_20pc/Colo829_20pc-ready
-    name: Colo829_20pc
+insilico_COLO829_20pc:
+  insilico_COLO829_20pc:
+    bam: /g/data/gx8/projects/Hsu_WGS_Validation/colo829-merged/final/insilico_COLO829_20pc/insilico_COLO829_20pc-ready
+    name: insilico_COLO829_20pc
     phenotype: tumor
-  Colo829_B:
-    bam: /g/data3/gx8/data/10X/TruSeq/bcbio_original/final/Colo829_B/Colo829_B-ready
-    name: Colo829_B
+  insilico_COLO829BL:
+    bam: /g/data/gx8/projects/Hsu_WGS_Validation/colo829-merged/final/insilico_COLO829BL/insilico_COLO829BL-ready
+    name: insilico_COLO829BL
     phenotype: normal
-Colo829_40pc:
-  Colo829_40pc:
-    bam: /g/data3/gx8/data/10X/TruSeq/bcbio_original/final/Colo829_40pc/Colo829_40pc-ready
-    name: Colo829_40pc
+insilico_COLO829_40pc:
+  insilico_COLO829_40pc:
+    bam: /g/data/gx8/projects/Hsu_WGS_Validation/colo829-merged/final/insilico_COLO829_40pc/insilico_COLO829_40pc-ready
+    name: insilico_COLO829_40pc
     phenotype: tumor
-  Colo829_B:
-    bam: /g/data3/gx8/data/10X/TruSeq/bcbio_original/final/Colo829_B/Colo829_B-ready
-    name: Colo829_B
+  insilico_COLO829BL:
+    bam: /g/data/gx8/projects/Hsu_WGS_Validation/colo829-merged/final/insilico_COLO829BL/insilico_COLO829BL-ready
+    name: insilico_COLO829BL
     phenotype: normal
-Colo829_60pc:
-  Colo829_60pc:
-    bam: /g/data3/gx8/data/10X/TruSeq/bcbio_original/final/Colo829_60pc/Colo829_60pc-ready
-    name: Colo829_60pc
+insilico_COLO829_60pc:
+  insilico_COLO829_60pc:
+    bam: /g/data/gx8/projects/Hsu_WGS_Validation/colo829-merged/final/insilico_COLO829_60pc/insilico_COLO829_60pc-ready
+    name: insilico_COLO829_60pc
     phenotype: tumor
-  Colo829_B:
-    bam: /g/data3/gx8/data/10X/TruSeq/bcbio_original/final/Colo829_B/Colo829_B-ready
-    name: Colo829_B
+  insilico_COLO829BL:
+    bam: /g/data/gx8/projects/Hsu_WGS_Validation/colo829-merged/final/insilico_COLO829BL/insilico_COLO829BL-ready
+    name: insilico_COLO829BL
     phenotype: normal
-Colo829_80pc:
-  Colo829_80pc:
-    bam: /g/data3/gx8/data/10X/TruSeq/bcbio_original/final/Colo829_80pc/Colo829_80pc-ready
-    name: Colo829_80pc
+insilico_COLO829_80pc:
+  insilico_COLO829_80pc:
+    bam: /g/data/gx8/projects/Hsu_WGS_Validation/colo829-merged/final/insilico_COLO829_80pc/insilico_COLO829_80pc-ready
+    name: insilico_COLO829_80pc
     phenotype: tumor
-  Colo829_B:
-    bam: /g/data3/gx8/data/10X/TruSeq/bcbio_original/final/Colo829_B/Colo829_B-ready
-    name: Colo829_B
+  insilico_COLO829BL:
+    bam: /g/data/gx8/projects/Hsu_WGS_Validation/colo829-merged/final/insilico_COLO829BL/insilico_COLO829BL-ready
+    name: insilico_COLO829BL
     phenotype: normal
-Colo829_TGEN:
-  COLO829T:
-    bam: /g/data3/gx8/data/10X/Reference/GRCh37/final/COLO829T/COLO829T-ready
-    name: COLO829T
-    phenotype: tumor
-  COLO829BL:
-    bam: /g/data3/gx8/data/10X/Reference/GRCh37/final/COLO829BL/COLO829BL-ready
-    name: COLO829BL
-    phenotype: normal
-MON3:
-  PRJ180359_MON3-T:
-    bam: /g/data3/gx8/projects/Croagh-KRAS-wt/2018-08-15T1051_Research-Croagh-KRAS-wt_WGS-merged/final/PRJ180359_MON3-T/PRJ180359_MON3-T-ready
-    name: PRJ180359_MON3-T
-    phenotype: tumor
-  PRJ180351_MON3-B:
-    bam: /g/data3/gx8/projects/Croagh-KRAS-wt/2018-08-15T1051_Research-Croagh-KRAS-wt_WGS-merged/final/PRJ180351_MON3-B/PRJ180351_MON3-B-ready
-    name: PRJ180351_MON3-B
-    phenotype: normal
-MON6:
-  PRJ180362_MON6-T:
-    bam: /g/data3/gx8/projects/Croagh-KRAS-wt/2018-08-15T1051_Research-Croagh-KRAS-wt_WGS-merged/final/PRJ180362_MON6-T/PRJ180362_MON6-T-ready
-    name: PRJ180362_MON6-T
-    phenotype: tumor
-  PRJ180354_MON6-B:
-    bam: /g/data3/gx8/projects/Croagh-KRAS-wt/2018-08-15T1051_Research-Croagh-KRAS-wt_WGS-merged/final/PRJ180354_MON6-B/PRJ180354_MON6-B-ready
-    name: PRJ180354_MON6-B
-    phenotype: normal
+
