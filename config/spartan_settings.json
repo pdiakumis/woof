@@ -1,37 +1,45 @@
 {
     "__default__" :
     {
-        "time": "12:00:00",
-        "n": 1,
-        "partition": "vccc",
-        "mem": 15000,
+        "time": "02:00:00",
+        "ntasks": 1,
+        "cpus-per-task": 1,
+        "mem": 10000,
         "out": "slurm_logs/{rule}_%j.out",
         "err": "slurm_logs/{rule}_%j.err",
         "name": "{rule}.{wildcards}"
     },
-    "facets_coverage":
-    {
-        "time": "06:00:00",
+    "amber_pileup": {
+        "time": "01:00:00",
+        "mem": 64000
+    },
+    "amber_run": {
+        "time": "01:00:00",
+        "mem": 10000
+    },
+    "cobalt_run": {
+        "time": "01:00:00",
+        "mem": 48000
+    },
+    "facets_pileup": {
+        "time": "05:00:00",
         "mem": 20000
     },
-    "facets_run":
-    {
-        "time": "2:00:00",
-        "mem": 35000
+    "facets_run": {
+        "time": "02:00:00",
+        "mem": 20000
     },
-    "facets_circos":
-    {
-        "time": "0:05:00",
-        "mem": 4000
-    },
-    "pdf2png":
-    {
-        "time": "0:10:00",
+    "facets_report": {
+        "time": "00:05:00",
         "mem": 2000
     },
-    "telseq_run":
-    {
-        "time": "10:00:00",
-        "mem": 15000
-    }
+    "manta_sv_prep": {
+        "time": "00:05:00",
+        "mem": 4000
+    },
+    "purple_run": {
+        "time": "00:30:00",
+        "mem": 8000
+    },
 }
+
