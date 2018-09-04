@@ -20,7 +20,7 @@ rule purple_run:
         gc = config['tools']['purple']['hmf_data']['gc_profile'],
         ensemble_snv = lambda wc: config['bcbio'][wc.batch]['ensemble']
     threads:
-        4
+        2
     log:
         log = join(config['woof']['final_dir'], 'logs', '{batch}/{tumor_alias}_purple.log')
     shell:
