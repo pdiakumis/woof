@@ -1,0 +1,132 @@
+---
+author: "Peter Diakumis (UMCCR)"
+date: "`r format(Sys.time(), '%a %Y-%b-%d')`"
+output:
+  html_document:
+    keep_md: yes
+    theme: readable
+    toc: true
+    toc_float: true
+    code_folding: hide
+  rmdformats::material:
+    highlight: kate
+params:
+  tumor_name: "x"
+  results_dir: "x"
+  title: "Purple Summary"
+title: "`r paste(params$tumor_name, params$title)`"
+---
+
+```{r load-pkgs, message=FALSE}
+require(dplyr)
+require(readr)
+require(glue)
+require(devtools)
+require(DT)
+require(rock, lib.loc = "/Users/pdiakumis/rock/master")
+```
+
+```{r render_interactively, eval=FALSE, echo=FALSE}
+render_me <- function() {
+  rmarkdown::render("purple_report.Rmd", 
+                    params = list(tumor_name = "BriGibFFPE", 
+                                  results_dir = "/Users/pdiakumis/Desktop/projects/umccr/patients/BriGib/purple")
+                    )
+}
+
+# can run this interactively to knit report
+render_me()
+```
+
+
+```{r funcs}
+cnv_tab <- function(cnv) {
+  
+  DT::datatable(cnv, filter = "top", rownames = FALSE) %>% 
+    DT::formatCurrency('start', currency = "", interval = 3, mark = ",", digits = 0) %>% 
+    DT::formatCurrency('end', currency = "", interval = 3, mark = ",", digits = 0) %>% 
+    DT::formatRound('tot_cn') %>% 
+    DT::formatCurrency('seg_len', currency = "", interval = 3, mark = ",", digits = 0)
+}
+```
+
+
+## Introduction
+
+[PURPLE](https://github.com/hartwigmedical/hmftools/tree/master/purity-ploidy-estimator)
+is a tool for estimating tumor purity and ploidy. It uses the read depth and 
+tumor beta allele frequency (BAF) to estimate purity and generate a copy number profile.
+
+## Parameters
+
+* Tumor Name: ``r params$tumor_name``
+* Results directory: ``r params$results_dir``
+
+## Results
+
+### Purity and Ploidy Summary
+
+```{r purply}
+fn <- file.path(params$results_dir, paste0(params$tumor_name, ".purple.purity"))
+x <- readr::read_tsv(fn, col_types = cols(.default = col_double(), 
+                                          Gender = col_character(), 
+                                          Status = col_character())) %>%
+  dplyr::mutate_if(is.numeric, round, 2) %>%
+  unlist()
+
+tribble(~key, ~value,
+        'Sex', x["Gender"],
+        'Purity', glue('{x["#Purity"]} ({x["MinPurity"]}-{x["MaxPurity"]})'),
+        'Ploidy', glue('{x["Ploidy"]} ({x["MinPloidy"]}-{x["MaxPloidy"]})'),
+        'Diploidy Proportion', glue('{x["DiploidProportion"]} ({x["MinDiploidProportion"]}-{x["MaxDiploidProportion"]})'),
+        'Polyclonal Proportion', x["PolyclonalProportion"],
+        'Purple Version', x["Version"]) %>% 
+  knitr::kable()
+```
+
+### Somatic and Germline CNV Calls
+
+```{r germ-som-prep}
+fn_som <- file.path(params$results_dir, paste0(params$tumor_name, ".purple.cnv"))
+fn_germ <- file.path(params$results_dir, paste0(params$tumor_name, ".purple.germline.cnv"))
+cnv_som <- rock::read_cnv(fn_som)
+cnv_germ <- readr::read_tsv(fn_germ, col_types = "ciiddddccc") %>%
+  dplyr::select(chrom = `#chromosome`, start, end, tot_cn = copyNumber) %>% 
+  dplyr::filter(.data$chrom != "MT")
+
+cnv_germ <- structure(list(cnv = cnv_germ), class = "cnv")
+
+dplyr::tribble(~calls, ~number,
+        "somatic", nrow(cnv_som$cnv),
+        "germline", nrow(cnv_germ$cnv)) %>% 
+  knitr::kable(format.args = list(big.mark = ","))
+```
+
+```{r cnv_comparison_germ-vs-som, fig.width=12}
+rock::plot_piano(list(germline = cnv_germ, somatic = cnv_som))
+```
+
+#### Somatic Calls
+
+```{r som-tab}
+cnv_tab(cnv_som$cnv %>% mutate(seg_len = end - start))
+```
+
+#### Germline Calls
+
+```{r germ-tab}
+cnv_tab(cnv_germ$cnv %>% mutate(seg_len = end - start))
+```
+
+### Circos Plots
+
+```{r circos-default, out.width="80%"}
+plot_path <- file.path(params$results_dir, "plot") 
+knitr::include_graphics(file.path(plot_path, paste0(params$tumor_name, ".circos.png")))
+knitr::include_graphics(file.path(plot_path, paste0(params$tumor_name, ".input.png")))
+```
+
+```{r circos-baf}
+
+```
+
