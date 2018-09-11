@@ -24,5 +24,8 @@ dependencies:
   - r-optparse=1.4.4
   - r-rmarkdown=1.9
   - r-tidyverse=1.1.1
+  - r-vcfr=1.5.0
   - bioconductor-copynumber=1.18.0                 # for hmftools
   - bioconductor-genomicranges=1.30.3
+  - bioconductor-omiccircos=1.16.0
+
