@@ -28,25 +28,21 @@ require(rock, lib.loc = "/Users/pdiakumis/rock/master")
 
 ```{r render_interactively, eval=FALSE, echo=FALSE}
 render_me <- function() {
-  rmarkdown::render("purple_report.Rmd", 
+  rmarkdown::render("purple_report.Rmd",
                     params = list(tumor_name = "BriGibFFPE", 
                                   results_dir = "/Users/pdiakumis/Desktop/projects/umccr/patients/BriGib/purple")
                     )
 }
 
-# can run this interactively to knit report
 render_me()
 ```
-
 
 ```{r funcs}
 cnv_tab <- function(cnv) {
   
   DT::datatable(cnv, filter = "top", rownames = FALSE) %>% 
-    DT::formatCurrency('start', currency = "", interval = 3, mark = ",", digits = 0) %>% 
-    DT::formatCurrency('end', currency = "", interval = 3, mark = ",", digits = 0) %>% 
-    DT::formatRound('tot_cn') %>% 
-    DT::formatCurrency('seg_len', currency = "", interval = 3, mark = ",", digits = 0)
+    DT::formatCurrency(~ start + end + seg_len, currency = "", interval = 3, mark = ",", digits = 0) %>% 
+    DT::formatRound('tot_cn')
 }
 ```
 
@@ -63,6 +59,21 @@ tumor beta allele frequency (BAF) to estimate purity and generate a copy number 
 * Results directory: ``r params$results_dir``
 
 ## Results
+
+### Circos Plots
+
+```{r circos-default, out.width="80%"}
+plot_path <- file.path(params$results_dir, "plot") 
+knitr::include_graphics(file.path(plot_path, paste0(params$tumor_name, ".circos.png")))
+knitr::include_graphics(file.path(plot_path, paste0(params$tumor_name, ".input.png")))
+```
+
+```{r circos-baf}
+purple_circos_dir <- file.path(params$results_dir, "circos")
+rock::plot_circos_baf(purple_dir = purple_circos_dir, out_dir = file.path(purple_circos_dir, "baf_circos"), tumor_name = params$tumor_name)
+knitr::include_graphics(file.path(purple_circos_dir, paste0(params$tumor_name, "_circos_baf.png")))
+```
+
 
 ### Purity and Ploidy Summary
 
@@ -102,10 +113,6 @@ dplyr::tribble(~calls, ~number,
   knitr::kable(format.args = list(big.mark = ","))
 ```
 
-```{r cnv_comparison_germ-vs-som, fig.width=12}
-rock::plot_piano(list(germline = cnv_germ, somatic = cnv_som))
-```
-
 #### Somatic Calls
 
 ```{r som-tab}
@@ -118,15 +125,22 @@ cnv_tab(cnv_som$cnv %>% mutate(seg_len = end - start))
 cnv_tab(cnv_germ$cnv %>% mutate(seg_len = end - start))
 ```
 
-### Circos Plots
+#### Genes
 
-```{r circos-default, out.width="80%"}
-plot_path <- file.path(params$results_dir, "plot") 
-knitr::include_graphics(file.path(plot_path, paste0(params$tumor_name, ".circos.png")))
-knitr::include_graphics(file.path(plot_path, paste0(params$tumor_name, ".input.png")))
-```
+```{r gene-tab}
+fn_gene <- file.path(params$results_dir, paste0(params$tumor_name, ".purple.gene.cnv"))
+df <- readr::read_tsv(fn_gene, col_types = cols(.default = col_character()), skip = 1, col_names = FALSE) %>% 
+  dplyr::select(chrom = X1, start = X2, end = X3, gene = X4, min_cn = X5, max_cn = X6) %>% 
+  dplyr::mutate(start = as.integer(start), end = as.integer(end),
+                min_cn = as.double(min_cn), max_cn = as.double(max_cn))
 
-```{r circos-baf}
+az300 <- readr::read_tsv(system.file("extdata", "az300.bed", package = "pebbles"), 
+                         col_names = c("chrom", "start", "end", "gene"),
+                         col_types = "ciic")
 
+df[df$gene %in% az300$gene, ] %>% 
+  DT::datatable(filter = "top", rownames = FALSE) %>% 
+  DT::formatCurrency(~ start + end, currency = "", interval = 3, mark = ",", digits = 0) %>% 
+  DT::formatRound(~ min_cn + max_cn)
 ```
 
