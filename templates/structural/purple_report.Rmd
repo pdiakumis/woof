@@ -29,8 +29,8 @@ require(rock, lib.loc = "/Users/pdiakumis/rock/master")
 ```{r render_interactively, eval=FALSE, echo=FALSE}
 render_me <- function() {
   rmarkdown::render("purple_report.Rmd",
-                    params = list(tumor_name = "BriGibFFPE", 
-                                  results_dir = "/Users/pdiakumis/Desktop/projects/umccr/patients/BriGib/purple")
+                    params = list(tumor_name = "PRJ180464_P007_Cell_culture", 
+                                  results_dir = "/Users/pdiakumis/Desktop/projects/umccr/tothill_projects/data/collibri/purple/P007_Cell")
                     )
 }
 
@@ -71,9 +71,8 @@ knitr::include_graphics(file.path(plot_path, paste0(params$tumor_name, ".input.p
 ```{r circos-baf}
 purple_circos_dir <- file.path(params$results_dir, "circos")
 rock::plot_circos_baf(purple_dir = purple_circos_dir, out_dir = file.path(purple_circos_dir, "baf_circos"), tumor_name = params$tumor_name)
-knitr::include_graphics(file.path(purple_circos_dir, paste0(params$tumor_name, "_circos_baf.png")))
+knitr::include_graphics(file.path(purple_circos_dir, "baf_circos", paste0(params$tumor_name, "_circos_baf.png")))
 ```
-
 
 ### Purity and Ploidy Summary
 
@@ -95,37 +94,7 @@ tribble(~key, ~value,
   knitr::kable()
 ```
 
-### Somatic and Germline CNV Calls
-
-```{r germ-som-prep}
-fn_som <- file.path(params$results_dir, paste0(params$tumor_name, ".purple.cnv"))
-fn_germ <- file.path(params$results_dir, paste0(params$tumor_name, ".purple.germline.cnv"))
-cnv_som <- rock::read_cnv(fn_som)
-cnv_germ <- readr::read_tsv(fn_germ, col_types = "ciiddddccc") %>%
-  dplyr::select(chrom = `#chromosome`, start, end, tot_cn = copyNumber) %>% 
-  dplyr::filter(.data$chrom != "MT")
-
-cnv_germ <- structure(list(cnv = cnv_germ), class = "cnv")
-
-dplyr::tribble(~calls, ~number,
-        "somatic", nrow(cnv_som$cnv),
-        "germline", nrow(cnv_germ$cnv)) %>% 
-  knitr::kable(format.args = list(big.mark = ","))
-```
-
-#### Somatic Calls
-
-```{r som-tab}
-cnv_tab(cnv_som$cnv %>% mutate(seg_len = end - start))
-```
-
-#### Germline Calls
-
-```{r germ-tab}
-cnv_tab(cnv_germ$cnv %>% mutate(seg_len = end - start))
-```
-
-#### Genes
+### AZ300 Gene Somatic CNV Calls
 
 ```{r gene-tab}
 fn_gene <- file.path(params$results_dir, paste0(params$tumor_name, ".purple.gene.cnv"))
@@ -144,3 +113,47 @@ df[df$gene %in% az300$gene, ] %>%
   DT::formatRound(~ min_cn + max_cn)
 ```
 
+
+### Global Somatic and Germline CNV Calls
+
+```{r germ-som-prep}
+fn_som <- file.path(params$results_dir, paste0(params$tumor_name, ".purple.cnv"))
+fn_germ <- file.path(params$results_dir, paste0(params$tumor_name, ".purple.germline.cnv"))
+cnv_som <- rock::read_cnv(fn_som)
+cnv_germ <- readr::read_tsv(fn_germ, col_types = "ciiddddccc") %>%
+  dplyr::select(chrom = `#chromosome`, start, end, tot_cn = copyNumber) %>% 
+  dplyr::filter(.data$chrom != "MT")
+
+cnv_germ <- structure(list(cnv = cnv_germ), class = "cnv")
+
+cnv_all <- dplyr::bind_rows(list(somatic = cnv_som$cnv, germline = cnv_germ$cnv), .id = "type")
+cnv_all %>% 
+  mutate(sv_len = end - start) %>% 
+  group_by(type) %>% 
+  summarise(n = n(),
+            mean_len = round(mean(sv_len), 2),
+            med_len = round(median(sv_len), 2),
+            min_cn = round(min(tot_cn), 2),
+            max_cn = round(max(tot_cn), 2)) %>% 
+  knitr::kable(format.args = list(big.mark = ","))
+```
+
+#### Somatic Calls
+
+```{r som-tab}
+cnv_tab(cnv_som$cnv %>% mutate(seg_len = end - start))
+```
+
+#### Germline Calls
+
+```{r germ-tab}
+cnv_tab(cnv_germ$cnv %>% mutate(seg_len = end - start))
+```
+
+### Other Stuff
+
+```{r purple-other-plots, out.width="80%"}
+knitr::include_graphics(file.path(plot_path, paste0(params$tumor_name, ".copyNumber.png")))
+knitr::include_graphics(file.path(plot_path, paste0(params$tumor_name, ".minor_allele.png")))
+knitr::include_graphics(file.path(plot_path, paste0(params$tumor_name, ".variant.png")))
+```
