@@ -14,7 +14,7 @@ params:
   tumor_name: "x"
   results_dir: "x"
   title: "Purple Summary"
-title: "`r paste(params$tumor_name, params$title)`"
+title: "`r paste0(params$tumor_name, '\n\n', params$title)`"
 ---
 
 ```{r load-pkgs, message=FALSE}
@@ -29,8 +29,8 @@ require(rock, lib.loc = "/Users/pdiakumis/rock/master")
 ```{r render_interactively, eval=FALSE, echo=FALSE}
 render_me <- function() {
   rmarkdown::render("purple_report.Rmd",
-                    params = list(tumor_name = "PRJ180464_P007_Cell_culture", 
-                                  results_dir = "/Users/pdiakumis/Desktop/projects/umccr/tothill_projects/data/collibri/purple/P007_Cell")
+                    params = list(tumor_name = "PRJ180467_P045_FFPE_tumour", 
+                                  results_dir = "/Users/pdiakumis/Desktop/projects/umccr/tothill_projects/data/collibri/purple/P045")
                     )
 }
 
@@ -47,34 +47,74 @@ cnv_tab <- function(cnv) {
 ```
 
 
-## Introduction
+
 
 [PURPLE](https://github.com/hartwigmedical/hmftools/tree/master/purity-ploidy-estimator)
 is a tool for estimating tumor purity and ploidy. It uses the read depth and 
 tumor beta allele frequency (BAF) to estimate purity and generate a copy number profile.
 
-## Parameters
+### Parameters
 
 * Tumor Name: ``r params$tumor_name``
 * Results directory: ``r params$results_dir``
 
-## Results
+## Circos
 
-### Circos Plots
+### Plot 1: Somatic SNVs/Indels, Total/Minor CN, SVs
 
-```{r circos-default, out.width="80%"}
+* __Track1__: Chromosomes. Darker shaded areas: gaps in reference genome 
+  (centromeres, heterochromatin & missing short arms)
+* __Track2__: Somatic variants (incl. exon, intron and intergenic regions). 
+    * outer ring: SNP allele frequencies, corrected for tumor purity and scaled from 0 to 100%.
+      Each dot represents a single somatic variant, coloured according to the
+      type of base change (e.g. C>T/G>A in red).
+    * inner ring: short insertion (yellow) and deletion (red) locations. 
+* __Track3__: Observed copy number changes adjusted for tumor purity,
+  including focal and chromosomal somatic events. 
+  <span style="color:red">Red</span> = Loss; <span style="color:#32CD32">Green</span> = Gain.
+  Scaled from 0 (complete loss) to 6 (high level gains). 
+  If > 6, shown as 6 with a green dot on the outermost green gridline. 
+* __Track4__: Observed 'minor allele copy numbers'. Range from 0 to 3. 
+  Expected normal minor allele copy number is 1, and anything below 1 is shown 
+  as a loss (<span style="color:#EE7600">Orange</span>), representing an LOH event. 
+  Minor allele copy numbers above 1 (<span style="color:#7EC0EE">Blue</span>) indicate gains 
+  of both A and B alleles. 
+* __Track5__ (Inner circle): Observed structural variants within or between the chromosomes.
+    * <span style="color:#7EC0EE">Blue</span> = Translocations
+    * <span style="color:red">Red</span> = Deletions 
+    * <span style="color:#e6e600">Yellow</span> = Insertions 
+    * <span style="color:#32CD32">Green</span> = Tandem duplications 
+    * <span style="color:#000000">Black</span> = Inversions
+
+```{r circos-default1, out.width="80%"}
 plot_path <- file.path(params$results_dir, "plot") 
+purple_circos_dir <- file.path(params$results_dir, "circos")
 knitr::include_graphics(file.path(plot_path, paste0(params$tumor_name, ".circos.png")))
+```
+
+### Plot 2: Tumor/Normal Allele Ratios, BAF
+
+* __Track1__: Chromosomes. Darker shaded areas: gaps in reference genome 
+  (centromeres, heterochromatin & missing short arms)
+* __Track2__: <span style="color:blue">Tumor</span> and <span style="color:#32CD32">Normal</span> Ratios
+* __Track3__: <span style="#EE7600">Beta Allele Frequency</span>
+
+
+```{r circos-default2, out.width="80%"}
 knitr::include_graphics(file.path(plot_path, paste0(params$tumor_name, ".input.png")))
 ```
 
-```{r circos-baf}
-purple_circos_dir <- file.path(params$results_dir, "circos")
+### Plot 3: Total/Minor CN, SVs, BAF
+
+```{r circos-baf-prep, eval=TRUE}
 rock::plot_circos_baf(purple_dir = purple_circos_dir, out_dir = file.path(purple_circos_dir, "baf_circos"), tumor_name = params$tumor_name)
+```
+
+```{r circos-baf-plot}
 knitr::include_graphics(file.path(purple_circos_dir, "baf_circos", paste0(params$tumor_name, "_circos_baf.png")))
 ```
 
-### Purity and Ploidy Summary
+## Purity and Ploidy Summary
 
 ```{r purply}
 fn <- file.path(params$results_dir, paste0(params$tumor_name, ".purple.purity"))
@@ -94,7 +134,7 @@ tribble(~key, ~value,
   knitr::kable()
 ```
 
-### AZ300 Gene Somatic CNV Calls
+## AZ300 Gene Somatic CNV Calls
 
 ```{r gene-tab}
 fn_gene <- file.path(params$results_dir, paste0(params$tumor_name, ".purple.gene.cnv"))
@@ -107,14 +147,15 @@ az300 <- readr::read_tsv(system.file("extdata", "az300.bed", package = "pebbles"
                          col_names = c("chrom", "start", "end", "gene"),
                          col_types = "ciic")
 
-df[df$gene %in% az300$gene, ] %>% 
+df %>% 
+  filter(gene %in% az300$gene) %>% 
   DT::datatable(filter = "top", rownames = FALSE) %>% 
   DT::formatCurrency(~ start + end, currency = "", interval = 3, mark = ",", digits = 0) %>% 
   DT::formatRound(~ min_cn + max_cn)
 ```
 
 
-### Global Somatic and Germline CNV Calls
+## Global Somatic and Germline CNV Summary
 
 ```{r germ-som-prep}
 fn_som <- file.path(params$results_dir, paste0(params$tumor_name, ".purple.cnv"))
@@ -138,19 +179,13 @@ cnv_all %>%
   knitr::kable(format.args = list(big.mark = ","))
 ```
 
-#### Somatic Calls
+### Somatic Calls
 
 ```{r som-tab}
 cnv_tab(cnv_som$cnv %>% mutate(seg_len = end - start))
 ```
 
-#### Germline Calls
-
-```{r germ-tab}
-cnv_tab(cnv_germ$cnv %>% mutate(seg_len = end - start))
-```
-
-### Other Stuff
+## Other Stuff
 
 ```{r purple-other-plots, out.width="80%"}
 knitr::include_graphics(file.path(plot_path, paste0(params$tumor_name, ".copyNumber.png")))
