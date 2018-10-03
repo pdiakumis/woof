@@ -1,16 +1,9 @@
-insilico_COLO829_100pc:
-  manta_svpri: /g/data/gx8/projects/Hsu_WGS_Validation/colo829-merged/final/insilico_COLO829_100pc/COLO829_100pc-sv-prioritize-manta.vcf.gz
-  ensemble: /g/data/gx8/projects/Hsu_WGS_Validation/colo829-merged/final/2018-08-18_colo829-merged/COLO829_100pc-ensemble-annotated.vcf.gz
-insilico_COLO829_20pc:
-  manta_svpri: /g/data/gx8/projects/Hsu_WGS_Validation/colo829-merged/final/insilico_COLO829_20pc/COLO829_20pc-sv-prioritize-manta.vcf.gz
-  ensemble: /g/data/gx8/projects/Hsu_WGS_Validation/colo829-merged/final/2018-08-18_colo829-merged/COLO829_20pc-ensemble-annotated.vcf.gz
-insilico_COLO829_40pc:
-  manta_svpri: /g/data/gx8/projects/Hsu_WGS_Validation/colo829-merged/final/insilico_COLO829_40pc/COLO829_40pc-sv-prioritize-manta.vcf.gz
-  ensemble: /g/data/gx8/projects/Hsu_WGS_Validation/colo829-merged/final/2018-08-18_colo829-merged/COLO829_40pc-ensemble-annotated.vcf.gz
-insilico_COLO829_60pc:
-  manta_svpri: /g/data/gx8/projects/Hsu_WGS_Validation/colo829-merged/final/insilico_COLO829_60pc/COLO829_60pc-sv-prioritize-manta.vcf.gz
-  ensemble: /g/data/gx8/projects/Hsu_WGS_Validation/colo829-merged/final/2018-08-18_colo829-merged/COLO829_60pc-ensemble-annotated.vcf.gz
-insilico_COLO829_80pc:
-  manta_svpri: /g/data/gx8/projects/Hsu_WGS_Validation/colo829-merged/final/insilico_COLO829_80pc/COLO829_80pc-sv-prioritize-manta.vcf.gz
-  ensemble: /g/data/gx8/projects/Hsu_WGS_Validation/colo829-merged/final/2018-08-18_colo829-merged/COLO829_80pc-ensemble-annotated.vcf.gz
-
+BriGib:
+  manta_svpri: /data/cephfs/punim0010/data/Results/Patients/2017-10-20/final/BriGibFFPE/batch1-sv-prioritize-manta.vcf.gz
+  ensemble: /data/cephfs/punim0010/data/Results/Patients/2017-10-20/final/2017-10-20_brigibFFPE/batch1-ensemble-annotated.vcf.gz
+MHP013:
+  manta_svpri: /data/cephfs/punim0010/data/Results/Avner/2018-01-31/final/WPT-013-organoid/p013-organoid-sv-prioritize-manta.vcf.gz
+  ensemble: /data/cephfs/punim0010/data/Results/Avner/2018-01-31/final/2018-01-31_p013/p013-organoid-ensemble-annotated.vcf.gz
+MHP031:
+  manta_svpri: /data/cephfs/punim0010/data/Results/Avner/2018-01-22/final/17MHP031Tmr/p031-sv-prioritize-manta.vcf.gz
+  ensemble: /data/cephfs/punim0010/data/Results/Avner/2018-01-22/final/2018-01-22_p031/p031-ensemble-annotated.vcf.gz

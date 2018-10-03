@@ -1,46 +1,28 @@
-insilico_COLO829_100pc:
-  insilico_COLO829_100pc:
-    bam: /g/data/gx8/projects/Hsu_WGS_Validation/colo829-merged/final/insilico_COLO829_100pc/insilico_COLO829_100pc-ready
-    name: insilico_COLO829_100pc
+BriGib:
+  BriGibFFPE:
+    bam: /data/cephfs/punim0010/data/Results/Patients/2017-10-20/final/BriGibFFPE/BriGibFFPE-ready
+    name: BriGibFFPE
     phenotype: tumor
-  insilico_COLO829BL:
-    bam: /g/data/gx8/projects/Hsu_WGS_Validation/colo829-merged/final/insilico_COLO829BL/insilico_COLO829BL-ready
-    name: insilico_COLO829BL
+  BriGibBld:
+    bam: /data/cephfs/punim0010/data/Results/Patients/2017-10-20/final/BriGibBld/BriGibBld-ready
+    name: BriGibBld
     phenotype: normal
-insilico_COLO829_20pc:
-  insilico_COLO829_20pc:
-    bam: /g/data/gx8/projects/Hsu_WGS_Validation/colo829-merged/final/insilico_COLO829_20pc/insilico_COLO829_20pc-ready
-    name: insilico_COLO829_20pc
+MHP013:
+  WPT-013-organoid:
+    bam: /data/cephfs/punim0010/data/Results/Avner/2018-01-31/final/WPT-013-organoid/WPT-013-organoid-ready
+    name: WPT-013-organoid
     phenotype: tumor
-  insilico_COLO829BL:
-    bam: /g/data/gx8/projects/Hsu_WGS_Validation/colo829-merged/final/insilico_COLO829BL/insilico_COLO829BL-ready
-    name: insilico_COLO829BL
+  WPT-013-normal:
+    bam: /data/cephfs/punim0010/data/Results/Avner/2018-01-31/final/WPT-013-normal/WPT-013-normal-ready
+    name: WPT-013-normal
     phenotype: normal
-insilico_COLO829_40pc:
-  insilico_COLO829_40pc:
-    bam: /g/data/gx8/projects/Hsu_WGS_Validation/colo829-merged/final/insilico_COLO829_40pc/insilico_COLO829_40pc-ready
-    name: insilico_COLO829_40pc
+MHP031:
+  17MHP031Tmr:
+    bam: /data/cephfs/punim0010/data/Results/Avner/2018-01-22/final/17MHP031Tmr/17MHP031Tmr-ready
+    name: 17MHP031Tmr
     phenotype: tumor
-  insilico_COLO829BL:
-    bam: /g/data/gx8/projects/Hsu_WGS_Validation/colo829-merged/final/insilico_COLO829BL/insilico_COLO829BL-ready
-    name: insilico_COLO829BL
-    phenotype: normal
-insilico_COLO829_60pc:
-  insilico_COLO829_60pc:
-    bam: /g/data/gx8/projects/Hsu_WGS_Validation/colo829-merged/final/insilico_COLO829_60pc/insilico_COLO829_60pc-ready
-    name: insilico_COLO829_60pc
-    phenotype: tumor
-  insilico_COLO829BL:
-    bam: /g/data/gx8/projects/Hsu_WGS_Validation/colo829-merged/final/insilico_COLO829BL/insilico_COLO829BL-ready
-    name: insilico_COLO829BL
-    phenotype: normal
-insilico_COLO829_80pc:
-  insilico_COLO829_80pc:
-    bam: /g/data/gx8/projects/Hsu_WGS_Validation/colo829-merged/final/insilico_COLO829_80pc/insilico_COLO829_80pc-ready
-    name: insilico_COLO829_80pc
-    phenotype: tumor
-  insilico_COLO829BL:
-    bam: /g/data/gx8/projects/Hsu_WGS_Validation/colo829-merged/final/insilico_COLO829BL/insilico_COLO829BL-ready
-    name: insilico_COLO829BL
+  17MHP031Bld:
+    bam: /data/cephfs/punim0010/data/Results/Avner/2018-01-22/final/17MHP031Bld/17MHP031Bld-ready
+    name: 17MHP031Bld
     phenotype: normal
 

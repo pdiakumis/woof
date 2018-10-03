@@ -1,11 +1,7 @@
 batch,bam_path,alias,phenotype
-insilico_COLO829_20pc,/g/data/gx8/projects/Hsu_WGS_Validation/colo829-merged/final/insilico_COLO829_20pc/insilico_COLO829_20pc-ready,insilico_COLO829_20pc,tumor
-insilico_COLO829_20pc,/g/data/gx8/projects/Hsu_WGS_Validation/colo829-merged/final/insilico_COLO829BL/insilico_COLO829BL-ready,insilico_COLO829BL,normal
-insilico_COLO829_40pc,/g/data/gx8/projects/Hsu_WGS_Validation/colo829-merged/final/insilico_COLO829_40pc/insilico_COLO829_40pc-ready,insilico_COLO829_40pc,tumor
-insilico_COLO829_40pc,/g/data/gx8/projects/Hsu_WGS_Validation/colo829-merged/final/insilico_COLO829BL/insilico_COLO829BL-ready,insilico_COLO829BL,normal
-insilico_COLO829_60pc,/g/data/gx8/projects/Hsu_WGS_Validation/colo829-merged/final/insilico_COLO829_60pc/insilico_COLO829_60pc-ready,insilico_COLO829_60pc,tumor
-insilico_COLO829_60pc,/g/data/gx8/projects/Hsu_WGS_Validation/colo829-merged/final/insilico_COLO829BL/insilico_COLO829BL-ready,insilico_COLO829BL,normal
-insilico_COLO829_80pc,/g/data/gx8/projects/Hsu_WGS_Validation/colo829-merged/final/insilico_COLO829_80pc/insilico_COLO829_80pc-ready,insilico_COLO829_80pc,tumor
-insilico_COLO829_80pc,/g/data/gx8/projects/Hsu_WGS_Validation/colo829-merged/final/insilico_COLO829BL/insilico_COLO829BL-ready,insilico_COLO829BL,normal
-insilico_COLO829_100pc,/g/data/gx8/projects/Hsu_WGS_Validation/colo829-merged/final/insilico_COLO829_100pc/insilico_COLO829_100pc-ready,insilico_COLO829_100pc,tumor
-insilico_COLO829_100pc,/g/data/gx8/projects/Hsu_WGS_Validation/colo829-merged/final/insilico_COLO829BL/insilico_COLO829BL-ready,insilico_COLO829BL,normal
+MHP031,/data/cephfs/punim0010/data/Results/Avner/2018-01-22/final/17MHP031Bld/17MHP031Bld-ready,17MHP031Bld,normal
+MHP031,/data/cephfs/punim0010/data/Results/Avner/2018-01-22/final/17MHP031Tmr/17MHP031Tmr-ready,17MHP031Tmr,tumor
+MHP013,/data/cephfs/punim0010/data/Results/Avner/2018-01-31/final/WPT-013-normal/WPT-013-normal-ready,WPT-013-normal,normal
+MHP013,/data/cephfs/punim0010/data/Results/Avner/2018-01-31/final/WPT-013-organoid/WPT-013-organoid-ready,WPT-013-organoid,tumor
+BriGib,/data/cephfs/punim0010/data/Results/Patients/2017-10-20/final/BriGibBld/BriGibBld-ready,BriGibBld,normal
+BriGib,/data/cephfs/punim0010/data/Results/Patients/2017-10-20/final/BriGibFFPE/BriGibFFPE-ready,BriGibFFPE,tumor
