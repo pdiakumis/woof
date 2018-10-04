@@ -19,7 +19,9 @@ require(gtools)
 # (chrY, chr1) -> chr1 colour
 
 # DF <- rock:::read_manta_vcf("../data/purple/BK221-NET1-manta.vcf.gz")
-DF <- rock:::read_manta_vcf("../data/purple/BK221-NET1__PRJ180471_BK221-NET1-sv-prioritize-manta-filter.vcf")
+vcf <- "/Users/pdiakumis/Desktop/projects/umccr/patients/MON3/data/purple/PRJ180359_MON3-T.manta_filtered.vcf"
+DF <- rock:::read_manta_vcf(vcf)
+DF2 <- rock::prep_manta_vcf(vcf)
 
 df_bnd <- DF %>%
   dplyr::filter(.data$svtype == "BND") %>%
@@ -27,7 +29,7 @@ df_bnd <- DF %>%
   dplyr::rename(chrom2 = .data$chrom11) %>%
   dplyr::mutate(bndid = substring(.data$id, nchar(.data$id))) %>%
   dplyr::filter(.data$bndid == "1") %>%
-  dplyr::select(.data$chrom1, .data$pos1, .data$chrom2, .data$pos2, .data$id, .data$mateid, .data$svtype, .data$filter, .data$n)
+  dplyr::select(.data$chrom1, .data$pos1, .data$chrom2, .data$pos2, .data$id, .data$mateid, .data$svtype, .data$filter)
 
 stopifnot(rock:::.manta_proper_pairs(df_bnd$id, df_bnd$mateid))
 
@@ -35,7 +37,7 @@ stopifnot(rock:::.manta_proper_pairs(df_bnd$id, df_bnd$mateid))
 df_other <- DF %>%
   dplyr::filter(.data$svtype != "BND") %>%
   dplyr::mutate(chrom2 = .data$chrom1) %>%
-  dplyr::select(.data$chrom1, .data$pos1, .data$chrom2, .data$pos2, .data$id, .data$mateid, .data$svtype, .data$filter, .data$n)
+  dplyr::select(.data$chrom1, .data$pos1, .data$chrom2, .data$pos2, .data$id, .data$mateid, .data$svtype, .data$filter)
 
 # All together now
 sv <- df_other %>%
@@ -56,10 +58,12 @@ cols <- c(hs1 = '(153,102,0)', hs2 = '(102,102,0)', hs3 = '(153,153,30)',
           hs19 = '(153,0,204)', hs20 = '(204,51,255)', hs21 = '(204,153,255)',
           hs22 = '(102,102,102)', hsX = '(153,153,153)', hsY = '(204,204,204)')
 
-links_coloured <- sv %>%
-  mutate(chrom1 = paste0("hs", chrom1),
-         chrom2 = paste0("hs", chrom2)) %>%
-  mutate(min_chrom = min_chrom_v(chrom1, chrom2)) %>%
+
+# links_coloured <- sv %>%
+links_coloured2 <- DF2$sv %>%
+  mutate(chrom1 = paste0("hs", .data$chrom1),
+         chrom2 = paste0("hs", .data$chrom2)) %>%
+  mutate(min_chrom = min_chrom_v(.data$chrom1, .data$chrom2)) %>%
   mutate(col = case_when(
     svtype == "DEL" ~ '(255,0,0)',
     svtype == "DUP" ~ '(0,255,0)',
@@ -67,29 +71,28 @@ links_coloured <- sv %>%
     svtype == "INV" ~ '(255,165,0)',
     svtype == "BND" ~ cols[min_chrom],
     TRUE ~ '0,0,0')) %>%
-  mutate(pos1b = pos1,
-         pos2b = pos2,
+  mutate(pos1b = .data$pos1,
+         pos2b = .data$pos2,
          col = paste0('color=', col)) %>%
-  # filter(filter == "PASS") %>%
-  select(chrom1, pos1, pos1b, chrom2, pos2, pos2b, col)
+  select(.data$chrom1, .data$pos1, .data$pos1b, .data$chrom2, .data$pos2, .data$pos2b, .data$col)
 
-links_blue <- sv %>%
-  mutate(chrom1 = paste0("hs", chrom1),
-         chrom2 = paste0("hs", chrom2)) %>%
-  mutate(min_chrom = min_chrom_v(chrom1, chrom2)) %>%
-  mutate(col = case_when(
-    svtype == "DEL" ~ 'red',
-    svtype == "DUP" ~ 'green',
-    svtype == "INS" ~ 'vdyellow',
-    svtype == "INV" ~ 'black',
-    svtype == "BND" ~ 'blue',
-    TRUE ~ 'purple')) %>%
-  mutate(pos1b = pos1,
-         pos2b = pos2,
-         col = paste0('color=', col)) %>%
-  # filter(filter == "PASS") %>%
-  select(chrom1, pos1, pos1b, chrom2, pos2, pos2b, col) %>%
-  arrange(chrom1, chrom2, pos1, pos2)
+# links_blue <- sv %>%
+#   mutate(chrom1 = paste0("hs", chrom1),
+#          chrom2 = paste0("hs", chrom2)) %>%
+#   mutate(min_chrom = min_chrom_v(chrom1, chrom2)) %>%
+#   mutate(col = case_when(
+#     svtype == "DEL" ~ 'red',
+#     svtype == "DUP" ~ 'green',
+#     svtype == "INS" ~ 'vdyellow',
+#     svtype == "INV" ~ 'black',
+#     svtype == "BND" ~ 'blue',
+#     TRUE ~ 'purple')) %>%
+#   mutate(pos1b = pos1,
+#          pos2b = pos2,
+#          col = paste0('color=', col)) %>%
+#   # filter(filter == "PASS") %>%
+#   select(chrom1, pos1, pos1b, chrom2, pos2, pos2b, col) %>%
+#   arrange(chrom1, chrom2, pos1, pos2)
 
 
 readr::write_tsv(links_blue, "../data/purple/circos/BK221_NET1_tumor.link2.circos", col_names = FALSE)
