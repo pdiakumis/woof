@@ -1,13 +1,13 @@
 channels:
-  - bioconda
   - conda-forge
+  - bioconda
   - defaults
   - raylim                                         # for facets
 dependencies:
   - bcftools=1.9
-  - boto3
+  - boto3=1.9.16
   - circos=0.69.6                                  # for circos
-  - click
+  - click=7.0
   - htslib=1.3.1                                   # for facets
   - java-jdk=8.0.92                                # for purple
   - libgd=2.2.5                                    # for circos

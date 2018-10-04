@@ -32,6 +32,8 @@ Woofing workflows using
 
 ## quick start
 * `environment.yaml`: contains tools you want to use in the pipeline.
+    * Run `conda env create --name woof --file environment.yaml` to create conda
+      environment
 * `rule.snakefile`: contains one or more pipeline steps (called 'rules'). Each
   rule can run for multiple samples, thus creating multiple 'jobs'.
 * `cluster.json`: cluster configuration file to specify partition, time etc.
