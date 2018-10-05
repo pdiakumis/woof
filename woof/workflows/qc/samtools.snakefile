@@ -7,6 +7,7 @@ shell.prefix("set -euo pipefail; ")
 
 localrules: all
 
+include: "../main_settings.py"
 include: join(WOOF_RULES, "samtools/samtools_idxstats.smk")
 
 batches = [*config['samples']]

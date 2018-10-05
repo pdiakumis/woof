@@ -2,6 +2,8 @@ channels:
   - conda-forge
   - bioconda
   - defaults
+  - vladsaveliev
+  - pdiakumis
   - raylim                                         # for facets
 dependencies:
   - bcftools=1.9
@@ -12,6 +14,7 @@ dependencies:
   - java-jdk=8.0.92                                # for purple
   - libgd=2.2.5                                    # for circos
   - ncurses=5.9                                    # for samtools - https://github.com/bioconda/bioconda-recipes/issues/8210
+  - ngs_utils                                      # vlad
   - pandoc=2.2.2
   - perl=5.22.0                                    # for circos
   - python>=3.6
@@ -24,6 +27,7 @@ dependencies:
   - r-dt=0.4
   - r-facets=0.5.2
   - r-optparse=1.4.4
+  - r-rock                                        # peter
   - r-reticulate=1.10
   - r-rmarkdown=1.9
   - r-tidyverse=1.1.1
