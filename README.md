@@ -4,9 +4,12 @@
 * [woof](#woof)
     * [quick start](#quick-start)
         * [example runs](#example-runs)
-        * [expand](#expand)
 * [Workflows](#workflows)
     * [Introduction](#introduction)
+    * [validation](#validation)
+        * [FASTQ:](#fastq)
+        * [BAM:](#bam)
+        * [VCF:](#vcf)
     * [structural](#structural)
         * [PURPLE](#purple)
             * [Steps](#steps)
@@ -21,7 +24,9 @@
     * [coverage](#coverage)
         * [mosdepth](#mosdepth)
         * [indexcov](#indexcov)
-    * [resources](#resources)
+* [Resources](#resources)
+* [Tips](#tips)
+        * [expand](#expand)
 
 <!-- vim-markdown-toc -->
 
@@ -37,6 +42,8 @@ Woofing workflows using
 * `rule.snakefile`: contains one or more pipeline steps (called 'rules'). Each
   rule can run for multiple samples, thus creating multiple 'jobs'.
 * `cluster.json`: cluster configuration file to specify partition, time etc.
+* `workflow.snakefile`: includes one or more snakemake rules, setting up a
+  specific workflow.
 
 ### example runs
 
@@ -99,51 +106,6 @@ where `cluster.json` is:
 }
 ```
 
-### expand
-Snakemake has a function in `snakemake.io` called `expand` which helps you
-'expand' different
-file lists as in the following:
-
-```
-PLOTFORMATS = ["pdf", "png"]
-DATASETS = ["ds1", "ds2"]
-```
-* `expand("{dataset}/file.txt", dataset = DATASETS)`
-
-Output:
-```
-["ds1/file.txt", "ds2/file.txt"]
-```
-
-* `expand("{dataset}/file.{ext}", dataset=DATASETS, ext=PLOTFORMATS)`
-
-Output:
-```
-["ds1/file.pdf", "ds2/file.pdf", "ds1/file.png", "ds2/file.pdf"]
-```
-
-* `expand(["{dataset}/plot1.{ext}", "{dataset}/plot2.{ext}"], dataset=DATASETS, ext=PLOTFORMATS)`
-
-Output:
-```
-["ds1/plot1.pdf", "ds1/plot2.pdf", "ds2/plot1.pdf", "ds2/plot2.pdf",
-"ds1/plot1.png", "ds1/plot2.png", "ds2/plot1.png", "ds2/plot2.png"]
-```
-
-* `expand("{dataset}/plot1.{ext} {dataset}/plot2.{ext}".split(), zip, dataset=DATASETS, ext=PLOTFORMATS)`
-
-Output:
-```
-["ds1/plot1.pdf", "ds1/plot2.pdf", "ds2/plot1.png", "ds2/plot2.png"]
-```
-
-* `expand("{{dataset}}/plot1.{ext}", ext=PLOTFORMATS)`
-
-Output:
-```
-['{dataset}/plot1.pdf', '{dataset}/plot1.png']
-```
-
 # Workflows
 
 
@@ -156,6 +118,27 @@ Introduction
   in the snakefile
 * Each rule can consist of `input`, `output`,
   `params`, `shell`, `run`, `threads`, `log` and `message` directives.
+
+validation
+----------
+
+### FASTQ:
+
+- [UMich FastQValidator](https://genome.sph.umich.edu/wiki/FastQValidator) (github [link](https://github.com/statgen/fastQValidator))
+- [fastq_utils](https://github.com/nunofonseca/fastq_utils)
+- [fqtools validate](https://github.com/alastair-droop/fqtools)
+
+### BAM:
+
+- GATK ValidateSamFile [link1](https://software.broadinstitute.org/gatk/documentation/article.php?id=7571),
+  [link2](http://broadinstitute.github.io/picard/command-line-overview.html#ValidateSamFile)
+- [UMich BamUtil validate](https://genome.sph.umich.edu/wiki/BamUtil:_validate)
+- [samtools quickcheck](http://www.htslib.org/doc/samtools.html)
+
+### VCF:
+
+- [EBI vcf-validator](https://github.com/EBIvariation/vcf-validator)
+
 
 structural
 ----------
@@ -214,9 +197,57 @@ coverage
 
 ### indexcov
 
-## resources
+# Resources
 
 * Snakemake docs: <https://snakemake.readthedocs.io/en/stable/>
 * Snakemake code examples: <https://codegists.com/code/snakefile/>
 * Useful rules repo: <https://github.com/percyfal/snakemake-rules>
 * Snakemake on SLURM: <https://hpc.nih.gov/apps/snakemake.html>
+
+# Tips
+
+### expand
+Snakemake has a function in `snakemake.io` called `expand` which helps you
+'expand' different
+file lists as in the following:
+
+```
+PLOTFORMATS = ["pdf", "png"]
+DATASETS = ["ds1", "ds2"]
+```
+* `expand("{dataset}/file.txt", dataset = DATASETS)`
+
+Output:
+```
+["ds1/file.txt", "ds2/file.txt"]
+```
+
+* `expand("{dataset}/file.{ext}", dataset=DATASETS, ext=PLOTFORMATS)`
+
+Output:
+```
+["ds1/file.pdf", "ds2/file.pdf", "ds1/file.png", "ds2/file.pdf"]
+```
+
+* `expand(["{dataset}/plot1.{ext}", "{dataset}/plot2.{ext}"], dataset=DATASETS, ext=PLOTFORMATS)`
+
+Output:
+```
+["ds1/plot1.pdf", "ds1/plot2.pdf", "ds2/plot1.pdf", "ds2/plot2.pdf",
+"ds1/plot1.png", "ds1/plot2.png", "ds2/plot1.png", "ds2/plot2.png"]
+```
+
+* `expand("{dataset}/plot1.{ext} {dataset}/plot2.{ext}".split(), zip, dataset=DATASETS, ext=PLOTFORMATS)`
+
+Output:
+```
+["ds1/plot1.pdf", "ds1/plot2.pdf", "ds2/plot1.png", "ds2/plot2.png"]
+```
+
+* `expand("{{dataset}}/plot1.{ext}", ext=PLOTFORMATS)`
+
+Output:
+```
+['{dataset}/plot1.pdf', '{dataset}/plot1.png']
+```
+
