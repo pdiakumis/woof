@@ -19,3 +19,7 @@ def bam_from_alias(config, batch, alias):
 def aliases_from_batch(config, batch):
     d = config['samples'][batch]
     return [*d]
+
+def abspath_from_fname(config, fname):
+    d = config['validate'][fname]
+    return d['abspath']
