@@ -19,7 +19,7 @@ rule cobalt_run:
         jar = config['tools']['purple']['cobalt']['jar']
     log:
         log = join(config['woof']['final_dir'], 'logs', '{batch}/{tumor_alias}_cobalt.log')
-    threads: 24
+    threads: 32
     shell:
         'echo "[$(date)] start {rule} with wildcards: {wildcards}" > {log.log}; '
         'java -jar {params.jar} '
