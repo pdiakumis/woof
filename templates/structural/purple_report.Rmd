@@ -27,11 +27,12 @@ require(rock, lib.loc = "/Users/pdiakumis/rock/master")
 ```
 
 ```{r render_interactively, eval=FALSE, echo=FALSE}
+params <- list(tumor_name = "CCR180038_SV18T002P006", 
+              results_dir = "/Users/pdiakumis/Desktop/projects/umccr/patients/SVP0006/purple/tumor")
 render_me <- function() {
   rmarkdown::render("purple_report.Rmd",
-                    params = list(tumor_name = "PRJ180467_P045_FFPE_tumour", 
-                                  results_dir = "/Users/pdiakumis/Desktop/projects/umccr/tothill_projects/data/collibri/purple/P045")
-                    )
+                    output_file = file.path(params$results_dir, paste0(params$tumor_name, "_purple_report.html")),
+                    params = params)
 }
 
 render_me()
