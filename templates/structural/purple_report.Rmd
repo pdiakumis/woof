@@ -23,7 +23,7 @@ require(readr)
 require(glue)
 require(devtools)
 require(DT)
-require(rock, lib.loc = "/Users/pdiakumis/rock/master")
+require(rock)
 ```
 
 ```{r render_interactively, eval=FALSE, echo=FALSE}

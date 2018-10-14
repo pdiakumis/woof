@@ -13,13 +13,14 @@ include: join(WOOF_RULES, "purple/pileup.smk")
 include: join(WOOF_RULES, "purple/amber.smk")
 include: join(WOOF_RULES, "purple/sv_prep.smk")
 include: join(WOOF_RULES, "purple/purple.smk")
+include: join(WOOF_RULES, "purple/purple_report.smk")
 
 batches = config['samples'].keys()
 
 rule all:
     input:
         expand(
-            join(config['tools']['purple']['outdir'], '{batch}', 'purple/{tumor_alias}.purple.cnv'),
+            join(config['tools']['purple']['outdir'], '{batch}', 'purple/{tumor_alias}.purple_report.html'),
             zip,
             batch = batches,
             tumor_alias = [alias_from_pheno(config, b, 'tumor') for b in batches]

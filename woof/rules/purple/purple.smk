@@ -37,3 +37,4 @@ rule purple_run:
         '-somatic_vcf {params.ensemble_snv} '
         '-circos ${{circos_path}} >> {log.log} 2>&1; '
         'echo "[$(date)] end {rule} with wildcards: {wildcards}" >> {log.log}; '
+
