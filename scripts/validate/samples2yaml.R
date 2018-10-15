@@ -2,17 +2,31 @@ require(dplyr)
 require(fs)
 require(readr)
 require(yaml)
-require(rock)
+# require(rock)
+
+guess_file_type <- function(file) {
+  dplyr::case_when(
+    grepl("fastq.gz$", file) ~ "FASTQ",
+    grepl("fastq$", file) ~ "FASTQ",
+    grepl("fq$", file) ~ "FASTQ",
+    grepl("fq.gz$", file) ~ "FASTQ",
+    grepl("bam$", file) ~ "BAM",
+    grepl("sam$", file) ~ "SAM",
+    grepl("vcf$", file) ~ "VCF",
+    grepl("vcf.gz$", file) ~ "VCF",
+    grepl("txt$", file) ~ "TXT",
+    grepl("csv$", file) ~ "CSV",
+    TRUE ~ "Other")
+}
 
 # what files do we have in the given directory
-data_dir <- "/Users/pdiakumis/Downloads/fastq_invalid_tests"
+data_dir <- "/data/cephfs/punim0010/projects/Diakumis/Diakumis_aws/batch1"
 d <- data_dir %>%
-  fs::dir_ls() %>%
+  list.files(full.names = TRUE) %>%
   tibble::as_tibble() %>%
   purrr::set_names("abspath") %>%
-  dplyr::mutate(fname = fs::path_file(abspath),
-                ftype = rock:::guess_file_type(fname))
-  # dplyr::filter(ftype == "FASTQ")
+  dplyr::mutate(fname = basename(abspath),
+                ftype = guess_file_type(fname))
 
 stopifnot(!any(duplicated(d$fname)))
 
