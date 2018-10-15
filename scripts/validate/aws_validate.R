@@ -2,12 +2,12 @@ require(tidyverse)
 require(fs)
 
 manifest <-
-  read_tsv("manifest.txt",  skip = 1, col_types = "ccc",
+  read_tsv("../../data/aws_validate/manifest.txt",  skip = 1, col_types = "ccc",
            col_names = c("id", "data_type", "file")) %>%
   arrange(id)
 
 fsizes <-
-  read_delim("file_sizes.txt", delim = ",", col_types = "cc",
+  read_delim("../../data/aws_validate/file_sizes.txt", delim = ",", col_types = "cc",
              col_names = c("size", "file")) %>%
   mutate(size = readr::parse_number(size))
 
@@ -34,9 +34,13 @@ df %>%
 df %>%
   group_by(file_type) %>%
   summarise(mean_size = sum(size)/n(),
-            med_size = median(size))
+            med_size = median(size),
+            tot_size = sum(size))
 
 # mito size
 df %>%
-  filter(data_type == "Mitochondrial") %>%
-  pull(size) %>% mean %>% as_fs_bytes()
+  filter(data_type == "Mitochondrial")
+  # pull(size) %>% mean %>% as_fs_bytes()
+
+length(table(df$id))
+
