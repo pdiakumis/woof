@@ -20,6 +20,10 @@ def aliases_from_batch(config, batch):
     d = config['samples'][batch]
     return [*d]
 
-def abspath_from_fname(config, fname):
-    d = config['validate'][fname]
+def abspath_from_fname(config, batch, fname):
+    d = config['validate'][batch][fname]
     return d['abspath']
+
+def ftype_from_fname(config, batch, fname):
+    d = config['validate'][batch][fname]
+    return d['ftype']

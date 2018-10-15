@@ -11,11 +11,13 @@ include: "../main_settings.py"
 include: join(WOOF_RULES, "fqtools/fqtools_validate.smk")
 
 vd = config['validate']
-fnames = [k for k in vd]
+batch = [b for b in vd]
+fnames = [f for f in vd[batch[0]]]
 
 rule all:
     input:
         expand(
-            join(config['tools']['fqtools']['validate']['outdir'], '{fname}_valid.txt'),
-            fname = fnames
+            join(config['tools']['fqtools']['validate']['outdir'], '{batch}', '{fname}_valid.txt'),
+            fname = fnames,
+            batch = batch
         )
