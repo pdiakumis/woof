@@ -1,8 +1,6 @@
 require(dplyr)
-require(fs)
-require(readr)
+require(purrr)
 require(yaml)
-# require(rock)
 
 guess_file_type <- function(file) {
   dplyr::case_when(
@@ -21,9 +19,10 @@ guess_file_type <- function(file) {
 
 # what files do we have in the given directory
 data_dir <- "/data/cephfs/punim0010/projects/Diakumis/Diakumis_aws/batch1"
+# data_dir <- "/Users/pdiakumis/Downloads/batch1"
 d <- data_dir %>%
   list.files(full.names = TRUE) %>%
-  tibble::as_tibble() %>%
+  dplyr::as_tibble() %>%
   purrr::set_names("abspath") %>%
   dplyr::mutate(fname = basename(abspath),
                 ftype = guess_file_type(fname))
@@ -43,7 +42,7 @@ for (i in 1:nrow(d)) {
 }
 
 l <- list(l)
-names(l) <- basename(data_dir)
+names(l) <- data_dir %>% gsub("\\/", '_', .) %>% sub("_", "", .)
 
 cat(yaml::as.yaml(l))
 write(yaml::as.yaml(l), file = "../../config/validate.yaml")
