@@ -33,6 +33,11 @@ hpc_dict = {
         'woof_data' : '/Users/pdiakumis/extras/woof/data',
         'ref_fasta' : '/Users/pdiakumis/extras/woof/data/genomes/Hsapiens/GRCh37/seq/GRCh37.fa',
         },
+    'aws' : {
+        'extras' : '/home/ubuntu/extras',
+        'woof_data' : '/home/ubuntu/extras/woof/data',
+        'ref_fasta' : '/home/ubuntu/extras/woof/data/genomes/Hsapiens/GRCh37/seq/GRCh37.fa'
+        },
 }
 
 hostname = get_hostname()
@@ -43,6 +48,8 @@ elif re.match(r'^raijin|(r\d+$)', hostname):
     hostname = 'RAIJIN'
 elif re.match(r'^5180L-133629-M.local$', hostname):
     hostname = 'peter'
+elif re.match(r'^ip*', hostname):
+    hostname = 'aws'
 else:
     critical(f'ERROR: could not detect location by hostname {hostname}')
 
