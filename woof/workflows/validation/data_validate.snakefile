@@ -12,6 +12,7 @@ include: "../main_settings.py"
 include: join(WOOF_RULES, "fqtools/fqtools_validate.smk")
 include: join(WOOF_RULES, "vcfvalidator/vcfvalidator_run.smk")
 include: join(WOOF_RULES, "samtools/samtools_quickcheck.smk")
+include: join(WOOF_RULES, "md5sum/md5sum_run.smk")
 
 vd = config['validate']
 batch = [b for b in vd][0]
@@ -33,4 +34,9 @@ rule all:
         expand(
             join(config['tools']['samtools']['quickcheck']['outdir'], '{batch}/{fname}_valid_summary.txt'),
             fname = bam,
+            batch = batch),
+        expand(
+            join(config['tools']['md5sum']['outdir'], '{batch}/{fname}_md5sum.txt'),
+            fname = chain.from_iterable([fastq, bam, vcf]),
             batch = batch)
+
