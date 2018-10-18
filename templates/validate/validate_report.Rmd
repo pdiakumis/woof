@@ -1,0 +1,206 @@
+---
+author: "University of Melboune"
+date: "`r format(Sys.time(), '%a %Y-%b-%d')`"
+output:
+  html_document:
+    keep_md: yes
+    theme: readable
+    toc: true
+    toc_float: true
+    code_folding: hide
+  rmdformats::material:
+    highlight: kate
+params:
+  batch_name: "x"
+  results_dir: "x"
+  title: "Data Validation Summary"
+title: "`r paste0(params$batch_name, '\n\n', params$title)`"
+---
+
+```{r load-pkgs, message=FALSE}
+require(dplyr)
+require(readr)
+require(glue)
+require(DT)
+require(rock)
+require(devtools)
+require(kableExtra)
+```
+
+```{r render_interactively, eval=FALSE, echo=FALSE}
+render_me <- function() {
+  rmarkdown::render(
+    "validate_report.Rmd",
+    params = list(
+      batch_name = "transfer_20180921162830", 
+      results_dir = "/Users/pdiakumis/Desktop/projects/umccr/woof/data/aws_validate/results/transfer_20180921162830")
+  )
+}
+
+render_me()
+```
+
+Introduction
+------------
+This report summarises the results from running different data validation tools
+on the BAM, FASTQ and VCF files in ``r params$batch_name``.
+
+Tools used include:
+
+- [fqtools](https://github.com/alastair-droop/fqtools)
+- [samtools quickcheck](https://github.com/samtools/samtools)
+- [vcf-validator](https://github.com/EBIvariation/vcf-validator)
+
+
+What was meant to be given
+--------------------------
+The ``r params$batch_name`` directory contains a `manifest.txt` file, which 
+lists the files that are meant to be in the directory:
+
+```{r}
+manifest <-
+  read_tsv(file.path(params$results_dir, "manifest.txt"), skip = 1, col_types = "ccc",
+           col_names = c("id", "data_type", "file")) %>%
+  mutate(ftype = case_when(
+    data_type == "Mitochondrial" ~ "FASTQ_Mito",
+    data_type == "WES (SureSelect CRE)" ~ "FASTQ_Exome",
+    data_type == "WES Alignment" ~  "BAM",
+    data_type == "WES Variants" ~ "VCF",
+    data_type == "WES VCF" ~ "VCF",
+    TRUE ~ "OTHER"
+  )) %>% 
+  arrange(id)
+
+datatable(manifest, extensions = c('Scroller'), 
+          options = list(scroller = TRUE, scrollX = TRUE, scrollY = 300))
+```
+
+What was actually given
+-----------------------
+The actual contents of the directory are:
+
+```{r}
+given_files <-
+  read_delim(file.path(params$results_dir, "file_sizes.txt"), delim = ",", col_types = "cc", 
+             col_names = c("size", "file")) %>% 
+  mutate(size = readr::parse_number(size)) %>%
+  mutate(size = fs::as_fs_bytes(size))
+
+datatable(given_files, extensions = c('Scroller'), 
+          options = list(scroller = TRUE, scrollX = TRUE, scrollY = 300))
+```
+
+
+Results
+-------
+Let's check if we got what we meant to:
+
+```{r}
+sample_ids <- readxl::read_xlsx(
+  "../../data/aws_validate/sample_ids/DEIDENTIFIED_Mito_Data_Extraction_WES_VCGS_180815.xlsx") %>% 
+  dplyr::select(study_num = `Study Number:`, 
+                sex = `Sex of patient:`, 
+                id = `Clinical Exome Sample Number`) %>% 
+  dplyr::slice(-n())
+
+comp_df <- dplyr::left_join(manifest, given_files, by = "file") %>% 
+  dplyr::left_join(sample_ids, by = "id")
+
+all(c(nrow(manifest), nrow(given_files)) == nrow(comp_df)) &&
+  all(complete.cases(comp_df))
+
+```
+
+Now let's see if we got the same type of files for all samples:
+
+```{r}
+addmargins(table(comp_df$ftype, useNA = "ifany")) %>% 
+  dplyr::as_tibble() %>% 
+  purrr::set_names(c("File_Type", "n")) %>% 
+  knitr::kable() %>% 
+  kableExtra::kable_styling(full_width = FALSE) %>% 
+  kableExtra::column_spec(1, bold = TRUE)
+
+f_per_sample <- comp_df %>%
+  dplyr::group_by(study_num, ftype) %>% 
+  dplyr::summarise(n = n()) %>% 
+  tidyr::spread(ftype, n) %>% 
+  tidyr::replace_na(list(BAM = 0, FASTQ_Exome = 0, FASTQ_Mito = 0, VCF = 0)) %>% 
+  dplyr::arrange(study_num)
+
+
+f_per_sample %>%  
+  datatable(extensions = c('Scroller'), 
+            options = list(scroller = TRUE, scrollX = TRUE, scrollY = 300)) %>% 
+  formatStyle(
+    2:5,
+    backgroundColor = styleInterval(0, c('#e6c3c3', '#c3e6c3'))
+  )
+  
+```
+
+Several samples are missing Mitochondrial FASTQ files, but the Exome FASTQs, BAMs
+and VCFs are available for all samples.
+
+Now let's see if the datasets are valid.
+
+* `fqtools` was run on the FASTQ and BAM files
+* `samtools quickcheck` was run on the BAM files
+* `vcf-validator` was run on the VCF files
+* `md5sum` was run on all files
+
+```{r}
+fqtools_fnames <- list.files(
+  file.path(params$results_dir, "validate/fqtools"), 
+  full.names = TRUE)
+fq_res <- purrr::map(fqtools_fnames, read_lines, n_max = 1) %>%
+  purrr::set_names(sub("_valid_summary.txt", "", basename(fqtools_fnames))) %>% 
+  dplyr::bind_rows() %>% 
+  tidyr::gather(key = "file_name", value = "fqtools")
+
+samquick_fnames <- list.files(file.path(params$results_dir, "validate/samtools_quickcheck"), full.names = TRUE)
+samquick_res <- purrr::map(samquick_fnames, read_lines, n_max = 1) %>%
+  purrr::set_names(sub("_valid_summary.txt", "", basename(samquick_fnames))) %>% 
+  dplyr::bind_rows() %>% 
+  tidyr::gather(key = "file_name", value = "quickcheck") %>% 
+  dplyr::mutate(quickcheck = toupper(quickcheck))
+
+vcfval_fnames <- list.files(file.path(params$results_dir, "validate/vcfvalidator"), full.names = TRUE)
+vcfval_res <- purrr::map(vcfval_fnames, read_lines, n_max = 1) %>%
+  purrr::set_names(sub("_valid_summary.txt", "", basename(vcfval_fnames))) %>% 
+  purrr::map(function(x) ifelse(length(x) > 0, "ok", "fail")) %>% 
+  dplyr::bind_rows() %>% 
+  tidyr::gather(key = "file_name", value = "vcfvalidate") %>% 
+  dplyr::mutate(vcfvalidate = toupper(vcfvalidate))
+
+md5_fnames <- list.files(file.path(params$results_dir, "validate/md5sum"), full.names = TRUE)
+md5_res <- purrr::map(md5_fnames, function(x) { 
+  readr::read_table2(x, col_names = c("md5sum", "file_name"), col_types = "cc") %>%
+    dplyr::mutate(file_name = basename(file_name)) %>% 
+    dplyr::select(file_name, md5sum)
+  }) %>%
+  purrr::set_names(sub("_md5sum.txt", "", basename(md5_fnames))) %>% 
+  dplyr::bind_rows()
+```
+
+### All together
+
+```{r}
+# start with md5 since it's been run on all files
+res <-  dplyr::left_join(md5_res, fq_res, by = "file_name") %>% 
+  dplyr::left_join(samquick_res, by = "file_name") %>% 
+  dplyr::left_join(vcfval_res, by = "file_name") %>% 
+  dplyr::select(file_name, fqtools:vcfvalidate, md5sum)
+
+datatable(res, extensions = c('Scroller'), 
+          options = list(scroller = TRUE, scrollX = TRUE, scrollY = 600),
+          caption = htmltools::tags$caption(
+            style = 'caption-side: bottom; text-align: center;',
+            htmltools::em('Green: OK; White: NA; Red: FAIL'))) %>% 
+  formatStyle(
+    2:4,
+    backgroundColor = styleEqual(c(NA, "FAIL", "OK"), c('white', '#e6c3c3', '#c3e6c3'))
+  )
+
+```
+

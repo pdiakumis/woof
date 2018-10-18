@@ -14,12 +14,14 @@ guess_file_type <- function(file) {
     grepl("vcf.gz$", file) ~ "VCF",
     grepl("txt$", file) ~ "TXT",
     grepl("csv$", file) ~ "CSV",
+    grepl("md5$", file) ~ "MD5",
     TRUE ~ "Other")
 }
 
 # what files do we have in the given directory
-data_dir <- "/data/cephfs/punim0010/projects/Diakumis/Diakumis_aws/batch1"
 # data_dir <- "/Users/pdiakumis/Downloads/batch1"
+# data_dir <- "/mnt/agha_data/transfer_20180921162830"
+data_dir <- "/mnt/agha_data/vcgs_2018091320405"
 d <- data_dir %>%
   list.files(full.names = TRUE) %>%
   dplyr::as_tibble() %>%
