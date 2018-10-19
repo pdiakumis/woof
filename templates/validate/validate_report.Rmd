@@ -1,9 +1,9 @@
 ---
-author: "University of Melboune"
+author: "University of Melbourne Centre for Cancer Research"
 date: "`r format(Sys.time(), '%a %Y-%b-%d')`"
 output:
   html_document:
-    keep_md: yes
+    keep_md: false
     theme: readable
     toc: true
     toc_float: true
@@ -32,10 +32,9 @@ render_me <- function() {
   rmarkdown::render(
     "validate_report.Rmd",
     params = list(
-      batch_name = "transfer_20180921162830", 
-      results_dir = "/Users/pdiakumis/Desktop/projects/umccr/woof/data/aws_validate/results/transfer_20180921162830")
-  )
-}
+      batch_name = "vcgs_2018091320405", 
+      results_dir = "/Users/pdiakumis/Desktop/projects/umccr/woof/data/aws_validate/results/vcgs_2018091320405")
+  )}
 
 render_me()
 ```
@@ -54,12 +53,12 @@ Tools used include:
 
 What was meant to be given
 --------------------------
-The ``r params$batch_name`` directory contains a `manifest.txt` file, which 
+The ``r params$batch_name`` directory contains a `metadata.txt` file, which 
 lists the files that are meant to be in the directory:
 
-```{r}
-manifest <-
-  read_tsv(file.path(params$results_dir, "manifest.txt"), skip = 1, col_types = "ccc",
+```{r eval=FALSE}
+metadata <-
+  read_tsv(file.path(params$results_dir, "metadata.txt"), skip = 1, col_types = "ccc",
            col_names = c("id", "data_type", "file")) %>%
   mutate(ftype = case_when(
     data_type == "Mitochondrial" ~ "FASTQ_Mito",
@@ -67,24 +66,30 @@ manifest <-
     data_type == "WES Alignment" ~  "BAM",
     data_type == "WES Variants" ~ "VCF",
     data_type == "WES VCF" ~ "VCF",
-    TRUE ~ "OTHER"
-  )) %>% 
+    TRUE ~ "OTHER")) %>% 
   arrange(id)
 
-datatable(manifest, extensions = c('Scroller'), 
+datatable(metadata, extensions = c('Scroller'), 
           options = list(scroller = TRUE, scrollX = TRUE, scrollY = 300))
 ```
 
 What was actually given
 -----------------------
-The actual contents of the directory are:
+The actual contents of the directory are (ignoring provided md5sum files):
 
 ```{r}
 given_files <-
   read_delim(file.path(params$results_dir, "file_sizes.txt"), delim = ",", col_types = "cc", 
              col_names = c("size", "file")) %>% 
-  mutate(size = readr::parse_number(size)) %>%
-  mutate(size = fs::as_fs_bytes(size))
+  mutate(size = as.character(fs::fs_bytes(size)),
+         ftype = rock:::guess_file_type(file),
+         ftype = case_when(
+           grepl("md5$", file) ~ "MD5",
+           TRUE ~ ftype
+         )) %>% 
+  filter(!ftype %in% c("MD5", "TXT")) %>% 
+  select(-ftype)
+  
 
 datatable(given_files, extensions = c('Scroller'), 
           options = list(scroller = TRUE, scrollX = TRUE, scrollY = 300))
@@ -103,20 +108,19 @@ sample_ids <- readxl::read_xlsx(
                 id = `Clinical Exome Sample Number`) %>% 
   dplyr::slice(-n())
 
-comp_df <- dplyr::left_join(manifest, given_files, by = "file") %>% 
+comp_df <- dplyr::left_join(metadata, given_files, by = "file") %>% 
   dplyr::left_join(sample_ids, by = "id")
 
-all(c(nrow(manifest), nrow(given_files)) == nrow(comp_df)) &&
+all(c(nrow(metadata), nrow(given_files)) == nrow(comp_df)) &&
   all(complete.cases(comp_df))
-
 ```
 
 Now let's see if we got the same type of files for all samples:
 
 ```{r}
-addmargins(table(comp_df$ftype, useNA = "ifany")) %>% 
-  dplyr::as_tibble() %>% 
-  purrr::set_names(c("File_Type", "n")) %>% 
+addmargins(table(comp_df$ftype, useNA = "ifany")) %>%
+  dplyr::as_tibble() %>%
+  purrr::set_names(c("File_Type", "n")) %>%
   knitr::kable() %>% 
   kableExtra::kable_styling(full_width = FALSE) %>% 
   kableExtra::column_spec(1, bold = TRUE)
@@ -139,14 +143,15 @@ f_per_sample %>%
   
 ```
 
-Several samples are missing Mitochondrial FASTQ files, but the Exome FASTQs, BAMs
-and VCFs are available for all samples.
+* One sample (`A0121006`/`17W000391`) doesn't have a BAM
+* Several samples are missing Mitochondrial FASTQ files 
+* The Exome FASTQs are all there
+* There are no VCFs in this batch
 
 Now let's see if the datasets are valid.
 
 * `fqtools` was run on the FASTQ and BAM files
 * `samtools quickcheck` was run on the BAM files
-* `vcf-validator` was run on the VCF files
 * `md5sum` was run on all files
 
 ```{r}
@@ -165,14 +170,6 @@ samquick_res <- purrr::map(samquick_fnames, read_lines, n_max = 1) %>%
   tidyr::gather(key = "file_name", value = "quickcheck") %>% 
   dplyr::mutate(quickcheck = toupper(quickcheck))
 
-vcfval_fnames <- list.files(file.path(params$results_dir, "validate/vcfvalidator"), full.names = TRUE)
-vcfval_res <- purrr::map(vcfval_fnames, read_lines, n_max = 1) %>%
-  purrr::set_names(sub("_valid_summary.txt", "", basename(vcfval_fnames))) %>% 
-  purrr::map(function(x) ifelse(length(x) > 0, "ok", "fail")) %>% 
-  dplyr::bind_rows() %>% 
-  tidyr::gather(key = "file_name", value = "vcfvalidate") %>% 
-  dplyr::mutate(vcfvalidate = toupper(vcfvalidate))
-
 md5_fnames <- list.files(file.path(params$results_dir, "validate/md5sum"), full.names = TRUE)
 md5_res <- purrr::map(md5_fnames, function(x) { 
   readr::read_table2(x, col_names = c("md5sum", "file_name"), col_types = "cc") %>%
@@ -189,8 +186,7 @@ md5_res <- purrr::map(md5_fnames, function(x) {
 # start with md5 since it's been run on all files
 res <-  dplyr::left_join(md5_res, fq_res, by = "file_name") %>% 
   dplyr::left_join(samquick_res, by = "file_name") %>% 
-  dplyr::left_join(vcfval_res, by = "file_name") %>% 
-  dplyr::select(file_name, fqtools:vcfvalidate, md5sum)
+  dplyr::select(file_name, fqtools, quickcheck, md5sum)
 
 datatable(res, extensions = c('Scroller'), 
           options = list(scroller = TRUE, scrollX = TRUE, scrollY = 600),
@@ -198,9 +194,43 @@ datatable(res, extensions = c('Scroller'),
             style = 'caption-side: bottom; text-align: center;',
             htmltools::em('Green: OK; White: NA; Red: FAIL'))) %>% 
   formatStyle(
-    2:4,
+    2:3,
     backgroundColor = styleEqual(c(NA, "FAIL", "OK"), c('white', '#e6c3c3', '#c3e6c3'))
   )
 
 ```
+
+## Check md5sums that we generated
+
+* Let's have a look at the `transfer_20180921162830` md5sums, and compare to the
+  files in this `vcgs_2018091320405` batch.
+
+
+```{r}
+md5_fnames_tr <- list.files(file.path(params$results_dir, "../transfer_20180921162830/validate/md5sum"), full.names = TRUE)
+md5_res_tr <- purrr::map(md5_fnames_tr, function(x) { 
+  readr::read_table2(x, col_names = c("md5sum", "file_name"), col_types = "cc") %>%
+    dplyr::mutate(file_name = basename(file_name)) %>% 
+    dplyr::select(file_name, md5sum)}) %>%
+  purrr::set_names(sub("_md5sum.txt", "", basename(md5_fnames_tr))) %>% 
+  dplyr::bind_rows()
+
+table(md5_res$file_name %in% md5_res_tr$file_name, useNA = 'ifany')
+table(md5_res_tr$file_name %in% md5_res$file_name, useNA = 'ifany')
+
+table(md5_res$md5sum %in% md5_res_tr$md5sum, useNA = 'ifany')
+table(md5_res_tr$md5sum %in% md5_res$md5sum, useNA = 'ifany')
+
+md5_res_tr %>% 
+  filter(!md5sum %in% md5_res$md5sum) %>% 
+  mutate(ftype = rock:::guess_file_type(file_name)) %>% 
+  filter(ftype == "BAM")
+```
+
+
+## Check md5sums against the ones provided TODO
+
+```{r}
+```
+
 
