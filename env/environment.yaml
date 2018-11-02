@@ -12,15 +12,15 @@ dependencies:
   - click>=7.0
   - htslib=1.3.1                                   # for facets
   - java-jdk>=8.0.92                                # for purple
-  - libgd>=2.2.5                                    # for circos
+  - libgd=2.2.5=3                                    # for circos
   - ncurses>=5.9                                    # for samtools - https://github.com/bioconda/bioconda-recipes/issues/8210
   - ngs_utils                                      # vlad
   - pandoc=2.2.2
   - perl=5.22.0                                    # for circos
   - python>=3.6
-  - pythonpy=0.4.2
+  - pythonpy>=0.4.2
   - snakemake
-  - samtools=1.9
+  - samtools>=1.9
   - sambamba=0.6.6                                 # for amber pileup
   - r-base=3.4.1
   - r-devtools=1.13.6
