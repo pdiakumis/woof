@@ -9,6 +9,7 @@ rule manta_sv_prep:
         manta_sv_filtered = join(config['tools']['purple']['outdir'], '{batch}', 'purple/{tumor_alias}.manta_filtered.vcf')
     log:
         log = join(config['woof']['final_dir'], 'logs', '{batch}/{tumor_alias}_purple_manta_sv_prep.log')
+    priority: -50
     shell: """
         echo "[$(date)] start {rule} with wildcards: {wildcards}" > {log.log};
         gunzip -c {input.manta_sv} |
