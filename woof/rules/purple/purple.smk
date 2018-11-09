@@ -8,7 +8,7 @@ rule purple_run:
     input:
         cobalt_dummy = lambda wc: join(config['tools']['purple']['outdir'], wc.batch, 'cobalt', alias_from_pheno(config, wc.batch, 'tumor') + '.cobalt'),
         amber_dummy = lambda wc: join(config['tools']['purple']['outdir'], wc.batch, 'amber', alias_from_pheno(config, wc.batch, 'tumor') + '.amber.baf'),
-        manta_sv_filtered = lambda wc: join(config['tools']['purple']['outdir'], wc.batch, 'purple', alias_from_pheno(config, wc.batch, 'tumor') + '.manta_filtered.vcf')
+        manta_sv_filtered = lambda wc: config['bcbio'][wc.batch]['manta_svpri']
     output:
         segs = join(config['tools']['purple']['outdir'], '{batch}', 'purple/{tumor_alias}.purple.cnv')
     params:

@@ -11,7 +11,6 @@ include: "../main_settings.py"
 include: join(WOOF_RULES, "purple/cobalt.smk")
 include: join(WOOF_RULES, "purple/pileup.smk")
 include: join(WOOF_RULES, "purple/amber.smk")
-include: join(WOOF_RULES, "purple/sv_prep.smk")
 include: join(WOOF_RULES, "purple/purple.smk")
 include: join(WOOF_RULES, "purple/purple_report.smk")
 
