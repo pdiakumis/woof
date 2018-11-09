@@ -1,7 +1,7 @@
 include: 'purple_settings.py'
 
 config['tools']['purple']['cobalt'] = {
-    'jar' : join(config['tools']['purple']['hmf_data']['dir'], 'cobalt-1.4.jar')
+    'jar' : join(config['tools']['purple']['hmf_data']['dir'], 'cobalt-1.5.jar')
 }
 
 

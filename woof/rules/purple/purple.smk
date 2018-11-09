@@ -1,7 +1,7 @@
 include: 'purple_settings.py'
 
 config['tools']['purple']['purple'] = {
-    'jar' : join(config['tools']['purple']['hmf_data']['dir'], 'purple-2.14.jar'),
+    'jar' : join(config['tools']['purple']['hmf_data']['dir'], 'purple-2.17.jar'),
 }
 
 rule purple_run:
