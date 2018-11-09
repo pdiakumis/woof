@@ -1,5 +1,5 @@
 ---
-author: "Peter Diakumis (UMCCR)"
+author: "University of Melbourne Centre for Cancer Research"
 date: "`r format(Sys.time(), '%a %Y-%b-%d')`"
 output:
   html_document:
@@ -27,8 +27,8 @@ require(rock)
 ```
 
 ```{r render_interactively, eval=FALSE, echo=FALSE}
-params <- list(tumor_name = "CCR180038_SV18T002P006", 
-              results_dir = "/Users/pdiakumis/Desktop/projects/umccr/patients/SVP0006/purple/tumor")
+params <- list(tumor_name = "PRJ180580_P055_Cells", 
+              results_dir = "/Users/pdiakumis/Desktop/projects/umccr/patients/P055/purple")
 render_me <- function() {
   rmarkdown::render("purple_report.Rmd",
                     output_file = file.path(params$results_dir, paste0(params$tumor_name, "_purple_report.html")),
@@ -107,7 +107,7 @@ knitr::include_graphics(file.path(plot_path, paste0(params$tumor_name, ".input.p
 
 ### Plot 3: Total/Minor CN, SVs, BAF
 
-```{r circos-baf-prep, eval=TRUE}
+```{r circos-baf-prep, message=FALSE, warning=FALSE}
 rock::plot_circos_baf(purple_dir = purple_circos_dir, out_dir = file.path(purple_circos_dir, "baf_circos"), tumor_name = params$tumor_name)
 ```
 
@@ -135,7 +135,7 @@ tribble(~key, ~value,
   knitr::kable()
 ```
 
-## AZ300 Gene Somatic CNV Calls
+## AZ300 + UMCCR Gene Somatic CNV Calls
 
 ```{r gene-tab}
 fn_gene <- file.path(params$results_dir, paste0(params$tumor_name, ".purple.gene.cnv"))
@@ -144,12 +144,19 @@ df <- readr::read_tsv(fn_gene, col_types = cols(.default = col_character()), ski
   dplyr::mutate(start = as.integer(start), end = as.integer(end),
                 min_cn = as.double(min_cn), max_cn = as.double(max_cn))
 
-az300 <- readr::read_tsv(system.file("extdata", "az300.bed", package = "pebbles"), 
-                         col_names = c("chrom", "start", "end", "gene"),
-                         col_types = "ciic")
+az300_genes <- readr::read_tsv(
+  system.file("extdata", "az300.bed", package = "pebbles"), 
+  col_names = c("chrom", "start", "end", "gene"), col_types = "ciic") %>% 
+  dplyr::pull(gene)
+
+umccr_genes <- readr::read_tsv("~/Desktop/projects/umccr/woof/templates/structural/cancer_genes.txt", col_names = "gene", col_types = "c") %>% 
+  dplyr::pull(gene)
+
+all_genes <- union(az300_genes, umccr_genes)
+  
 
 df %>% 
-  filter(gene %in% az300$gene) %>% 
+  filter(gene %in% c(az300_genes, umccr_genes)) %>% 
   DT::datatable(filter = "top", rownames = FALSE) %>% 
   DT::formatCurrency(~ start + end, currency = "", interval = 3, mark = ",", digits = 0) %>% 
   DT::formatRound(~ min_cn + max_cn)
@@ -162,7 +169,7 @@ df %>%
 fn_som <- file.path(params$results_dir, paste0(params$tumor_name, ".purple.cnv"))
 fn_germ <- file.path(params$results_dir, paste0(params$tumor_name, ".purple.germline.cnv"))
 cnv_som <- rock::read_cnv(fn_som)
-cnv_germ <- readr::read_tsv(fn_germ, col_types = "ciiddddccc") %>%
+cnv_germ <- readr::read_tsv(fn_germ, col_types = "ciiddddcccdddd") %>%
   dplyr::select(chrom = `#chromosome`, start, end, tot_cn = copyNumber) %>% 
   dplyr::filter(.data$chrom != "MT")
 
@@ -173,8 +180,8 @@ cnv_all %>%
   mutate(sv_len = end - start) %>% 
   group_by(type) %>% 
   summarise(n = n(),
-            mean_len = round(mean(sv_len), 2),
-            med_len = round(median(sv_len), 2),
+            mean_len = round(mean(sv_len), 0),
+            med_len = round(median(sv_len), 0),
             min_cn = round(min(tot_cn), 2),
             max_cn = round(max(tot_cn), 2)) %>% 
   knitr::kable(format.args = list(big.mark = ","))
