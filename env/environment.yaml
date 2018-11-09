@@ -1,14 +1,12 @@
 channels:
+  - vladsaveliev
+  - pdiakumis
   - conda-forge
   - bioconda
   - defaults
-  - vladsaveliev
-  - pdiakumis
-  - raylim                                         # for facets
 dependencies:
   - bcftools=1.9
-  - boto3>=1.9.16
-  - circos>=0.69.6                                  # for circos
+  - circos                                  # for circos
   - click>=7.0
   - htslib=1.3.1                                   # for facets
   - java-jdk>=8.0.92                                # for purple
@@ -18,21 +16,14 @@ dependencies:
   - pandoc=2.2.2
   - perl=5.22.0                                    # for circos
   - python>=3.6
-  - pythonpy>=0.4.2
   - snakemake
   - samtools>=1.9
   - sambamba=0.6.6                                 # for amber pileup
-  - r-base=3.4.1
-  - r-devtools=1.13.6
-  - r-dt=0.4
-  - r-facets=0.5.2
-  - r-optparse=1.4.4
+  - r-base
+  - r-devtools
+  - r-dt
+  - r-optparse
   - r-rock                                        # peter
-  - r-reticulate=1.10
-  - r-rmarkdown=1.9
-  - r-tidyverse=1.1.1
-  - r-vcfr=1.5.0
-  - bioconductor-copynumber=1.18.0                 # for hmftools
-  - bioconductor-genomicranges=1.30.3
-  - bioconductor-omiccircos=1.16.0
+  - r-rmarkdown
+  - r-tidyverse
 
