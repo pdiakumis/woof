@@ -26,4 +26,5 @@ dependencies:
   - r-rock                                        # peter
   - r-rmarkdown
   - r-tidyverse
+  - bioconductor-copynumber                      # for purple
 
