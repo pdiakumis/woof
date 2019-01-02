@@ -14,4 +14,9 @@ setup(
     long_description_content_type = "text/markdown",
     url = "https://github.com/umccr/woof",
     packages = ["woof"],
-)
+    entry_points = {
+        'console_scripts': [
+            'woof = woof.__main__:main'
+            ]
+        }
+    )
