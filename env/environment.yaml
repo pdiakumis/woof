@@ -6,6 +6,7 @@ channels:
 dependencies:
   - bcftools
   - click>=7.0
+  - ldc=1.11.0        # for sambamba
   - python>=3.6
   - snakemake
   - sambamba
