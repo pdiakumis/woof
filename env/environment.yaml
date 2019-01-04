@@ -6,7 +6,10 @@ channels:
 dependencies:
   - bcftools
   - click>=7.0
+  - jinja2            # for snakemake report
   - ldc=1.11.0        # for sambamba
+  - networkx          # for snakemake report
+  - pygraphviz        # for snakemake report
   - python>=3.6
   - snakemake
   - sambamba
