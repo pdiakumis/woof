@@ -16,6 +16,10 @@ aliases = [aliases_from_batch(config, b) for b in batches]
 
 rule all:
     input:
-        expand(join(config['tools']['damest']['outdir'], 'bam/{batch}/{alias}_subsample.bam'), zip,
+        expand(join(config['tools']['damest']['outdir'], 'results/{batch}/{alias}_damage_estimate.txt'), zip,
+               batch = batches_rep,
+               alias = list(chain(*aliases))),
+        expand(join(config['tools']['damest']['outdir'], 'results/{batch}/{alias}_damage_estimate_pos.txt'), zip,
                batch = batches_rep,
                alias = list(chain(*aliases)))
+
