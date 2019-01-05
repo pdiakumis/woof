@@ -20,8 +20,8 @@ GetOptions (
 if (!($in_mp && $out_ct && $out_cp && $out_cc)) { die $error_message }
 
 my $baseq_min = 30;
-my $cov_min = 1;
-my $cov_max = 100;
+my $cov_min = 10;
+my $cov_max = 150;
 my $soft_masked = 1;
 my $context = 3;
 
