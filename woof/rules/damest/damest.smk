@@ -88,4 +88,49 @@ rule damest_run2:
         '--out {output.txt} 2>> {log.log}; '
         'echo "[$(date)] end {rule} with wildcards: {wildcards}" >> {log.log}; '
 
+rule count_mut:
+    """Count mutations in read pileup"""
+    input:
+        mpileup = join(config['tools']['damest']['outdir'], 'mpileup/{batch}/{alias}_f{flag}.mpileup')
+    output:
+        counts_tot = join(config['tools']['damest']['outdir'] + 'results2/{batch}/{alias}_f{flag}_counts_tot.tsv'),
+        counts_pos = join(config['tools']['damest']['outdir'] + 'results2/{batch}/{alias}_f{flag}_counts_pos.tsv'),
+        counts_con = join(config['tools']['damest']['outdir'] + 'results2/{batch}/{alias}_f{flag}_counts_con.tsv')
+    log:
+        log = join(config['woof']['final_dir'], 'logs', '{batch}/{alias}_damest_counts_f{flag}.log')
+    params:
+        perl_script = join(config['tools']['damest']['scripts'], 'count_mut.pl')
+    shell:
+        'echo "[$(date)] start {rule} with wildcards: {wildcards}" > {log.log}; '
+        '{params.perl_script} --in_mp {input.mpileup} '
+        '--out_ct {output.counts_tot} --out_cp {output.counts_pos} '
+        '--out_cc {output.counts_con} 2>> {log.log}; '
+        'echo "[$(date)] end {rule} with wildcards: {wildcards}" >> {log.log}; '
+
+rule estimate_damage:
+    """Estimate damage scores"""
+    input:
+        ct1 = join(config['tools']['damest']['outdir'] + 'results2/{batch}/{alias}_f64_counts_tot.tsv'),
+        ct2 = join(config['tools']['damest']['outdir'] + 'results2/{batch}/{alias}_f128_counts_tot.tsv'),
+        cp1 = join(config['tools']['damest']['outdir'] + 'results2/{batch}/{alias}_f64_counts_pos.tsv'),
+        cp2 = join(config['tools']['damest']['outdir'] + 'results2/{batch}/{alias}_f128_counts_pos.tsv'),
+        cc1 = join(config['tools']['damest']['outdir'] + 'results2/{batch}/{alias}_f64_counts_con.tsv'),
+        cc2 = join(config['tools']['damest']['outdir'] + 'results2/{batch}/{alias}_f128_counts_con.tsv')
+    output:
+        tot = join(config['tools']['damest']['outdir'] + 'results2/{batch}/{alias}_tot_damage.tsv'),
+        pos = join(config['tools']['damest']['outdir'] + 'results2/{batch}/{alias}_pos_damage.tsv'),
+        con = join(config['tools']['damest']['outdir'] + 'results2/{batch}/{alias}_con_damage.tsv')
+    log:
+        log = join(config['woof']['final_dir'], 'logs', '{batch}/{alias}_damest_run.log')
+    params:
+        perl_script = join(config['tools']['damest']['scripts'], 'damest.pl')
+    shell:
+        'echo "[$(date)] start {rule} with wildcards: {wildcards}" > {log.log}; '
+        '{params.perl_script} '
+        '--ct1 {input.ct1} --ct2 {input.ct2} '
+        '--cp1 {input.cp1} --cp2 {input.cp2} '
+        '--cc1 {input.cc1} --cc2 {input.cc2} '
+        '--out_tot {output.tot} --out_pos {output.pos} '
+        '--out_con {output.con} --id {wildcards.alias} 2>> {log.log}; '
+        'echo "[$(date)] end {rule} with wildcards: {wildcards}" >> {log.log}; '
 
