@@ -218,6 +218,7 @@ sub get_context_count {
 
     open (MPILEUP, $mpileup) or die "Can't open $mpileup\n";
     while (my $line = <MPILEUP>) {
+    $. % 10000000 == 0 and print STDERR "Read $. lines\n";
         $line =~ s/\r|\n//g;
         $l1 = $l2;
         $l2 = $l3;
