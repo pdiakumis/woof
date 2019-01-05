@@ -22,7 +22,7 @@ rule all:
         expand(join(config['tools']['damest']['outdir'], 'results/{batch}/{alias}_damage_estimate_pos.txt'), zip,
                batch = batches_rep,
                alias = list(chain(*aliases))),
-        expand(join(config['tools']['damest']['outdir'] + 'results2/{batch}/{alias}_tot_damage.tsv'), zip,
+        expand(join(config['tools']['damest']['outdir'], 'results2/{batch}/{alias}_tot_damage.tsv'), zip,
                 batch = batches_rep,
                 alias = list(chain(*aliases)))
 
