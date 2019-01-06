@@ -64,6 +64,8 @@ rule damest_run1:
         '{params.perl_script} '
         '--mpileup1 {input.mp1} '
         '--mpileup2 {input.mp2} '
+        '--min_coverage_limit 10 '
+        '--max_coverage_limit 150 '
         '--id {wildcards.alias} > {output.txt} 2>> {log.log}; '
         'echo "[$(date)] end {rule} with wildcards: {wildcards}" >> {log.log}; '
 
