@@ -4,7 +4,7 @@ include: 'damest_settings.py'
 rule damest_subsample_bam:
     """Use sambamba view to sample reads"""
     input:
-        bam = lambda wc: bam_from_alias(config, wc.batch, wc.alias) + '.bam'
+        bam = lambda wc: bam_from_alias(config, wc.batch, wc.alias)
     output:
         bam = join(config['tools']['damest']['outdir'], 'bam/{batch}/{alias}_subsample.bam')
     threads: 8

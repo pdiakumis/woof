@@ -1,28 +1,28 @@
 BriGib:
   BriGibFFPE:
-    bam: /data/cephfs/punim0010/data/Results/Patients/2017-10-20/final/BriGibFFPE/BriGibFFPE-ready
+    bam: /data/cephfs/punim0010/data/Results/Patients/2017-10-20/final/BriGibFFPE/BriGibFFPE-ready.bam
     name: BriGibFFPE
     phenotype: tumor
   BriGibBld:
-    bam: /data/cephfs/punim0010/data/Results/Patients/2017-10-20/final/BriGibBld/BriGibBld-ready
+    bam: /data/cephfs/punim0010/data/Results/Patients/2017-10-20/final/BriGibBld/BriGibBld-ready.bam
     name: BriGibBld
     phenotype: normal
 MHP013:
   WPT-013-organoid:
-    bam: /data/cephfs/punim0010/data/Results/Avner/2018-01-31/final/WPT-013-organoid/WPT-013-organoid-ready
+    bam: /data/cephfs/punim0010/data/Results/Avner/2018-01-31/final/WPT-013-organoid/WPT-013-organoid-ready.bam
     name: WPT-013-organoid
     phenotype: tumor
   WPT-013-normal:
-    bam: /data/cephfs/punim0010/data/Results/Avner/2018-01-31/final/WPT-013-normal/WPT-013-normal-ready
+    bam: /data/cephfs/punim0010/data/Results/Avner/2018-01-31/final/WPT-013-normal/WPT-013-normal-ready.bam
     name: WPT-013-normal
     phenotype: normal
 MHP031:
   17MHP031Tmr:
-    bam: /data/cephfs/punim0010/data/Results/Avner/2018-01-22/final/17MHP031Tmr/17MHP031Tmr-ready
+    bam: /data/cephfs/punim0010/data/Results/Avner/2018-01-22/final/17MHP031Tmr/17MHP031Tmr-ready.bam
     name: 17MHP031Tmr
     phenotype: tumor
   17MHP031Bld:
-    bam: /data/cephfs/punim0010/data/Results/Avner/2018-01-22/final/17MHP031Bld/17MHP031Bld-ready
+    bam: /data/cephfs/punim0010/data/Results/Avner/2018-01-22/final/17MHP031Bld/17MHP031Bld-ready.bam
     name: 17MHP031Bld
     phenotype: normal
 
