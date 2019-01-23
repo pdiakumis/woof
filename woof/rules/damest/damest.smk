@@ -95,9 +95,9 @@ rule count_mut:
     input:
         mpileup = join(config['tools']['damest']['outdir'], 'mpileup/{batch}/{alias}_f{flag}.mpileup')
     output:
-        counts_tot = join(config['tools']['damest']['outdir'], 'results2/{batch}/{alias}_f{flag}_counts_tot.tsv'),
-        counts_pos = join(config['tools']['damest']['outdir'], 'results2/{batch}/{alias}_f{flag}_counts_pos.tsv'),
-        counts_con = join(config['tools']['damest']['outdir'], 'results2/{batch}/{alias}_f{flag}_counts_con.tsv')
+        counts_tot = join(config['tools']['damest']['outdir'], 'results/{batch}/{alias}_f{flag}_counts_tot.tsv'),
+        counts_pos = join(config['tools']['damest']['outdir'], 'results/{batch}/{alias}_f{flag}_counts_pos.tsv'),
+        counts_con = join(config['tools']['damest']['outdir'], 'results/{batch}/{alias}_f{flag}_counts_con.tsv')
     log:
         log = join(config['woof']['final_dir'], 'logs', '{batch}/{alias}_damest_counts_f{flag}.log')
     params:
@@ -112,16 +112,16 @@ rule count_mut:
 rule estimate_damage:
     """Estimate damage scores"""
     input:
-        ct1 = join(config['tools']['damest']['outdir'], 'results2/{batch}/{alias}_f64_counts_tot.tsv'),
-        ct2 = join(config['tools']['damest']['outdir'], 'results2/{batch}/{alias}_f128_counts_tot.tsv'),
-        cp1 = join(config['tools']['damest']['outdir'], 'results2/{batch}/{alias}_f64_counts_pos.tsv'),
-        cp2 = join(config['tools']['damest']['outdir'], 'results2/{batch}/{alias}_f128_counts_pos.tsv'),
-        cc1 = join(config['tools']['damest']['outdir'], 'results2/{batch}/{alias}_f64_counts_con.tsv'),
-        cc2 = join(config['tools']['damest']['outdir'], 'results2/{batch}/{alias}_f128_counts_con.tsv')
+        ct1 = join(config['tools']['damest']['outdir'], 'results/{batch}/{alias}_f64_counts_tot.tsv'),
+        ct2 = join(config['tools']['damest']['outdir'], 'results/{batch}/{alias}_f128_counts_tot.tsv'),
+        cp1 = join(config['tools']['damest']['outdir'], 'results/{batch}/{alias}_f64_counts_pos.tsv'),
+        cp2 = join(config['tools']['damest']['outdir'], 'results/{batch}/{alias}_f128_counts_pos.tsv'),
+        cc1 = join(config['tools']['damest']['outdir'], 'results/{batch}/{alias}_f64_counts_con.tsv'),
+        cc2 = join(config['tools']['damest']['outdir'], 'results/{batch}/{alias}_f128_counts_con.tsv')
     output:
-        tot = join(config['tools']['damest']['outdir'], 'results2/{batch}/{alias}_tot_damage.tsv'),
-        pos = join(config['tools']['damest']['outdir'], 'results2/{batch}/{alias}_pos_damage.tsv'),
-        con = join(config['tools']['damest']['outdir'], 'results2/{batch}/{alias}_con_damage.tsv')
+        tot = join(config['tools']['damest']['outdir'], 'results/{batch}/{alias}_tot_damage.tsv'),
+        pos = join(config['tools']['damest']['outdir'], 'results/{batch}/{alias}_pos_damage.tsv'),
+        con = join(config['tools']['damest']['outdir'], 'results/{batch}/{alias}_con_damage.tsv')
     log:
         log = join(config['woof']['final_dir'], 'logs', '{batch}/{alias}_damest_run.log')
     params:
