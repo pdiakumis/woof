@@ -19,7 +19,7 @@ aliases = [aliases_from_batch(config, b) for b in batches]
 
 rule all:
     input:
-        expand(join(config['tools']['damest']['outdir'], 'results2/{batch}/{alias}_tot_damage.tsv'), zip,
+        expand(join(config['tools']['damest']['outdir'], 'results/{batch}/{alias}_tot_damage.tsv'), zip,
                 batch = batches_rep,
                 alias = list(chain(*aliases)))
 
