@@ -1,9 +1,0 @@
-BriGib:
-  manta_svpri: /data/cephfs/punim0010/data/Results/Patients/2017-10-20/final/BriGibFFPE/batch1-sv-prioritize-manta.vcf.gz
-  ensemble: /data/cephfs/punim0010/data/Results/Patients/2017-10-20/final/2017-10-20_brigibFFPE/batch1-ensemble-annotated.vcf.gz
-MHP013:
-  manta_svpri: /data/cephfs/punim0010/data/Results/Avner/2018-01-31/final/WPT-013-organoid/p013-organoid-sv-prioritize-manta.vcf.gz
-  ensemble: /data/cephfs/punim0010/data/Results/Avner/2018-01-31/final/2018-01-31_p013/p013-organoid-ensemble-annotated.vcf.gz
-MHP031:
-  manta_svpri: /data/cephfs/punim0010/data/Results/Avner/2018-01-22/final/17MHP031Tmr/p031-sv-prioritize-manta.vcf.gz
-  ensemble: /data/cephfs/punim0010/data/Results/Avner/2018-01-22/final/2018-01-22_p031/p031-ensemble-annotated.vcf.gz

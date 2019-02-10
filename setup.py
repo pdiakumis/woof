@@ -9,7 +9,7 @@ setup(
     license = "MIT",
     author = "Peter Diakumis",
     author_email = "peterdiakumis@gmail.com",
-    description = "Woofing Snakemake Workflows for UMCCR",
+    description = "Woofing Workflows for UMCCR",
     long_description = long_description,
     long_description_content_type = "text/markdown",
     url = "https://github.com/umccr/woof",
