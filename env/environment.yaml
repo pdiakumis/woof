@@ -1,24 +1,23 @@
+name: woof
+
 channels:
   - pdiakumis
   - conda-forge
   - bioconda
   - defaults
+
 dependencies:
   - bcftools
-  - click>=7.0
-  - jinja2            # for snakemake report
-  - ldc=1.11.0        # for sambamba
-  - networkx          # for snakemake report
-  - pygraphviz        # for snakemake report
+  - click
+  - cromwell
+  - fqtools
+  - pandoc
   - python>=3.6
-  - snakemake
-  - sambamba
   - samtools
-  - r-base
-  - r-tidyverse
+  - r-base>=3.5
   - r-devtools
   - r-dt
-  - r-optparse
+  - r-radix
   - r-knitr
   - r-rmarkdown
-  - r-bookdown
+  - r-tidyverse
