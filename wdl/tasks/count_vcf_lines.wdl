@@ -1,24 +1,33 @@
-task count_vcf_variants_all {
-  File VCF
-  String out = basename(VCF, ".vcf.gz")
+version 1.0
 
-  command {
-    gunzip -c ${VCF} | grep -v "^#" | wc -l > ${out}_variants_all.txt
-  }
+task all {
 
-  output {
-    File counts = "${out}_variants_all.txt"
-  }
-}
-
-workflow get_lines {
-  File inputSamplesFile
-  Array[Array[File]] inputSamples = read_tsv(inputSamplesFile)
-
-  scatter (sample in inputSamples) {
-    call count_vcf_variants_all {
-      input:
-        VCF = sample[1]
+    input {
+        File VCF
+        String out = "count_all_" + basename(VCF, ".vcf.gz") + ".txt"
     }
-  }
+
+    command {
+        gunzip -c ~{VCF} | grep -v "^#" | wc -l > ~{out}
+    }
+
+    output {
+        File result = "~{out}"
+    }
 }
+
+task pass {
+    input {
+        File VCF
+        String out = "count_pass_" + basename(VCF, ".vcf.gz") + ".txt"
+    }
+
+    command {
+        bcftools view -f .,PASS -H ~{VCF} | wc -l > ~{out}
+    }
+
+    output {
+        File result = "~{out}"
+    }
+}
+

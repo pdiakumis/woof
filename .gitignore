@@ -2,6 +2,7 @@
 .Rhistory
 *.swp
 .vscode/
+.idea/
 
 data/
 
@@ -12,3 +13,6 @@ __pycache__/
 *.egg-info/
 
 *.html
+
+cromwell-executions/
+cromwell-workflow-logs/
