@@ -1,6 +1,6 @@
 version 1.0
 
-import "../tasks/count_vcf_lines.wdl"
+import "tasks/count_vcf_lines.wdl"
 
 workflow compare_vcf_files {
 
