@@ -1,26 +1,27 @@
 
+# woof
+Woofing workflows using [WDL](https://software.broadinstitute.org/wdl/) and
+[Cromwell](https://snakemake.readthedocs.io/en/stable/index.html).
+
+Contents
+--------
+
 <!-- vim-markdown-toc GFM -->
 
-* [woof](#woof)
-    * [quick start](#quick-start)
-        * [example runs](#example-runs)
+* [Quick Start](#quick-start)
+    * [Run Cromwell](#run-cromwell)
+* [Installation](#installation)
+* [Repo Structure](#repo-structure)
 * [Workflows](#workflows)
     * [bcbio Comparison](#bcbio-comparison)
     * [AGHA Data Validation](#agha-data-validation)
 
 <!-- vim-markdown-toc -->
 
-# woof
-Woofing workflows using [WDL](https://software.broadinstitute.org/wdl/) and
-[Cromwell](https://snakemake.readthedocs.io/en/stable/index.html).
 
+# Quick Start
 
-## quick start
-
-* `environment.yaml`: contains conda tools you want to use in the pipeline.
-    * `conda env create --name woof --file environment.yaml` to create the conda environment
-
-### example runs
+## Run Cromwell
 
 * From within the `woof/wdl` directory:
 
@@ -32,6 +33,14 @@ cromwell run \
   --options options.json \
   compare_vcf_files.wdl
 ```
+
+# Installation
+
+# Repo Structure
+
+* `environment.yaml`: contains conda tools you want to use in the pipeline.
+    * `conda env create --name woof --file environment.yaml` to create the conda environment
+
 
 # Workflows
 
