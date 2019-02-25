@@ -1,0 +1,2 @@
+{ "final_workflow_outputs_dir" : "/Users/pdiakumis/Desktop/projects/umccr/woof/wdl/final-cromwell",
+    "default_runtime_attributes": {"bootDiskSizeGb": 20}}
