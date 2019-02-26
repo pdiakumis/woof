@@ -11,6 +11,8 @@ Contents
 * [Quick Start](#quick-start)
     * [Run Cromwell](#run-cromwell)
 * [Installation](#installation)
+        * [woof](#woof)
+        * [Conda](#conda)
 * [Repo Structure](#repo-structure)
 * [Workflows](#workflows)
     * [bcbio Comparison](#bcbio-comparison)
@@ -36,16 +38,38 @@ cromwell run \
 
 # Installation
 
+### woof
+
+```
+# clone repo, create conda env
+git clone git@github.com:pdiakumis/woof.git
+```
+
+### Conda
+
+* Download and install Miniconda
+
+```
+wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
+bash miniconda.sh
+conda update -n base -c defaults conda
+```
+
+* Create `woof` conda environment
+
+```
+conda env create -f woof/env/woof.yaml
+```
+
 # Repo Structure
 
-* `environment.yaml`: contains conda tools you want to use in the pipeline.
-    * `conda env create --name woof --file environment.yaml` to create the conda environment
+
+
 
 
 # Workflows
 
-* `woof` consists of several WDL workflows, written in
-  separate WDL files
+* `woof` consists of several WDL workflows, written in separate WDL files
 * each workflow calls several tasks
 
 bcbio Comparison

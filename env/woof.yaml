@@ -10,7 +10,7 @@ dependencies:
   - bcftools
   - click
   - cromwell
-  - fqtools
+  - openssl=1.0 # for samtools
   - pandoc
   - python>=3.6
   - samtools
@@ -19,5 +19,6 @@ dependencies:
   - r-dt
   - r-radix
   - r-knitr
+  - r-kableextra
   - r-rmarkdown
   - r-tidyverse
