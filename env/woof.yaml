@@ -9,10 +9,10 @@ channels:
 dependencies:
   - bcftools
   - click
-  - cromwell
+  - cromwell=0.36.1
   - openssl=1.0 # for samtools
   - pandoc
-  - python>=3.6
+  - python=3.7
   - samtools
   - r-base>=3.5
   - r-devtools
@@ -22,3 +22,4 @@ dependencies:
   - r-kableextra
   - r-rmarkdown
   - r-tidyverse
+  - r-woofr
