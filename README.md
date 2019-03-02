@@ -1,7 +1,9 @@
 
 # woof
-Woofing workflows using [WDL](https://software.broadinstitute.org/wdl/) and
-[Cromwell](https://snakemake.readthedocs.io/en/stable/index.html).
+Woofing workflows using
+[WDL](https://software.broadinstitute.org/wdl/),
+[CWL](https://www.commonwl.org/) and
+[Cromwell](https://cromwell.readthedocs.io/en/stable/).
 
 Contents
 --------
@@ -9,21 +11,24 @@ Contents
 <!-- vim-markdown-toc GFM -->
 
 * [Quick Start](#quick-start)
-    * [Run Cromwell](#run-cromwell)
+    * [Run Cromwell (__draft__)](#run-cromwell-__draft__)
 * [Installation](#installation)
-        * [woof](#woof)
-        * [Conda](#conda)
+    * [Step 1: Clone woof repo](#step-1-clone-woof-repo)
+    * [Step 2: Create conda environment](#step-2-create-conda-environment)
 * [Repo Structure](#repo-structure)
 * [Workflows](#workflows)
-    * [bcbio Comparison](#bcbio-comparison)
-    * [AGHA Data Validation](#agha-data-validation)
+    * [bcbio run comparison](#bcbio-run-comparison)
+        * [Input](#input)
+        * [Command](#command)
+        * [Output](#output)
+    * [AGHA data validation](#agha-data-validation)
 
 <!-- vim-markdown-toc -->
 
 
 # Quick Start
 
-## Run Cromwell
+## Run Cromwell (__draft__)
 
 * From within the `woof/wdl` directory:
 
@@ -38,26 +43,18 @@ cromwell run \
 
 # Installation
 
-### woof
+## Step 1: Clone woof repo
 
 ```
-# clone repo, create conda env
 git clone git@github.com:pdiakumis/woof.git
 ```
 
-### Conda
-
-* Download and install Miniconda
+## Step 2: Create conda environment
 
 ```
 wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
 bash miniconda.sh
 conda update -n base -c defaults conda
-```
-
-* Create `woof` conda environment
-
-```
 conda env create -f woof/env/woof.yaml
 ```
 
@@ -69,14 +66,33 @@ conda env create -f woof/env/woof.yaml
 
 # Workflows
 
-* `woof` consists of several WDL workflows, written in separate WDL files
-* each workflow calls several tasks
-
-bcbio Comparison
+bcbio run comparison
 ----------------
 
-AGHA Data Validation
+### Input
+
+* `final1` & `final2`: path to two bcbio `final` results
+* `name`: name to use for the result output directory e.g. `v1.3_vs_v1.4` or `dev_vs_stable` (default: `<timestamp>_compare`)
+
+### Command
+
+```
+woof compare /path/to/final1 /path/to/final2 name
+```
+
+### Output
+
+* `<name>`: directory with comparison results
+    * `<name>_report.html`: final comparison report
+    * `bcftools_isec`: results from `bcftools isec`
+    * `counts`: results from simply counting total and `PASS` variants
+
+AGHA data validation
 --------------------
+
+```
+woof validate /path/to/data
+```
 
 * __FASTQ__
 
