@@ -7,23 +7,17 @@ workflow compare_vcf_files {
 
   input {
     File inputSamplesFile
-    File inputSamplesFile2
     Array[Array[File]] inputSamples = read_tsv(inputSamplesFile)
-    Array[Array[File]] inputSamples2 = read_tsv(inputSamplesFile2)
   }
 
   scatter (sample in inputSamples) {
-    call count_vcf_lines.all { input: VCF = sample[1] }
-    call count_vcf_lines.pass { input: VCF = sample[1] }
+    call count_vcf_lines.all as count_vcf_lines_all_cwl { input: VCF = sample[1] }
+    call count_vcf_lines.all as count_vcf_lines_all_native { input: VCF = sample[2] }
+    call count_vcf_lines.pass as count_vcf_lines_pass_cwl { input: VCF = sample[1] }
+    call count_vcf_lines.pass as count_vcf_lines_pass_native { input: VCF = sample[2] }
+    call bcftools.isec { input: vcf1 = sample[1], vcf2 = sample[2] }
   }
 
-  scatter (sample in inputSamples2) {
-    call bcftools.isec {
-      input:
-        vcf1 = sample[0],
-        vcf2 = sample[1]
-    }
-  }
 
 }
 
