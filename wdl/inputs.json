@@ -1,6 +1,5 @@
 {
-  "compare_vcf_files.inputSamplesFile": "inputs.tsv",
-  "compare_vcf_files.inputSamplesFile2": "inputs2.tsv",
+  "compare_vcf_files.inputSamplesFile": "apgi_inputs.tsv",
   "compare_vcf_files.isec.out_dir": "bcftools_isec_outdir"
 }
 

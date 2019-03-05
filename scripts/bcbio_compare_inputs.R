@@ -19,4 +19,4 @@ d <-
   dplyr::select(run, ftype, fpath) %>%
   tidyr::spread(run, fpath)
 
-readr::write_tsv(d, "../nogit/data/agpi_inputs.tsv", col_names = FALSE)
+readr::write_tsv(d, "../nogit/data/apgi_inputs.tsv", col_names = FALSE)

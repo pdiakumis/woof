@@ -14,5 +14,7 @@ __pycache__/
 
 cromwell-executions/
 cromwell-workflow-logs/
+persist/
+final-cromwell/
 
 woof/_version.py
