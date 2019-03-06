@@ -22,7 +22,8 @@ def write_version_py():
                                     '__git_revision__ = "%s"' % githash]))
 
 write_version_py()
-install_requires = []
+
+install_requires = ["Click",]
 
 setup(
     name="woof",
@@ -37,5 +38,9 @@ setup(
     packages=find_packages(),
     install_requires=install_requires,
     include_package_data=True,
+    entry_points='''
+        [console_scripts]
+        woof=woof.main:main
+    ''',
     )
 
