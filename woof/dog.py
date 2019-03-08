@@ -1,4 +1,11 @@
-#!/usr/bin/env python
+import click
+from click import echo
+
+@click.command()
+@click.option("-c", "--color", default="green")
+def woof(color):
+    """G'day"""
+    echo(click.style(dog, fg=color))
 
 dog = """
 

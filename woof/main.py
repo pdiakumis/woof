@@ -7,15 +7,17 @@ from click import echo
 
 from woof import _version as version
 from woof import dog
+from .compare import main as compare
+from .validate import main as validate
 
-@click.command()
+
+@click.group(context_settings=dict(help_option_names=['-h', '--help']))
 @click.version_option(version.__version__)
-@click.argument('main_command')
-
-def main(main_command):
+def cli():
     """woof main runner script"""
-    echo("Hello World!")
-    echo(dog.dog)
-    echo(main_command)
-    echo(main_command)
+    echo(click.style("In woof main", fg='green'))
 
+
+cli.add_command(compare.compare)
+cli.add_command(validate.validate)
+cli.add_command(dog.woof)
