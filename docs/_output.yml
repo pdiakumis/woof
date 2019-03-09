@@ -1,0 +1,8 @@
+bookdown::gitbook:
+  css: style.css
+  config:
+    toc:
+      before: |
+        <li><a href="./">woof</a></li>
+      after: |
+        <li><a href="https://github.com/pdiakumis" target="blank">Peter Diakumis UMCCR</a></li>

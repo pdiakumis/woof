@@ -1,0 +1,25 @@
+Compare bcbio runs
+==================
+
+Step 1
+------
+
+* Use `woofr::bcbio_outputs` to generate a TSV file with the following columns:
+  - `col1` - type of VCF file
+     1. ensembl-batch
+     2. mutect2-batch
+     3. strelka2-batch
+     4. vardict-batch
+     5. ensemble-germ
+     6. gatk-germ
+     7. strelka2-germ
+     8. vardict-germ
+  - `col2` - path to file for final1
+  - `col3` - path to file for final2
+
+Step 2
+------
+
+* Now we can iterate through each row of the TSV according to its name, and do the comparisons per row
+* If we want to run something on every VCF (i.e. files in `col2` and `col3`), we can just scatter over
+  the columns twice for now.

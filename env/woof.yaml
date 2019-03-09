@@ -15,6 +15,7 @@ dependencies:
   - python=3.7
   - samtools
   - r-base>=3.5
+  - r-bookdown
   - r-devtools
   - r-dt
   - r-radix

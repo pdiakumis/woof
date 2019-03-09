@@ -1,0 +1,22 @@
+--- 
+title: "woof: Workflows for Bioinformatics"
+author: "Peter Diakumis"
+date: "`r format(Sys.time(), '%a %Y-%b-%d')`"
+site: bookdown::bookdown_site
+description: "Bioinformatic Workflows with Cromwell"
+---
+
+# Introduction {-}
+
+```{r knitr-opts, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
+```{r load_pkgs, message=FALSE, warning=FALSE}
+require(tidyverse)
+```
+
+`woof` is an application for running workflows with 
+[Cromwell](https://cromwell.readthedocs.io/en/stable/)
+
+
