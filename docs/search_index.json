@@ -1,0 +1,4 @@
+[
+["index.html", "woof: Workflows for Bioinformatics Introduction", " woof: Workflows for Bioinformatics Peter Diakumis Sun 2019-Mar-10 Introduction require(tidyverse) woof is an application for running workflows with Cromwell "],
+["compare-bcbio-runs.html", "Section 1 Compare bcbio runs 1.1 Step 1 1.2 Step 2", " Section 1 Compare bcbio runs 1.1 Step 1 Use woofr::bcbio_outputs to generate a TSV file with the following columns: col1 - type of VCF file ensembl-batch mutect2-batch strelka2-batch vardict-batch ensemble-germ gatk-germ strelka2-germ vardict-germ col2 - path to file for final1 col3 - path to file for final2 1.2 Step 2 Now we can iterate through each row of the TSV according to its name, and do the comparisons per row If we want to run something on every VCF (i.e. files in col2 and col3), we can just scatter over the columns twice for now. "]
+]
