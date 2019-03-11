@@ -1,8 +1,28 @@
 import click
 from click import echo
 
+avail_colours = [
+    'black',
+    'red',
+    'green',
+    'yellow',
+    'blue',
+    'magenta',
+    'cyan',
+    'white',
+    'reset',
+    'bright_black',
+    'bright_red',
+    'bright_green',
+    'bright_yellow',
+    'bright_blue',
+    'bright_magenta',
+    'bright_cyan',
+    'bright_white'
+    ]
+
 @click.command()
-@click.option("-c", "--color", default="green")
+@click.option("-c", "--color", default="green", type=click.Choice(avail_colours), help="Dog colour")
 def woof(color):
     """G'day"""
     echo(click.style(dog, fg=color))

@@ -1,10 +1,11 @@
+"""Helpful utilities for woof"""
+
 import os
-from os.path import join, abspath, dirname, pardir, isfile, exists
 import socket
 import re
 import sys
-import yaml
 import json
+
 
 def critical(msg):
     sys.stderr.write(msg + '\n')
@@ -13,8 +14,40 @@ def critical(msg):
 def get_hostname():
     return os.environ.get('HOST') or os.environ.get('HOSTNAME') or socket.gethostname()
 
-WOOF_ROOT = dirname(dirname(abspath(__file__)))
-WOOF_RULES = join(WOOF_ROOT, 'woof/rules')
+def get_filesystem():
+
+    hostname = get_hostname()
+
+    if re.match(r'spartan*', hostname):
+        hostname = 'SPARTAN'
+    elif re.match(r'^raijin|(r\d+$)', hostname):
+        hostname = 'RAIJIN'
+    elif re.match(r'^5180L-133629-M.local$', hostname) or re.match(r'^x86_64-apple-darwin13.4.0$', hostname):
+        hostname = 'PETER'
+    elif re.match(r'^ip*', hostname):
+        hostname = 'AWS'
+    else:
+        critical(f'ERROR: could not detect location by hostname {hostname}')
+
+
+
+def safe_mkdir(dname):
+    """Make a directory if it doesn't exist, handling concurrent race conditions.
+    """
+    if not dname:
+        return dname
+    num_tries = 0
+    max_tries = 5
+    while not os.path.exists(dname):
+        try:
+            os.makedirs(dname)
+        except OSError:
+            if num_tries > max_tries:
+                raise
+            num_tries += 1
+            time.sleep(2)
+    return dname
+
 
 # select the appropriate machine
 hpc_dict = {
@@ -40,24 +73,3 @@ hpc_dict = {
         },
 }
 
-hostname = get_hostname()
-
-if re.match(r'spartan*', hostname):
-    hostname = 'SPARTAN'
-elif re.match(r'^raijin|(r\d+$)', hostname):
-    hostname = 'RAIJIN'
-elif re.match(r'^5180L-133629-M.local$', hostname):
-    hostname = 'peter'
-elif re.match(r'^ip*', hostname):
-    hostname = 'aws'
-else:
-    critical(f'ERROR: could not detect location by hostname {hostname}')
-
-hpc_dict = hpc_dict[hostname]
-config = {}
-config['HPC'] = hpc_dict # needs to be set up on each machine
-
-config['woof'] = {}
-config['woof']['root_dir'] = WOOF_ROOT
-config['woof']['rules_dir'] = WOOF_RULES
-config['tools'] = {}
