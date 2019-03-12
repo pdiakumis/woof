@@ -1,2 +1,0 @@
-{ "final_workflow_outputs_dir" : "/g/data3/gx8/projects/Diakumis/woof/wdl/final-cromwell",
-    "default_runtime_attributes": {"bootDiskSizeGb": 20}}
