@@ -1,5 +1,5 @@
 
-OPTIONS = { "final_workflow_outputs_dir" : "/g/data3/gx8/projects/Diakumis/woof/wdl/final-cromwell", 
+OPTIONS = { "final_workflow_outputs_dir" : "",
             "default_runtime_attributes": {}
             }
 
@@ -134,7 +134,7 @@ CLOUD_CONFIGS = {
 """
 }
 
-_AUTH_CONFIG_AWS = """
+AUTH_CONFIG_AWS = """
 aws {
   application-name = "cromwell"
   auths = [{
@@ -145,7 +145,7 @@ aws {
 }
 """
 
-_FILESYSTEM_CONFIG = {
+FILESYSTEM_CONFIG = {
   "http": """
         http { }
   """,

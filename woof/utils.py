@@ -19,17 +19,17 @@ def get_filesystem():
     hostname = get_hostname()
 
     if re.match(r'spartan*', hostname):
-        hostname = 'SPARTAN'
+        fs = 'SPARTAN'
     elif re.match(r'^raijin|(r\d+$)', hostname):
-        hostname = 'RAIJIN'
+        fs = 'RAIJIN'
     elif re.match(r'^5180L-133629-M.local$', hostname) or re.match(r'^x86_64-apple-darwin13.4.0$', hostname):
-        hostname = 'PETER'
+        fs = 'PETER'
     elif re.match(r'^ip*', hostname):
-        hostname = 'AWS'
+        fs = 'AWS'
     else:
         critical(f'ERROR: could not detect location by hostname {hostname}')
 
-
+    return fs
 
 def safe_mkdir(dname):
     """Make a directory if it doesn't exist, handling concurrent race conditions.
