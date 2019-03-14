@@ -43,7 +43,7 @@ def create_cromwell_files(dname, project):
 
 
 def create_cromwell_config(dname):
-    """Prepare a cromwell configuration within the specified directory.
+    """Create a cromwell HOCON config.
     """
     joblimit = 1
     filesystem = utils.get_filesystem() # SPARTAN/RAIJIN/AWS/OTHER - dealing with single fs for now
@@ -93,7 +93,7 @@ def _get_engine_filesystem_config(file_types):
 
 
 
-def run_cromwell(args):
+def run_cromwell(wdl_workflow, input_json):
     """Run Cromwell
 
     cromwell run \
@@ -109,7 +109,7 @@ def run_cromwell(args):
     # So the command should take those two as args.
     wdl_workflow, input_json, project_name = _get_main_and_json(args.directory)
 
-    cmd = ["cromwell", "-Xms1g", "-Xmx3g", "run", "--type", "CWL",
+    cmd = ["cromwell", "-Xms1g", "-Xmx3g", "run",
            "-Dconfig.file=%s" % hpc.create_cromwell_config(args, work_dir, json_file)]
     cmd += hpc.args_to_cromwell_cl(args)
     cmd += ["--metadata-output", metadata_file, "--options", option_file,

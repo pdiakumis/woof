@@ -2,6 +2,8 @@
 
 from setuptools import setup, find_packages
 import os
+import woof
+import woof.utils
 
 __version__ = "0.0.0.1"
 
@@ -23,7 +25,7 @@ def write_version_py():
 
 write_version_py()
 
-install_requires = ["Click",]
+install_requires = []
 
 setup(
     name="woof",
@@ -37,7 +39,9 @@ setup(
     url="https://github.com/pdiakumis/woof",
     packages=find_packages(),
     install_requires=install_requires,
-    include_package_data=True,
+    package_data={
+        'woof': woof.utils.find_package_files('wdl', 'woof')
+    },
     entry_points='''
         [console_scripts]
         woof=woof.main:cli

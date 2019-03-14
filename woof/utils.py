@@ -5,6 +5,7 @@ import socket
 import re
 import sys
 import json
+import datetime
 
 
 def critical(msg):
@@ -31,6 +32,7 @@ def get_filesystem():
 
     return fs
 
+# courtesy of bcbio
 def safe_mkdir(dname):
     """Make a directory if it doesn't exist, handling concurrent race conditions.
     """
@@ -48,6 +50,19 @@ def safe_mkdir(dname):
             time.sleep(2)
     return dname
 
+# courtesy of vlad-versionpy
+def find_package_files(dirpath, package, skip_exts=None):
+    paths = []
+    for (path, dirs, fnames) in os.walk(os.path.join(package, dirpath)):
+        for fname in fnames:
+            if skip_exts and any(fname.endswith(ext) for ext in skip_exts):
+                continue
+            fpath = os.path.join(path, fname)
+            paths.append(os.path.relpath(fpath, package))
+    return paths
+
+def timestamp():
+    return datetime.datetime.now().strftime("%Y-%m-%d-%H%M%S")
 
 # select the appropriate machine
 hpc_dict = {
