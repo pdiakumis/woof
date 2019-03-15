@@ -46,7 +46,7 @@ database {
   profile = "slick.jdbc.HsqldbProfile$"
   db {
     driver = "org.hsqldb.jdbcDriver"
-    url = "jdbc:hsqldb:file:%(dname)s/persist/metadata;shutdown=false;hsqldb.tx=mvcc"
+    url = "jdbc:hsqldb:file:%(dir_name)s/persist/metadata;shutdown=false;hsqldb.tx=mvcc"
     connectionTimeout = 200000
   }
 }
