@@ -1,12 +1,15 @@
-"""Helpful utilities for woof"""
+"""
+Helpful utilities for woof.
+Most have been copied/modified from bcbio or ngs_utils.
+"""
 
 import os
+from os.path import exists, isdir
 import socket
 import re
 import sys
 import json
 import datetime
-
 
 def critical(msg):
     sys.stderr.write(msg + '\n')
@@ -18,7 +21,6 @@ def get_hostname():
 def get_filesystem():
 
     hostname = get_hostname()
-
     if re.match(r'spartan*', hostname):
         fs = 'SPARTAN'
     elif re.match(r'^raijin|(r\d+$)', hostname):
@@ -32,7 +34,6 @@ def get_filesystem():
 
     return fs
 
-# courtesy of bcbio
 def safe_mkdir(dname):
     """Make a directory if it doesn't exist, handling concurrent race conditions.
     """
@@ -50,7 +51,6 @@ def safe_mkdir(dname):
             time.sleep(2)
     return dname
 
-# courtesy of vlad-versionpy
 def find_package_files(dirpath, package, skip_exts=None):
     paths = []
     for (path, dirs, fnames) in os.walk(os.path.join(package, dirpath)):
@@ -63,6 +63,66 @@ def find_package_files(dirpath, package, skip_exts=None):
 
 def timestamp():
     return datetime.datetime.now().strftime("%Y-%m-%d-%H%M%S")
+
+def file_exists(fname):
+    """Check if a file exists and is non-empty.
+    """
+    try:
+        return fname and os.path.exists(fname) and os.path.getsize(fname) > 0
+    except OSError:
+        return False
+
+def adjust_path(path):
+    if path is None: return None
+
+    path = remove_quotes(path)
+    if path is None: return None
+
+    path = expanduser(path)
+    if path is None: return None
+
+    path = os.path.abspath(path)
+    if path is None: return None
+
+    return path
+
+def expanduser(path):
+    """
+    Expand ~ and ~user constructs.
+    If user or $HOME is unknown, do nothing.
+    """
+    if path[:1] != '~':
+        return path
+    i, n = 1, len(path)
+    while i < n and path[i] not in '/\\':
+        i = i + 1
+
+    if 'HOME' in os.environ:
+        userhome = os.environ['HOME']
+    elif 'USERPROFILE' in os.environ:
+        userhome = os.environ['USERPROFILE']
+    elif not 'HOMEPATH' in os.environ:
+        return path
+    else:
+        try:
+            drive = os.environ['HOMEDRIVE']
+        except KeyError:
+            drive = ''
+        userhome = join(drive, os.environ['HOMEPATH'])
+
+    if i != 1:  # ~user
+        userhome = join(dirname(userhome), path[1:i])
+
+    return userhome + path[i:]
+
+def remove_quotes(s):
+    if s and s[0] in ['"', "'"]:
+        s = s[1:]
+    if s and s[-1] in ['"', "'"]:
+        s = s[:-1]
+    return s
+
+
 
 # select the appropriate machine
 hpc_dict = {
