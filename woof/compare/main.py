@@ -1,18 +1,17 @@
 import os
-from os.path import isfile, join, dirname, abspath
 import sys
-import subprocess as sp
+import subprocess
 import click
 from click import echo, style
 from woof import utils
+from woof.cromwell import run
 
 
 @click.command()
 @click.argument("f1", type=click.Path(exists=True), metavar="<final1>")
 @click.argument("f2", type=click.Path(exists=True), metavar="<final2>")
-@click.option("-n", "--name", help="Name of the comparison [def: bcbio-comp_<timestamp>]", default=f'bcbio-comp_{utils.timestamp()}')
 @click.option("-o", "--outdir", help="Output directory [def: ./woof].", default="woof")
-def compare(f1, f2, name, outdir):
+def compare(f1, f2, outdir):
     """Compare two bcbio runs <final1> and <final2>"""
     echo(style("In compare.main", fg='blue'))
     echo(f'f1 is {f1}; f2 is {f2}')
@@ -30,16 +29,27 @@ def compare(f1, f2, name, outdir):
       - col2: path to VCF file for <final1>
       - col3: path to VCF file for <final2>
 
-    Step 2: capture output and write to <name>_samples.tsv
+    Step 2: capture output and write to samples.tsv
     Step 3: copy
     """
 
-    r_cmd = f"Rscript --no-environ -e \"library(woofr); woofr:::merge_bcbio_outputs('{f1}', '{f2}')\""
-    cmd = sp.run(r_cmd, stdout=sp.PIPE, encoding='utf-8', shell=True)
-
+    outdir = utils.adjust_path(outdir)
+    f1 = utils.adjust_path(f1)
+    f2 = utils.adjust_path(f2)
 
     utils.safe_mkdir(outdir)
-    with open(join(outdir, f"{name}_samples.tsv"), "w") as out_handle:
+    run.create_cromwell_files(outdir)
+    input_samples = create_cromwell_input(f1, f2, os.path.join(outdir, "work"))
+
+    echo(style("This probably means success. Enjoy life!"))
+
+
+def create_cromwell_input(f1, f2, outdir):
+
+    r_cmd = f"Rscript --no-environ -e \"library(woofr); woofr:::merge_bcbio_outputs('{f1}', '{f2}')\""
+    cmd = subprocess.run(r_cmd, stdout=subprocess.PIPE, encoding='utf-8', shell=True)
+    fname = os.path.join(outdir, "cromwell_samples.tsv")
+    with open(fname, "w") as out_handle:
         out_handle.write(cmd.stdout)
 
-    echo(style("This probably means success. Enjoy life!")
+    return fname

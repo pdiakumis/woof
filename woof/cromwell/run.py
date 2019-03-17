@@ -6,16 +6,16 @@ import json
 from woof import utils
 from woof.cromwell import configs
 
-def create_cromwell_files(dir_name):
+def create_cromwell_files(outdir):
     """
-    Writes following to <dir_name>/work:
+    Writes following to <outdir>/work:
     1. config
     2. options
     3. all WDL files
     """
 
-    work_dir = utils.safe_mkdir(os.path.join(dir_name, "work"))
-    final_dir = utils.safe_mkdir(os.path.join(dir_name, "final"))
+    work_dir = utils.safe_mkdir(os.path.join(outdir, "work"))
+    final_dir = utils.safe_mkdir(os.path.join(outdir, "final"))
 
     # config
     config_hocon = create_cromwell_config(work_dir)
@@ -44,7 +44,7 @@ def create_cromwell_files(dir_name):
     return res
 
 
-def create_cromwell_config(dir_name):
+def create_cromwell_config(outdir):
     """Create a cromwell HOCON config.
     """
 
@@ -81,7 +81,7 @@ def create_cromwell_config(dir_name):
                 "submit_docker": 'submit-docker: ""',
                 "joblimit": f"concurrent-job-limit = {(joblimit) if joblimit > 0 else ''}",
                 "filesystem": _get_filesystem_config(file_types),
-                "database": configs.DATABASE_CONFIG % {"dir_name": dir_name}}
+                "database": configs.DATABASE_CONFIG % {"outdir": outdir}}
     conf_args = {}
     std_args["engine"] = _get_engine_filesystem_config(file_types)
     conf_args.update(std_args)
@@ -89,7 +89,7 @@ def create_cromwell_config(dir_name):
     cloud_type = None
     main_config = {"hpc": (configs.HPC_CONFIGS[scheduler] % conf_args) if scheduler else "",
                    "cloud": (configs.CLOUD_CONFIGS[cloud_type] % conf_args) if cloud_type else "",
-                   "work_dir": dir_name}
+                   "work_dir": outdir}
     main_config.update(std_args)
 
     return configs.CROMWELL_CONFIG % main_config
