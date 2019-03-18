@@ -4,23 +4,21 @@ channels:
   - pdiakumis
   - conda-forge
   - bioconda
-  - defaults
   - vladsaveliev
+  - defaults
 
 dependencies:
   - bcftools
   - click
-  - cromwell=0.36.1
+  - cromwell
   - ngs_utils
-  - openssl=1.0 # for samtools
   - pandoc
-  - python=3.7
+  - python>=3.7
   - samtools
   - r-base>=3.5
   - r-bookdown
   - r-devtools
   - r-dt
-  - r-radix
   - r-knitr
   - r-kableextra
   - r-rmarkdown

@@ -20,7 +20,7 @@ def create_cromwell_files(outdir):
 
     # config
     config_hocon = create_cromwell_config(work_dir)
-    config_file = os.path.join(work_dir, "cromwell.conf")
+    config_file = os.path.join(work_dir, "cromwell_config.conf")
     with open(config_file, "w") as out_handle:
         out_handle.write(config_hocon)
 
