@@ -3,6 +3,7 @@
 import os
 import sys
 import json
+import pkg_resources
 from woof import utils
 from woof.cromwell import configs
 
@@ -94,6 +95,15 @@ def create_cromwell_config(outdir):
 
     return configs.CROMWELL_CONFIG % main_config
 
+
+def copy_wdl_files(outdir):
+    """Copy recursively WDL files (workflows + tasks) from 'woof/woof/wdl' to 'outdir/wdl'
+    """
+    outdir = utils.adjust_path(outdir)
+    if not pkg_resources.resource_exists('woof', 'wdl'):
+        utils.critical("Error: 'woof/wdl' directory does not exist!")
+    d = pkg_resources.resource_filename('woof', 'wdl')
+    utils.copy_recursive(d, os.path.join(outdir, 'wdl'))
 
 
 def run_cromwell(wdl_workflow, input_json):

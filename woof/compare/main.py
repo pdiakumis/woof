@@ -2,6 +2,7 @@ import os
 import sys
 import subprocess
 import click
+import json
 from click import echo, style
 from woof import utils
 from woof.cromwell import run
@@ -16,40 +17,34 @@ def compare(f1, f2, outdir):
     echo(style("In compare.main", fg='blue'))
     echo(f'f1 is {f1}; f2 is {f2}')
 
-    """
-    Step 0: we want the structure of the `woof/work` to be:
-      - wdl_workflow_x.wdl
-      - wdl_workflow_y.wdl
-      - wdl_tasks/
-      - <cromwell_config>.conf
-      - <cromwell_opts>.json
-      - <cromwell_inputs>.json
-    Step 1: use woofr::merge_bcbio_outputs to generate a TSV output with the following columns:
-      - col1: type of VCF file (ensemble-batch, germline-gatk etc.)
-      - col2: path to VCF file for <final1>
-      - col3: path to VCF file for <final2>
-
-    Step 2: capture output and write to samples.tsv
-    Step 3: copy
-    """
-
     outdir = utils.adjust_path(outdir)
     f1 = utils.adjust_path(f1)
     f2 = utils.adjust_path(f2)
 
     utils.safe_mkdir(outdir)
+    work_dir = os.path.join(outdir, "work")
     run.create_cromwell_files(outdir)
-    input_samples = create_cromwell_input(f1, f2, os.path.join(outdir, "work"))
+    input_samples = create_cromwell_samples(f1, f2, work_dir)
+    run.copy_wdl_files(work_dir)
+    create_cromwell_input(work_dir)
 
-    echo(style("This probably means success. Enjoy life!"))
+    echo(style("This probably means success. Enjoy life!", fg='yellow'))
 
 
-def create_cromwell_input(f1, f2, outdir):
+def create_cromwell_samples(f1, f2, outdir):
 
     r_cmd = f"Rscript --no-environ -e \"library(woofr); woofr:::merge_bcbio_outputs('{f1}', '{f2}')\""
     cmd = subprocess.run(r_cmd, stdout=subprocess.PIPE, encoding='utf-8', shell=True)
     fname = os.path.join(outdir, "cromwell_samples.tsv")
-    with open(fname, "w") as out_handle:
+    with open(fname, 'w') as out_handle:
         out_handle.write(cmd.stdout)
 
     return fname
+
+def create_cromwell_input(outdir):
+
+    d = {}
+    d['compare_vcf_files.inputSamplesFile'] = 'cromwell_samples.tsv'
+    input_file = os.path.join(outdir, 'cromwell_inputs.json')
+    with open(input_file, "w") as out_handle:
+        json.dump(d, out_handle)

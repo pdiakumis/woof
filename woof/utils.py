@@ -4,12 +4,12 @@ Most have been copied/modified from bcbio or ngs_utils.
 """
 
 import os
-from os.path import exists, isdir
 import socket
 import re
 import sys
 import json
 import datetime
+import shutil
 
 def critical(msg):
     sys.stderr.write(msg + '\n')
@@ -108,10 +108,10 @@ def expanduser(path):
             drive = os.environ['HOMEDRIVE']
         except KeyError:
             drive = ''
-        userhome = join(drive, os.environ['HOMEPATH'])
+        userhome = os.path.join(drive, os.environ['HOMEPATH'])
 
     if i != 1:  # ~user
-        userhome = join(dirname(userhome), path[1:i])
+        userhome = os.path.join(os.path.dirname(userhome), path[1:i])
 
     return userhome + path[i:]
 
@@ -122,6 +122,18 @@ def remove_quotes(s):
         s = s[:-1]
     return s
 
+def copy_recursive(src, dest):
+    """Copy directory recursively
+    https://www.pythoncentral.io/how-to-recursively-copy-a-directory-folder-in-python/
+    """
+    try:
+        shutil.copytree(src, dest)
+    # Directories are the same
+    except shutil.Error as e:
+        critical(f'Directory not copied. Error: {e}')
+    # Any error saying that the directory doesn't exist
+    except OSError as e:
+        critical(f'Directory not copied. Error: {e}')
 
 
 # select the appropriate machine
