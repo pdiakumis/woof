@@ -26,6 +26,7 @@ backend {
     Local {
       config {
         %(joblimit)s
+        max-concurrent-workflows = 1
         runtime-attributes = \"\"\"
         Int? cpu
         Int? memory_mb
@@ -59,6 +60,7 @@ HPC_CONFIGS = {
       actor-factory = "cromwell.backend.impl.sfs.config.ConfigBackendLifecycleActorFactory"
       config {
         %(joblimit)s
+        max-concurrent-workflows = 1
         runtime-attributes = \"\"\"
         Int cpu = 1
         Int memory_mb = 2048
@@ -84,6 +86,7 @@ HPC_CONFIGS = {
       actor-factory = "cromwell.backend.impl.sfs.config.ConfigBackendLifecycleActorFactory"
       config {
         %(joblimit)s
+        max-concurrent-workflows = 1
         runtime-attributes = \"\"\"
         Int cpu = 1
         Int memory_mb = 2048
