@@ -15,36 +15,38 @@ from woof.cromwell import run
 def compare(f1, f2, outdir):
     """Compare two bcbio runs <final1> and <final2>"""
     echo(style("In compare.main", fg='blue'))
-    echo(f'f1 is {f1}; f2 is {f2}')
 
     outdir = utils.adjust_path(outdir)
     f1 = utils.adjust_path(f1)
     f2 = utils.adjust_path(f2)
+    echo(f'f1 is {f1}; f2 is {f2}')
 
-    utils.safe_mkdir(outdir)
     work_dir = os.path.join(outdir, "work")
-    run.create_cromwell_files(outdir)
-    input_samples = create_cromwell_samples(f1, f2, work_dir)
-    run.copy_wdl_files(work_dir)
-    create_cromwell_input(work_dir)
+    final_dir = os.path.join(outdir, "final")
+    utils.safe_mkdir(work_dir)
+    utils.safe_mkdir(final_dir)
+
+
+    input_file = create_cromwell_input(f1, f2, work_dir)
+    wdl_workflow = os.path.join(work_dir, "wdl", "compare_vcf_files.wdl")
+    run.run_cromwell(outdir, input_file, wdl_workflow)
 
     echo(style("This probably means success. Enjoy life!", fg='yellow'))
 
 
-def create_cromwell_samples(f1, f2, outdir):
+def create_cromwell_input(f1, f2, outdir):
 
-    r_cmd = f"Rscript --no-environ -e \"library(woofr); woofr:::merge_bcbio_outputs('{f1}', '{f2}')\""
-    cmd = subprocess.run(r_cmd, stdout=subprocess.PIPE, encoding='utf-8', shell=True)
-    fname = os.path.join(outdir, "cromwell_samples.tsv")
-    with open(fname, 'w') as out_handle:
-        out_handle.write(cmd.stdout)
-
-    return fname
-
-def create_cromwell_input(outdir):
+    def _create_cromwell_samples(f1, f2, outdir):
+        r_cmd = f"Rscript --no-environ -e \"library(woofr); woofr:::merge_bcbio_outputs('{f1}', '{f2}')\""
+        cmd = subprocess.run(r_cmd, stdout=subprocess.PIPE, encoding='utf-8', shell=True)
+        fname = os.path.join(outdir, "cromwell_samples.tsv")
+        with open(fname, 'w') as out_handle:
+            out_handle.write(cmd.stdout)
+        return fname
 
     d = {}
-    d['compare_vcf_files.inputSamplesFile'] = 'cromwell_samples.tsv'
+    d['compare_vcf_files.inputSamplesFile'] = _create_cromwell_samples(f1, f2, outdir)
     input_file = os.path.join(outdir, 'cromwell_inputs.json')
     with open(input_file, "w") as out_handle:
         json.dump(d, out_handle)
+    return input_file

@@ -15,8 +15,8 @@ def create_cromwell_files(outdir):
     3. all WDL files
     """
 
-    work_dir = utils.safe_mkdir(os.path.join(outdir, "work"))
-    final_dir = utils.safe_mkdir(os.path.join(outdir, "final"))
+    work_dir = os.path.join(outdir, "work")
+    final_dir = os.path.join(outdir, "final")
 
     # config
     config_hocon = create_cromwell_config(work_dir)
@@ -32,7 +32,7 @@ def create_cromwell_files(outdir):
         json.dump(opts, out_handle)
 
     # pre-create log, meta
-    log_file = os.path.join(work_dir, "cromwell.log")
+    log_file = os.path.join(work_dir, "cromwell_log.log")
     metadata_file = os.path.join(work_dir, "cromwell_meta.json")
 
     res = {
@@ -75,7 +75,7 @@ def create_cromwell_config(outdir):
 
         return out
 
-    joblimit = 1
+    joblimit = 0 # need to play with this
     filesystem = utils.get_filesystem() # SPARTAN/RAIJIN/AWS/OTHER - dealing with single fs for now
     file_types = set(["s3" if filesystem == "AWS" else "local"])
     std_args = {"docker_attrs": "",
@@ -95,7 +95,6 @@ def create_cromwell_config(outdir):
 
     return configs.CROMWELL_CONFIG % main_config
 
-
 def copy_wdl_files(outdir):
     """Copy recursively WDL files (workflows + tasks) from 'woof/woof/wdl' to 'outdir/wdl'
     """
@@ -106,7 +105,7 @@ def copy_wdl_files(outdir):
     utils.copy_recursive(d, os.path.join(outdir, 'wdl'))
 
 
-def run_cromwell(wdl_workflow, input_json):
+def run_cromwell(outdir, inputs, workflow):
     """Run Cromwell
 
     cromwell run \
@@ -119,22 +118,18 @@ def run_cromwell(wdl_workflow, input_json):
     """
 
     # The only things that change depending on project_name are inputs and workflow.
-    # So the command should take those two as args.
-    wdl_workflow, input_json, project_name = _get_main_and_json(args.directory)
 
-    cmd = ["cromwell", "-Xms1g", "-Xmx3g", "run",
-           "-Dconfig.file=%s" % hpc.create_cromwell_config(args, work_dir, json_file)]
-    cmd += hpc.args_to_cromwell_cl(args)
-    cmd += ["--metadata-output", metadata_file, "--options", option_file,
-            "--inputs", json_file, main_file]
-    with utils.chdir(work_dir):
-        _run_tool(cmd, not args.no_container, work_dir, log_file)
-        if metadata_file and utils.file_exists(metadata_file):
-            with open(metadata_file) as in_handle:
-                metadata = json.load(in_handle)
-            if metadata["status"] == "Failed":
-                _cromwell_debug(metadata)
-                sys.exit(1)
-            else:
-                _cromwell_move_outputs(metadata, final_dir)
+    copy_wdl_files(os.path.join(outdir, "work"))
+    cf = create_cromwell_files(outdir)
 
+    cc = f"cromwell -Xms1g -Xmx3g run " \
+         f"-Dconfig.file={cf['config_file']} " \
+         f"--metadata-output {cf['metadata_file']} " \
+         f"--options {cf['option_file']} " \
+         f"--inputs {inputs} " \
+         f"{workflow} " \
+         f"2>&1 | tee -a {cf['log_file']} "
+
+    print(cc)
+
+    # cmd = subprocess.run(cc, stdout=subprocess.PIPE, encoding='utf-8', shell=True)
