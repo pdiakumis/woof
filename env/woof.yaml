@@ -9,12 +9,14 @@ channels:
 
 dependencies:
   - bcftools
+  - bedtools
   - click
   - cromwell
   - ngs_utils
   - pandoc
   - python>=3.7
   - samtools
+  - vcflib
   - r-base>=3.5
   - r-bookdown
   - r-devtools
