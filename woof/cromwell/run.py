@@ -75,12 +75,12 @@ def create_cromwell_config(outdir):
 
         return out
 
-    joblimit = 0 # need to play with this
+    joblimit = 2 # need to play with this
     filesystem = utils.get_filesystem() # SPARTAN/RAIJIN/AWS/OTHER - dealing with single fs for now
     file_types = set(["s3" if filesystem == "AWS" else "local"])
     std_args = {"docker_attrs": "",
                 "submit_docker": 'submit-docker: ""',
-                "joblimit": f"concurrent-job-limit = {(joblimit) if joblimit > 0 else ''}",
+                "joblimit": f'concurrent-job-limit = {joblimit if joblimit > 0 else ""}',
                 "filesystem": _get_filesystem_config(file_types),
                 "database": configs.DATABASE_CONFIG % {"outdir": outdir}}
     conf_args = {}

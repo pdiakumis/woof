@@ -1,12 +1,11 @@
 import os
-from pathlib import Path
 import sys
 import subprocess
 import gzip
 import csv
 from woof import utils
 
-def eval(fp_vcf, fn_vcf, tp_vcf, outdir):
+def eval(fp_vcf, fn_vcf, tp_vcf, out):
     fpc = count_variants(fp_vcf)
     fnc = count_variants(fn_vcf)
     tpc = count_variants(tp_vcf)
@@ -33,8 +32,7 @@ def eval(fp_vcf, fn_vcf, tp_vcf, outdir):
     ind_f2 = f_measure(2, ind_precision, ind_recall)
     ind_f3 = f_measure(3, ind_precision, ind_recall)
 
-    outdir = Path(outdir)
-    with open(outdir / 'eval_stats.tsv', 'w') as f:
+    with open(out, 'w') as f:
         writer = csv.writer(f, delimiter='\t')
         writer.writerow([
             'SNP_Truth', 'SNP_TP', 'SNP_FP', 'SNP_FN', 'SNP_Recall', 'SNP_Precision', 'SNP_f1', 'SNP_f2', 'SNP_f3',

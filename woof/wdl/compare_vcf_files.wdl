@@ -21,9 +21,9 @@ workflow compare_vcf_files {
 
     call eval_vcf.eval {
       input:
-            fp_vcf = bcftools.isec.false_pos,
-            fn_vcf = bcftools.isec.false_neg,
-            tp_vcf = bcftools.isec.true_pos,
+            fp_vcf = isec.false_pos,
+            fn_vcf = isec.false_neg,
+            tp_vcf = isec.true_pos,
             outdir = sample[0]
                                 }
   }
