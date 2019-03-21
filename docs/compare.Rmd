@@ -40,12 +40,16 @@ woof-comparison1/final
               |--- 0001.vcf
               |--- 0002.vcf
     |--- vcf_eval/
-         |--- vcf_typeA_eval_stats.txt
-         |--- vcf_typeB_eval_stats.txt
+         |--- vcf_typeA/
+              |--- eval_stats.txt
+         |--- vcf_typeB
+              |--- eval_stats.txt
     |--- vcf_counts/
-         |--- vcf_typeA_count_all.txt
-         |--- vcf_typeB_count_all.txt
-         |--- vcf_typeA_count_pass.txt
-         |--- vcf_typeB_count_pass.txt
+         |--- vcf_typeA/
+              |--- count_all.txt
+              |--- count_pass.txt
+         |--- vcf_typeB/
+              |--- count_all.txt
+              |--- count_pass.txt
 ```
 
