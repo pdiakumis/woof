@@ -8,7 +8,7 @@ task isec {
     # indices required
     File vcf1_tbi = vcf1 + ".tbi"
     File vcf2_tbi = vcf2 + ".tbi"
-    String outdir
+    String outdir # woof/final/bcftools_isec/<vcf_type>
   }
 
   command {

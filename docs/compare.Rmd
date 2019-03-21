@@ -23,3 +23,29 @@ Step 2
 * Now we can iterate through each row of the TSV according to its name, and do the comparisons per row
 * If we want to run something on every VCF (i.e. files in `col2` and `col3`), we can just scatter over
   the columns twice for now.
+
+Output
+------
+
+
+```
+woof-comparison1/final
+    |--- bcftools_isec/
+         |--- vcf_typeA/
+              |--- 0000.vcf
+              |--- 0001.vcf
+              |--- 0002.vcf
+         |--- vcf_typeB/
+              |--- 0000.vcf
+              |--- 0001.vcf
+              |--- 0002.vcf
+    |--- vcf_eval/
+         |--- vcf_typeA_eval_stats.txt
+         |--- vcf_typeB_eval_stats.txt
+    |--- vcf_counts/
+         |--- vcf_typeA_count_all.txt
+         |--- vcf_typeB_count_all.txt
+         |--- vcf_typeA_count_pass.txt
+         |--- vcf_typeB_count_pass.txt
+```
+

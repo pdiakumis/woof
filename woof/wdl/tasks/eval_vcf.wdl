@@ -5,7 +5,8 @@ task eval {
     File fp_vcf
     File fn_vcf
     File tp_vcf
-    String out
+    String outdir # woof/final/<vcf-type>
+    String tsv = outdir + "_eval_stats.tsv"
   }
 
   command {
@@ -14,12 +15,12 @@ task eval {
 
   python <<CODE
   from woof.compare import eval
-  eval.eval("~{fp_vcf}", "~{fn_vcf}", "~{tp_vcf}", "~{out}_eval_stats.tsv")
+  eval.eval("~{fp_vcf}", "~{fn_vcf}", "~{tp_vcf}", "~{tsv}")
   CODE
   }
 
   output {
-      File eval_stats = "~{out}_eval_stats.tsv"
+      File tsv = "~{tsv}"
   }
 }
 
