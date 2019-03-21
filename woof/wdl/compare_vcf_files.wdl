@@ -17,14 +17,14 @@ workflow compare_vcf_files {
     call count_vcf_lines.pass as count_vcf_lines_pass_f1 { input: VCF = sample[1] }
     call count_vcf_lines.pass as count_vcf_lines_pass_f2 { input: VCF = sample[2] }
 
-    call bcftools.isec { input: out_dir = sample[0], vcf1 = sample[1], vcf2 = sample[2] }
+    call bcftools.isec { input: outdir = sample[0], vcf1 = sample[1], vcf2 = sample[2] }
 
     call eval_vcf.eval {
       input:
             fp_vcf = isec.false_pos,
             fn_vcf = isec.false_neg,
             tp_vcf = isec.true_pos,
-            outdir = sample[0]
+            out = sample[0]
                                 }
   }
 

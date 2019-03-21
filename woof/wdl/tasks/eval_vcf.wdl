@@ -21,6 +21,3 @@ task eval {
   }
 }
 
-workflow eval_vcf {
-    call eval
-}

@@ -18,3 +18,4 @@ persist/
 final-cromwell/
 
 woof/_version.py
+test_woof/
