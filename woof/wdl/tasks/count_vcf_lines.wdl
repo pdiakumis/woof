@@ -9,11 +9,11 @@ task all {
     }
 
     command {
-        gunzip -c ~{VCF} | grep -v "^#" | wc -l > ~{txt}
+        gunzip -c ~{vcf} | grep -v "^#" | wc -l > ~{txt}
     }
 
     output {
-        File txt = "~{txt}"
+        File out = "~{txt}"
     }
 }
 
@@ -26,11 +26,11 @@ task pass {
 
     command {
         conda activate woof
-        bcftools view -f .,PASS -H ~{VCF} | wc -l > ~{txt}
+        bcftools view -f .,PASS -H ~{vcf} | wc -l > ~{txt}
     }
 
     output {
-        File txt = "~{txt}"
+        File out = "~{txt}"
     }
 }
 
