@@ -10,6 +10,8 @@ task eval {
 
   command {
 
+  conda activate woof
+
   python <<CODE
   from woof.compare import eval
   eval.eval("~{fp_vcf}", "~{fn_vcf}", "~{tp_vcf}", "~{out}_eval_stats.tsv")

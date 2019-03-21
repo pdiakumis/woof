@@ -12,6 +12,7 @@ task isec {
   }
 
   command {
+    conda activate woof
     bcftools isec ~{vcf1} ~{vcf2} -p ~{outdir}
   }
 

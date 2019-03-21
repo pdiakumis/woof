@@ -23,6 +23,7 @@ task pass {
     }
 
     command {
+        conda activate woof
         bcftools view -f .,PASS -H ~{VCF} | wc -l > ~{out}
     }
 
