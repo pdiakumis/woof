@@ -27,14 +27,14 @@ def compare(f1, f2, outdir):
     utils.safe_mkdir(final_dir)
 
 
-    input_file = create_cromwell_input(f1, f2, work_dir)
+    input_file = create_cromwell_input(f1, f2, work_dir, final_dir)
     wdl_workflow = os.path.join(work_dir, "wdl", "compare_vcf_files.wdl")
     run.run_cromwell(outdir, input_file, wdl_workflow)
 
     echo(style("This probably means success. Enjoy life!", fg='yellow'))
 
 
-def create_cromwell_input(f1, f2, outdir):
+def create_cromwell_input(f1, f2, outdir, final_dir):
 
     def _create_cromwell_samples(f1, f2, outdir):
         r_cmd = f"Rscript --no-environ -e \"library(woofr); woofr:::merge_bcbio_outputs('{f1}', '{f2}')\""
@@ -46,6 +46,7 @@ def create_cromwell_input(f1, f2, outdir):
 
     d = {}
     d['compare_vcf_files.inputSamplesFile'] = _create_cromwell_samples(f1, f2, outdir)
+    d['compare_vcf_files.outdir'] = final_dir + "/"
     input_file = os.path.join(outdir, 'cromwell_inputs.json')
     with open(input_file, "w") as out_handle:
         json.dump(d, out_handle)
