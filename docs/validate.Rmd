@@ -1,0 +1,64 @@
+Validate NGS data
+=================
+
+Step 1
+------
+
+* Use `woofr::validation_outputs` to generate a TSV file with the following columns:
+  - `col1` - type of file
+    1. VCF
+    2. BAM
+    3. FASTQ
+    4. Other
+  - `col2` - path to file
+
+Step 2
+------
+
+* Now we can iterate through each row of the TSV according to its type:
+  - if `col1 == "VCF"`, validate using `head` and `vcf-validator`
+  - if `col1 == "BAM"`, validate using `samtools quickcheck`
+  - if `col1 == "FASTQ"`, validate using `fqtools`
+
+
+Output
+------
+
+```
+woof-validation1/final
+    |--- vcf/
+         |--- tool_1/
+              |--- results_fileA.txt
+              |--- results_fileB.txt
+         |--- tool_2/
+              |--- results_fileA.txt
+              |--- results_fileB.txt
+    |--- bam/
+         |--- tool_1/
+              |--- results_fileC.txt
+              |--- results_fileD.txt
+         |--- tool_2/
+              |--- results_fileC.txt
+              |--- results_fileD.txt
+    |--- fastq/
+         |--- tool_1/
+              |--- results_fileE.txt
+              |--- results_fileF.txt
+         |--- tool_2/
+              |--- results_fileE.txt
+              |--- results_fileF.txt
+    |--- md5/
+         |--- vcf/
+              |--- md5_fileA.txt
+              |--- md5_fileB.txt
+         |--- bam/
+              |--- md5_fileC.txt
+              |--- md5_fileD.txt
+         |--- fastq/
+              |--- md5_fileE.txt
+              |--- md5_fileF.txt
+         |--- other/
+              |--- md5_fileG.txt
+              |--- md5_fileH.txt
+```
+
