@@ -14,10 +14,10 @@ workflow compare_vcf_files {
   }
 
   scatter (sample in inputSamples) {
-    call count_vcf_lines.all as nvar_all_f1 { input: vcf = sample[1], outdir = count_outdir + sample[0] }
-    call count_vcf_lines.all as nvar_all_f2 { input: vcf = sample[2], outdir = count_outdir + sample[0] }
-    call count_vcf_lines.pass as nvar_pass_f1 { input: vcf = sample[1], outdir = count_outdir + sample[0] }
-    call count_vcf_lines.pass as nvar_pass_f2 { input: vcf = sample[2], outdir = count_outdir + sample[0] }
+    call count_vcf_lines.all as nvar_all_f1 { input: vcf = sample[1], outdir = count_outdir + "f1/" + sample[0] }
+    call count_vcf_lines.all as nvar_all_f2 { input: vcf = sample[2], outdir = count_outdir + "f2/" + sample[0] }
+    call count_vcf_lines.pass as nvar_pass_f1 { input: vcf = sample[1], outdir = count_outdir + "f1/" + sample[0] }
+    call count_vcf_lines.pass as nvar_pass_f2 { input: vcf = sample[2], outdir = count_outdir + "f2/" + sample[0] }
 
     call bcftools.isec {
       input:
