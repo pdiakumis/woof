@@ -26,7 +26,8 @@ def create_cromwell_files(outdir):
 
     # opts
     opts = configs.OPTIONS
-    opts["final_workflow_outputs_dir"] = final_dir
+    # maybe remove final_dir as option and work based on work_dir
+    #opts["final_workflow_outputs_dir"] = final_dir
     option_file = os.path.join(work_dir, "cromwell_opts.json")
     with open(option_file, "w") as out_handle:
         json.dump(opts, out_handle)
@@ -75,7 +76,7 @@ def create_cromwell_config(outdir):
 
         return out
 
-    joblimit = 2 # need to play with this
+    joblimit = 16 # need to play with this
     filesystem = utils.get_filesystem() # SPARTAN/RAIJIN/AWS/OTHER - dealing with single fs for now
     file_types = set(["s3" if filesystem == "AWS" else "local"])
     std_args = {"docker_attrs": "",
@@ -124,6 +125,7 @@ def run_cromwell(outdir, inputs, workflow):
 
     cc = f"cromwell -Xms1g -Xmx3g run " \
          f"-Dconfig.file={cf['config_file']} " \
+         f"-DLOG_LEVEL=ERROR -DLOG_LEVEL=WARN " \
          f"--metadata-output {cf['metadata_file']} " \
          f"--options {cf['option_file']} " \
          f"--inputs {inputs} " \

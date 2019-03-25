@@ -1,5 +1,5 @@
 
-OPTIONS = { "final_workflow_outputs_dir" : "",
+OPTIONS = { 
             "default_runtime_attributes": {}
             }
 
