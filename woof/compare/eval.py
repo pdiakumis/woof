@@ -5,6 +5,8 @@ import gzip
 import csv
 from woof import utils
 
+# Mostly from umccr/vcf_stuff
+
 def eval(fp_vcf, fn_vcf, tp_vcf, out):
     fpc = count_variants(fp_vcf)
     fnc = count_variants(fn_vcf)
@@ -16,12 +18,12 @@ def eval(fp_vcf, fn_vcf, tp_vcf, out):
 
     snp_truth = tp_snp + fn_snp
     snp_recall = tp_snp / snp_truth if snp_truth else 0
-    snp_called = tp_snp / fp_snp
+    snp_called = tp_snp + fp_snp
     snp_precision = tp_snp / snp_called if snp_called else 0
 
     ind_truth = tp_ind + fn_ind
     ind_recall = tp_ind / ind_truth if ind_truth else 0
-    ind_called = tp_ind / fp_ind
+    ind_called = tp_ind + fp_ind
     ind_precision = tp_ind / ind_called if ind_called else 0
 
     snp_f1 = f_measure(1, snp_precision, snp_recall)
@@ -45,11 +47,9 @@ def eval(fp_vcf, fn_vcf, tp_vcf, out):
 
 
 
-# from umccr/vcf_stuff
 def f_measure(b, prec, recall):
     return (1 + b**2) * prec * recall / (b**2 * prec + recall) if prec + recall > 0 else 0
 
-# from umccr/vcf_stuff
 def count_variants(vcf):
     snps = 0
     indels = 0
