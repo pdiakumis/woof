@@ -23,3 +23,27 @@ task isec {
   }
 }
 
+task get_pass {
+    input {
+        File vcf_in
+        String outdir
+        String vcf_out = outdir + "/" + basename(vcf_in, ".vcf.gz") + "_PASS.vcf.gz"
+    }
+
+    command {
+        conda activate woof
+
+        mkdir -p ~{outdir}
+
+        # include only header; exclude Header, keep only variants with . or PASS FILTER,
+        # sort by CHROM and POS (-V = like mixedsort), bgzip to stdout
+        (bcftools view -h ~{vcf_in} ; bcftools view -H -f .,PASS ~{vcf_in} | sort -k1,1V -k2,2n) | \
+        bgzip -c > ~{vcf_out} && tabix -f -p vcf ~{vcf_out}
+    }
+
+    output {
+        File out = "~{vcf_out}"
+        File out_tbi = "~{vcf_out}.tbi"
+    }
+}
+
