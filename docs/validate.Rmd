@@ -1,5 +1,4 @@
-Validate NGS data
-=================
+# Validate NGS data
 
 Step 1
 ------
@@ -16,10 +15,16 @@ Step 2
 ------
 
 * Now we can iterate through each row of the TSV according to its type:
-  - if `col1 == "VCF"`, validate using `head` and `vcf-validator`
-  - if `col1 == "BAM"`, validate using `samtools quickcheck`
-  - if `col1 == "FASTQ"`, validate using `fqtools`
-
+  - `VCF`:
+    - `head` 
+    - [vcf-validator](https://github.com/EBIvariation/vcf-validator)
+  - `BAM`: 
+    - [samtools quickcheck](http://www.htslib.org/doc/samtools.html)
+    - GATK ValidateSamFile [link1](https://software.broadinstitute.org/gatk/documentation/article.php?id=7571),
+  [link2](http://broadinstitute.github.io/picard/command-line-overview.html#ValidateSamFile)
+    - UMich [BamUtil validate](https://genome.sph.umich.edu/wiki/BamUtil:_validate)
+  - `FASTQ`: 
+    - [fqtools validate](https://github.com/alastair-droop/fqtools)
 
 Output
 ------

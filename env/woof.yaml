@@ -23,6 +23,7 @@ dependencies:
   - r-dt
   - r-knitr
   - r-kableextra
+  - r-radix
   - r-rmarkdown
   - r-tidyverse
   - r-woofr

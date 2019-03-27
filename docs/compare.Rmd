@@ -1,5 +1,48 @@
-Compare bcbio runs
-==================
+# Compare bcbio runs
+
+
+Diagram
+-------
+
+```{r gr1}
+ndf <- 
+  tribble(
+    ~id, ~label, ~type,
+    1, "vcf1", "file",
+    2, "vcf2", "file",
+    3, "bcftools-view-f", "command",
+    4, "vcf1_pass", "file",
+    5, "vcf2_pass", "file",
+    6, "bcftools-isec", "command",
+    7, "FP-FN-TP", "file",
+    8, "FP-FN-TP_pass", "file",
+    9, "count-vars", "command",
+    10, "counts", "file",
+    11, "counts_pass", "file") %>% 
+  mutate(
+    fillcolor = case_when(
+      type == "file" ~ "lightblue",
+ 
+           type == "command" ~ "#f48f42",
+      TRUE ~ "#eef442"
+    ),
+    fontcolor = "black")
+
+edf <- 
+  create_edge_df(
+    from = c(1, 2, 3, 3, 1, 2, 4, 5, 6, 6, 1, 2, 4, 5, 9, 9),
+    to =   c(3, 3, 4, 5, 6, 6, 6, 6, 7, 8, 9, 9, 9, 9, 10, 11)
+  )
+
+
+create_graph(nodes_df = ndf, edges_df = edf) %>% 
+  set_node_attrs(
+    node_attr = "fontsize",
+    values = "6"
+  ) %>% 
+  render_graph(layout = "nicely")
+```
+
 
 Step 1
 ------
@@ -30,21 +73,48 @@ Output
 
 ```
 woof-comparison1/final
+    |--- vcf_pass/
+         |--- f1/
+              |--- vcf_typeA_pass.vcf
+              |--- vcf_typeB_pass.vcf
+         |--- f2/
+              |--- vcf_typeA_pass.vcf
+              |--- vcf_typeB_pass.vcf
     |--- bcftools_isec/
          |--- vcf_typeA/
+            |--- ALL/
+              |--- 0000.vcf
+              |--- 0001.vcf
+              |--- 0002.vcf
+            |--- PASS/
               |--- 0000.vcf
               |--- 0001.vcf
               |--- 0002.vcf
          |--- vcf_typeB/
+            |--- ALL/
+              |--- 0000.vcf
+              |--- 0001.vcf
+              |--- 0002.vcf
+            |--- PASS/
               |--- 0000.vcf
               |--- 0001.vcf
               |--- 0002.vcf
     |--- vcf_eval/
          |--- vcf_typeA/
-              |--- eval_stats.txt
+              |--- eval_stats_ALL.txt
+              |--- eval_stats_PASS.txt
          |--- vcf_typeB
-              |--- eval_stats.txt
+              |--- eval_stats_ALL.txt
+              |--- eval_stats_PASS.txt
     |--- vcf_counts/
+        f1/
+         |--- vcf_typeA/
+              |--- count_all.txt
+              |--- count_pass.txt
+         |--- vcf_typeB/
+              |--- count_all.txt
+              |--- count_pass.txt
+        f2/
          |--- vcf_typeA/
               |--- count_all.txt
               |--- count_pass.txt
@@ -52,4 +122,5 @@ woof-comparison1/final
               |--- count_all.txt
               |--- count_pass.txt
 ```
+
 

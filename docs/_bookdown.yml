@@ -1,4 +1,4 @@
-rmd_files: ["index.Rmd", "compare.Rmd"]
+rmd_files: ["index.Rmd", "compare.Rmd", "validate.Rmd"]
 delete_merged_file: true
 language:
   ui:

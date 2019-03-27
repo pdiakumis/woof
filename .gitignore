@@ -19,3 +19,4 @@ final-cromwell/
 
 woof/_version.py
 test_woof/
+.Rproj.user
