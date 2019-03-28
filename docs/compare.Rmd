@@ -5,6 +5,8 @@ Diagram
 -------
 
 ```{r gr1}
+set.seed(42)
+
 ndf <- 
   tribble(
     ~id, ~label, ~type,
@@ -38,9 +40,9 @@ edf <-
 create_graph(nodes_df = ndf, edges_df = edf) %>% 
   set_node_attrs(
     node_attr = "fontsize",
-    values = "6"
+    values = "8"
   ) %>% 
-  render_graph(layout = "nicely")
+  render_graph(layout = "tree")
 ```
 
 
@@ -75,11 +77,11 @@ Output
 woof-comparison1/final
     |--- vcf_pass/
          |--- f1/
-              |--- vcf_typeA_pass.vcf
-              |--- vcf_typeB_pass.vcf
+            |--- vcf_typeA_PASS.vcf.gz
+            |--- vcf_typeB_PASS.vcf.gz
          |--- f2/
-              |--- vcf_typeA_pass.vcf
-              |--- vcf_typeB_pass.vcf
+            |--- vcf_typeA_PASS.vcf.gz
+            |--- vcf_typeB_PASS.vcf.gz
     |--- bcftools_isec/
          |--- vcf_typeA/
             |--- ALL/
@@ -101,26 +103,38 @@ woof-comparison1/final
               |--- 0002.vcf
     |--- vcf_eval/
          |--- vcf_typeA/
-              |--- eval_stats_ALL.txt
-              |--- eval_stats_PASS.txt
+            |--- ALL/
+              |--- eval_stats.txt
+            |--- PASS/
+              |--- eval_stats.txt
          |--- vcf_typeB
-              |--- eval_stats_ALL.txt
-              |--- eval_stats_PASS.txt
+            |--- ALL/
+              |--- eval_stats.txt
+            |--- PASS/
+              |--- eval_stats.txt
     |--- vcf_counts/
-        f1/
-         |--- vcf_typeA/
-              |--- count_all.txt
-              |--- count_pass.txt
-         |--- vcf_typeB/
-              |--- count_all.txt
-              |--- count_pass.txt
-        f2/
-         |--- vcf_typeA/
-              |--- count_all.txt
-              |--- count_pass.txt
-         |--- vcf_typeB/
-              |--- count_all.txt
-              |--- count_pass.txt
+         |--- f1
+            |--- vcf_typeA/
+               |--- ALL/
+                 |--- count_vars.txt
+               |--- PASS/
+                 |--- count_vars.txt
+            |--- vcf_typeB
+               |--- ALL/
+                 |--- count_vars.txt
+               |--- PASS/
+                 |--- count_vars.txt
+         |--- f2
+            |--- vcf_typeA/
+               |--- ALL/
+                 |--- count_vars.txt
+               |--- PASS/
+                 |--- count_vars.txt
+            |--- vcf_typeB
+               |--- ALL/
+                 |--- count_vars.txt
+               |--- PASS/
+                 |--- count_vars.txt
 ```
 
 

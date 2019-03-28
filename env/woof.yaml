@@ -16,6 +16,7 @@ dependencies:
   - pandoc
   - python>=3.7
   - samtools
+  - tabix
   - vcflib
   - r-base>=3.5
   - r-bookdown
