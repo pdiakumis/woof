@@ -8,7 +8,7 @@ task isec {
     # indices required
     File vcf1_tbi = vcf1 + ".tbi"
     File vcf2_tbi = vcf2 + ".tbi"
-    String outdir # woof/final/bcftools_isec/<vcf_type>
+    String outdir # woof/final/bcftools_isec/<vcf_type>/<all-or-pass>
   }
 
   command {
@@ -23,17 +23,17 @@ task isec {
   }
 }
 
-task get_pass {
+task filter_pass {
     input {
         File vcf_in
-        String outdir
-        String vcf_out = outdir + "/" + basename(vcf_in, ".vcf.gz") + "_PASS.vcf.gz"
+        String outdir # woof/final/vcf_pass/<f1-or-f2>/<vcf_type>
+        String vcf_out = outdir + "_PASS.vcf.gz"
     }
 
     command {
         conda activate woof
 
-        mkdir -p ~{outdir}
+        mkdir -p $(dirname ~{outdir})
 
         # include only header; exclude Header, keep only variants with . or PASS FILTER,
         # sort by CHROM and POS (-V = like mixedsort), bgzip to stdout

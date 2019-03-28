@@ -1,35 +1,17 @@
 version 1.0
 
-task all {
+task count_vars {
 
     input {
         File vcf
-        String outdir # woof/final/vcf_counts/<vcf-typeX>
-        String txt = outdir + "/count_all.txt"
+        File vcf_tbi = vcf + ".tbi"
+        String outdir # woof/final/vcf_counts/<f1-or-f2>/<vcf-typeX>/<all-or-pass>/
+        String txt = outdir + "count_vars.txt"
     }
 
     command {
         mkdir -p ~{outdir}
         gunzip -c ~{vcf} | grep -v "^#" | wc -l > ~{txt}
-    }
-
-    output {
-        File out = "~{txt}"
-    }
-}
-
-task pass {
-    input {
-        File vcf
-        String outdir
-        String txt = outdir + "/count_pass.txt"
-    }
-
-    command {
-        conda activate woof
-
-        mkdir -p ~{outdir}
-        bcftools view -f .,PASS -H ~{vcf} | wc -l > ~{txt}
     }
 
     output {
