@@ -27,14 +27,14 @@ workflow compare_vcf_files {
 
     call eval_vcf.eval as eval_all {
       input:
-        outdir = outdir + "vcf_eval/" + sample[0] + "/ALL",
+        outdir = outdir + "vcf_eval/" + sample[0] + "/ALL/",
         fp_vcf = isec_all.false_pos,
         fn_vcf = isec_all.false_neg,
         tp_vcf = isec_all.true_pos
     }
     call eval_vcf.eval as eval_pass {
       input:
-        outdir = outdir + "vcf_eval/" + sample[0] + "/PASS",
+        outdir = outdir + "vcf_eval/" + sample[0] + "/PASS/",
         fp_vcf = isec_pass.false_pos,
         fn_vcf = isec_pass.false_neg,
         tp_vcf = isec_pass.true_pos
