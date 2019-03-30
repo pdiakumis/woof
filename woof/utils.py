@@ -153,7 +153,7 @@ def chdir(new_dir):
                 raise
             num_tries += 1
             time.sleep(2)
-    safe_makedir(new_dir)
+    safe_mkdir(new_dir)
     os.chdir(new_dir)
     try:
         yield
