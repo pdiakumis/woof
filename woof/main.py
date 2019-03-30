@@ -6,7 +6,7 @@ import click
 from click import echo
 
 from woof import _version as version
-from woof import dog
+from woof import dog, utils
 from .compare import main as compare
 from .validate import main as validate
 
@@ -15,7 +15,7 @@ from .validate import main as validate
 @click.version_option(version.__version__)
 def cli():
     """Bioinformatic Workflows"""
-    echo(click.style("In woof main", fg='green'))
+    echo(click.style(f"[{utils.timestamp()}] woof start", fg='yellow'))
 
 
 cli.add_command(compare.compare)

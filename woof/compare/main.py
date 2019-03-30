@@ -30,7 +30,7 @@ def compare(f1, f2, outdir):
     wdl_workflow = os.path.join(work_dir, "wdl", "compare_vcf_files.wdl")
     run.run_cromwell(outdir, input_file, wdl_workflow)
 
-    echo(style("This probably means success. Enjoy life!", fg='yellow'))
+    echo(click.style(f"[{utils.timestamp()}] woof end", fg='yellow'))
 
 
 def create_cromwell_input(f1, f2, outdir, final_dir):
