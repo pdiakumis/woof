@@ -10,6 +10,7 @@ import sys
 import json
 import datetime
 import shutil
+import contextlib
 
 def critical(msg):
     sys.stderr.write(msg + '\n')
@@ -135,28 +136,51 @@ def copy_recursive(src, dest):
     except OSError as e:
         critical(f'Directory not copied. Error: {e}')
 
+@contextlib.contextmanager
+def chdir(new_dir):
+    """
+    Context manager to temporarily change to a new directory.
+    On busy filesystems can have issues accessing main directory, so allow retries.
+    """
+    num_tries = 0
+    max_tries = 5
+    cur_dir = None
+    while cur_dir is None:
+        try:
+            cur_dir = os.getcwd()
+        except OSError:
+            if num_tries > max_tries:
+                raise
+            num_tries += 1
+            time.sleep(2)
+    safe_makedir(new_dir)
+    os.chdir(new_dir)
+    try:
+        yield
+    finally:
+        os.chdir(cur_dir)
 
 # select the appropriate machine
-hpc_dict = {
-    'SPARTAN' : {
-        'extras' : '/data/cephfs/punim0010/extras',
-        'woof_data' : '/data/cephfs/punim0010/extras/woof/data',
-        'ref_fasta' : '/data/cephfs/punim0010/local/development/bcbio/genomes/Hsapiens/GRCh37/seq/GRCh37.fa',
-        },
-    'RAIJIN' : {
-        'extras' : '/g/data3/gx8/extras',
-        'woof_data' : '/g/data3/gx8/extras/woof/data',
-        'ref_fasta' : '/g/data3/gx8/local/development/bcbio/genomes/Hsapiens/GRCh37/seq/GRCh37.fa',
-        },
-    'peter' : {
-        'extras' : '/Users/pdiakumis/extras',
-        'woof_data' : '/Users/pdiakumis/extras/woof/data',
-        'ref_fasta' : '/Users/pdiakumis/extras/woof/data/genomes/Hsapiens/GRCh37/seq/GRCh37.fa',
-        },
-    'aws' : {
-        'extras' : '/home/ubuntu/extras',
-        'woof_data' : '/home/ubuntu/extras/woof/data',
-        'ref_fasta' : '/home/ubuntu/extras/woof/data/genomes/Hsapiens/GRCh37/seq/GRCh37.fa'
-        },
-}
+# hpc_dict = {
+#     'SPARTAN' : {
+#         'extras' : '/data/cephfs/punim0010/extras',
+#         'woof_data' : '/data/cephfs/punim0010/extras/woof/data',
+#         'ref_fasta' : '/data/cephfs/punim0010/local/development/bcbio/genomes/Hsapiens/GRCh37/seq/GRCh37.fa',
+#         },
+#     'RAIJIN' : {
+#         'extras' : '/g/data3/gx8/extras',
+#         'woof_data' : '/g/data3/gx8/extras/woof/data',
+#         'ref_fasta' : '/g/data3/gx8/local/development/bcbio/genomes/Hsapiens/GRCh37/seq/GRCh37.fa',
+#         },
+#     'peter' : {
+#         'extras' : '/Users/pdiakumis/extras',
+#         'woof_data' : '/Users/pdiakumis/extras/woof/data',
+#         'ref_fasta' : '/Users/pdiakumis/extras/woof/data/genomes/Hsapiens/GRCh37/seq/GRCh37.fa',
+#         },
+#     'aws' : {
+#         'extras' : '/home/ubuntu/extras',
+#         'woof_data' : '/home/ubuntu/extras/woof/data',
+#         'ref_fasta' : '/home/ubuntu/extras/woof/data/genomes/Hsapiens/GRCh37/seq/GRCh37.fa'
+#         },
+# }
 

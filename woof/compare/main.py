@@ -14,7 +14,6 @@ from woof.cromwell import run
 @click.option("-o", "--outdir", help="Output directory [def: ./woof].", default="woof")
 def compare(f1, f2, outdir):
     """Compare two bcbio runs <final1> and <final2>"""
-    echo(style("In compare.main", fg='blue'))
 
     outdir = utils.adjust_path(outdir)
     f1 = utils.adjust_path(f1)

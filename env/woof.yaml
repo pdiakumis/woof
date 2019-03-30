@@ -21,6 +21,7 @@ dependencies:
   - r-base>=3.5
   - r-bookdown
   - r-devtools
+  - r-diagrammer
   - r-dt
   - r-knitr
   - r-kableextra
