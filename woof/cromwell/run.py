@@ -132,5 +132,6 @@ def run_cromwell(outdir, inputs, workflow):
          f"{workflow} " \
          f"2>&1 | tee -a {cf['log_file']} "
 
-    with utils.chdir(outdir, "work")
+    with utils.chdir(os.path.join(outdir, "work")):
         subprocess.run(cc, stdout=subprocess.PIPE, encoding='utf-8', shell=True)
+
