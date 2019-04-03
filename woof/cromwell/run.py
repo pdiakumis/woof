@@ -16,6 +16,7 @@ def create_cromwell_files(outdir):
     3. all WDL files
     """
 
+    outdir = utils.adjust_path(outdir)
     work_dir = os.path.join(outdir, "work")
     final_dir = os.path.join(outdir, "final")
 
@@ -133,6 +134,7 @@ def run_cromwell(outdir, inputs, workflow):
          f"{workflow} " \
          f"2>&1 | tee -a {cf['log_file']} "
 
-    with utils.chdir(os.path.join(outdir, "work")):
-        subprocess.run(cc, stdout=subprocess.PIPE, encoding='utf-8', shell=True)
+    #with utils.chdir(os.path.join(outdir, "work")):
+    #    subprocess.run(cc, stdout=subprocess.PIPE, encoding='utf-8', shell=True)
+    print(cc)
 

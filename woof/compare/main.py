@@ -15,22 +15,15 @@ from woof.cromwell import run
 def compare(f1, f2, outdir):
     """Compare two bcbio runs <final1> and <final2>"""
 
-    outdir = utils.adjust_path(outdir)
     f1 = utils.adjust_path(f1)
     f2 = utils.adjust_path(f2)
-    echo(f'f1 is {f1}; f2 is {f2}')
+    echo(style(f"f1 is {f1}\nf2 is {f2}", fg='green'))
 
-    work_dir = os.path.join(outdir, "work")
-    final_dir = os.path.join(outdir, "final")
-    utils.safe_mkdir(work_dir)
-    utils.safe_mkdir(final_dir)
-
-
+    work_dir, final_dir = utils.setup_woof_dirs(outdir)
     input_file = create_cromwell_input(f1, f2, work_dir, final_dir)
     wdl_workflow = os.path.join(work_dir, "wdl", "compare_vcf_files.wdl")
     run.run_cromwell(outdir, input_file, wdl_workflow)
-
-    echo(click.style(f"[{utils.timestamp()}] woof end", fg='yellow'))
+    echo(style(f"[{utils.timestamp()}] woof end", fg='yellow'))
 
 
 def create_cromwell_input(f1, f2, outdir, final_dir):
@@ -50,3 +43,4 @@ def create_cromwell_input(f1, f2, outdir, final_dir):
     with open(input_file, "w") as out_handle:
         json.dump(d, out_handle)
     return input_file
+

@@ -8,11 +8,13 @@ from woof.cromwell import run
 
 @click.command()
 @click.argument("dirpath", type=click.File(), metavar="<dirpath>")
+@click.option("-o", "--outdir", help="Output directory [def: ./woof].", default="woof")
 def validate(dirpath):
-    """Validate NGS data in <dir>"""
+    """Validate NGS data in <dirpath>"""
 
-    echo(click.style("In validate.main", fg='blue'))
+    echo(style("In validate.main", fg='yellow'))
 
     dirpath = utils.adjust_path(dirpath)
-
     echo(f'<dirpath> is {dirpath}')
+    work_dir, final_dir = utils.setup_woof_dirs(outdir)
+

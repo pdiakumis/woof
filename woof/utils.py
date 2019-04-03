@@ -12,6 +12,17 @@ import datetime
 import shutil
 import contextlib
 
+def setup_woof_dirs(d):
+    """Create woof/final and woof/work dirs"""
+    d = adjust_path(d)
+    work_dir = os.path.join(d, "work")
+    final_dir = os.path.join(d, "final")
+    safe_mkdir(work_dir)
+    safe_mkdir(final_dir)
+
+    return (work_dir, final_dir)
+
+
 def critical(msg):
     sys.stderr.write(msg + '\n')
     sys.exit(1)
