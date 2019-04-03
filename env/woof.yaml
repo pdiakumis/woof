@@ -25,7 +25,9 @@ dependencies:
   - r-dt
   - r-knitr
   - r-kableextra
+  - r-pebbles
   - r-radix
+  - r-rock
   - r-rmarkdown
   - r-tidyverse
   - r-woofr
