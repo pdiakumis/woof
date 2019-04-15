@@ -12,7 +12,6 @@ Cromwell
 * [VPC Stuff](#vpc-stuff)
 * [AWS Batch](#aws-batch)
 * [Cromwell EC2 Instance](#cromwell-ec2-instance)
-* [Running Workflows](#running-workflows)
 
 <!-- vim-markdown-toc -->
 
@@ -41,8 +40,8 @@ Cromwell
 ### VPC Stuff
 You can see the mappings between VPCs and their subnets under Services `->` VPC `->` Your VPCs / Subnets
 
-* VPC ID: use something like `vpc-005b.. (vpc-bootstrap-main)`
-* VPC Subnet ID: use something like `subnet-0345.. (vpc-bootstrap-main-public-2)`
+* VPC ID: use something like `vpc-0e47286.. (umccrise-vpc-dev)`
+* VPC Subnet ID: use something like `subnet-0fb22c..`
 
 ### AWS Batch
 * Use cf template
@@ -95,12 +94,10 @@ system {
 java -Dconfig.file=cromwell.conf -jar cromwell.jar server
 ```
 
-The thing with the cf template above is that it starts the Cromwell server automatically on launch.
+The thing with the cf template above is that __it starts the Cromwell server automatically on launch__.
 This means that once the stack has been created and launched successfully, you can simply do a
 `ssh -L localhost:8000:localhost:8000 ec2-user@ec2-foo.ap-southeast-2.compute.amazonaws.com`
 and that will open up a port between the EC2 instance running Cromwell and your local laptop.
-You can then go to <http://localhost:8000/> and you'll see the Swagger UI, where you can submit
-jobs to Cromwell. Awesomeness!!!
-
-### Running Workflows
+You can then go to <http://localhost:8000/> and you'll hopefully see the Swagger UI. This means
+you can now submit jobs to Cromwell using that interface, curl, or something like Postman. Awesomeness!!!
 
