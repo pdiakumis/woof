@@ -15,9 +15,9 @@ from .validate import main as validate
 @click.version_option(version.__version__)
 def cli():
     """Bioinformatic Workflows"""
-    echo(click.style(f"[{utils.timestamp()}] woof start", fg='yellow'))
 
 
 cli.add_command(compare.compare)
 cli.add_command(validate.validate)
 cli.add_command(dog.woof)
+
