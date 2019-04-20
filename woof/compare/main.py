@@ -26,8 +26,8 @@ def compare(r1, r2, outdir):
 
     work_dir, final_dir = utils.setup_woof_dirs(outdir)
     input_file = create_cromwell_input(r1, r2, work_dir, final_dir, comp_type)
-    #wdl_workflow = os.path.join(work_dir, "wdl", "compare_vcf_files.wdl")
-    #run.run_cromwell(outdir, input_file, wdl_workflow)
+    wdl_workflow = os.path.join(work_dir, "wdl", "compare_vcf_files.wdl")
+    run.run_cromwell(outdir, input_file, wdl_workflow)
     echo(style(f"[{utils.timestamp()}] woof-compare end", fg="yellow"))
 
 def bcbio_or_umccrise(r1, r2):
