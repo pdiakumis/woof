@@ -65,7 +65,7 @@ def create_cromwell_input(r1, r2, outdir, final_dir, comp_type):
         return fname
 
     d = {}
-    d["compare_vcf_files.inputSamplesFile"] = _create_cromwell_samples(r1, r2, outdir)
+    d["compare_vcf_files.inputSamplesFile"] = _create_cromwell_samples(r1, r2, outdir, comp_type)
     d["compare_vcf_files.outdir"] = final_dir + "/"
     input_file = os.path.join(outdir, "cromwell_inputs.json")
     with open(input_file, "w") as out_handle:
