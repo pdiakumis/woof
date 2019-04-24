@@ -1,8 +1,8 @@
 version 1.0
 
-import "tasks/count_vcf_lines.wdl" as count
-import "tasks/bcftools.wdl" as bcftools
-import "tasks/eval_vcf.wdl" as eval_vcf
+import "tasks/compare/count_vcf_lines.wdl" as count
+import "tasks/compare/bcftools.wdl" as bcftools
+import "tasks/compare/eval_vcf.wdl" as eval_vcf
 
 workflow compare_vcf_files {
 
