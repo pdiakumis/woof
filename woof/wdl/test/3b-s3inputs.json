@@ -1,3 +1,3 @@
 {
-  "ReadFile.read_file.file": "s3://umccr-cromwell-test-bucket1/data/meats.txt"
+  "ReadS3File.read_S3file.file": "s3://umccr-sandbox/test-cromwell/foo.txt"
 }

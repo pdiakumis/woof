@@ -1,16 +1,17 @@
 version 1.0
 
-task read_file {
+task read_S3file {
   input {
     File file
+    String txt = "cat_foo.txt"
   }
 
   command {
-    cat ${file}
+    cat ~{file} > ~{txt}
   }
 
   output {
-    String contents = read_string(stdout())
+    File out = "~{txt}"
   }
 
   runtime {
@@ -18,6 +19,7 @@ task read_file {
   }
 }
 
-workflow ReadFile {
-  call read_file
+workflow ReadS3File {
+  call read_S3file
 }
+
