@@ -1,0 +1,10 @@
+1.quickcheck.badeof.bam	s3://umccr-cromwell-test-bucket1/data/1.quickcheck.badeof.bam	BAM
+10.quickcheck.notargets.bam	s3://umccr-cromwell-test-bucket1/data/10.quickcheck.notargets.bam	BAM
+2.quickcheck.badheader.bam	s3://umccr-cromwell-test-bucket1/data/2.quickcheck.badheader.bam	BAM
+3.quickcheck.ok.bam	s3://umccr-cromwell-test-bucket1/data/3.quickcheck.ok.bam	BAM
+4.quickcheck.ok.bam	s3://umccr-cromwell-test-bucket1/data/4.quickcheck.ok.bam	BAM
+5.quickcheck.scramble30.truncated.cram	s3://umccr-cromwell-test-bucket1/data/5.quickcheck.scramble30.truncated.cram	OTHER
+6.quickcheck.cram21.ok.cram	s3://umccr-cromwell-test-bucket1/data/6.quickcheck.cram21.ok.cram	OTHER
+7.quickcheck.cram30.ok.cram	s3://umccr-cromwell-test-bucket1/data/7.quickcheck.cram30.ok.cram	OTHER
+8.quickcheck.cram21.truncated.cram	s3://umccr-cromwell-test-bucket1/data/8.quickcheck.cram21.truncated.cram	OTHER
+9.quickcheck.cram30.truncated.cram	s3://umccr-cromwell-test-bucket1/data/9.quickcheck.cram30.truncated.cram	OTHER

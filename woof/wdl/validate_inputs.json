@@ -1,4 +1,4 @@
 {
-  "validate_files.input_data_tsv": "/Users/pdiakumis/Desktop/projects/umccr/woof_validate/validate_test.tsv"
+  "validate_files.input_data_tsv": "s3://umccr-cromwell-test-bucket1/test1/validate_test.tsv"
 }
 

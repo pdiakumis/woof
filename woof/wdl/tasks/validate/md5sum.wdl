@@ -7,7 +7,7 @@ task md5sum {
   }
 
   command {
-    md5sum in_file > ~{prefix}.md5.txt
+    md5sum ~{in_file} > ~{prefix}.md5.txt
   }
 
   output {
@@ -15,8 +15,8 @@ task md5sum {
   }
 
   runtime {
-    docker: "alpine:latest"
-    memory: "1G"
+    docker: "ubuntu:latest"
+    memory: "512MB"
     cpu: 1
   }
 }
