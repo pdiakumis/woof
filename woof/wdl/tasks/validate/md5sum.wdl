@@ -16,7 +16,7 @@ task md5sum {
 
   runtime {
     docker: "ubuntu:latest"
-    memory: 1
+    memory: "512MB"
     cpu: 1
   }
 }

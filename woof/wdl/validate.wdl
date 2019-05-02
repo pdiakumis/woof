@@ -12,9 +12,9 @@ workflow validate_files {
 
   scatter (f in input_files) {
     call md5sum.md5sum { input: in_file = f[1], prefix = f[0] }
-    #if (f[2] == "FASTQ") {
-    #  call fqtools.fqtools { input: in_file = f[1], prefix = f[0] }
-    #}
+    if (f[2] == "FASTQ") {
+      call fqtools.fqtools { input: in_file = f[1], prefix = f[0] }
+    }
   }
 }
 
