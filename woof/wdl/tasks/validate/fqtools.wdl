@@ -16,7 +16,7 @@ task fqtools {
 
   runtime {
     docker: "quay.io/biocontainers/fqtools:2.0--hf50d5a6_4"
-    memory: "512MB"
+    memory: "3GB"
     cpu: 1
   }
 }
