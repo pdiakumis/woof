@@ -7,7 +7,7 @@ task quickcheck {
   }
 
   command {
-    ( samtools quickcheck -q ~{in_file} && echo "ok" || echo "fail" ) > ~{prefix}.quickcheck.txt 2>&1 
+    ( samtools quickcheck -q ~{in_file} && echo "ok" || echo "fail" ) > ~{prefix}.quickcheck.txt 2>&1
   }
 
   output {
