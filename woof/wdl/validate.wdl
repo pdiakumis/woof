@@ -3,6 +3,7 @@ version 1.0
 import "tasks/validate/md5sum.wdl" as md5sum
 import "tasks/validate/fqtools.wdl" as fqtools
 import "tasks/validate/samtools.wdl" as samtools
+import "tasks/validate/bcftools.wdl" as bcftools
 
 workflow validate_files {
 
@@ -20,6 +21,10 @@ workflow validate_files {
 
     if (f[2] == "BAM") {
       call samtools.quickcheck { input: in_file = f[1], prefix = f[0] }
+    }
+
+    if (f[2] == "VCF") {
+      call bcftools.querysamplenames { input: in_file = f[1], prefix = f[0] }
     }
   }
 }
