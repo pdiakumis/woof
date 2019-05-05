@@ -8,7 +8,7 @@ task querysamplenames {
 
   command {
     # outputs list of VCF sample names - doesn't require .tbi
-    ( bcftools query -l ~{in_file} && echo "ok" || echo "fail" ) > ~{prefix}.query_sn.txt 2>&1
+    ( echo "ok" && bcftools query -l ~{in_file} || echo "fail" ) > ~{prefix}.query_sn.txt 2>&1
   }
 
   output {
