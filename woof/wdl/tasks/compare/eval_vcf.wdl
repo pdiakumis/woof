@@ -11,13 +11,13 @@ task eval {
 
   command {
 
-  conda activate woof
-  mkdir -p ~{outdir}
+    conda activate woof
+    mkdir -p ~{outdir}
 
-  python <<CODE
-  from woof.compare import eval
-  eval.eval("~{fp_vcf}", "~{fn_vcf}", "~{tp_vcf}", "~{tsv}")
-  CODE
+    python <<CODE
+    from woof.compare import eval
+    eval.eval("~{fp_vcf}", "~{fn_vcf}", "~{tp_vcf}", "~{tsv}")
+    CODE
   }
 
   output {
