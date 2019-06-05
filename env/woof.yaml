@@ -4,7 +4,6 @@ channels:
   - pdiakumis
   - conda-forge
   - bioconda
-  - vladsaveliev
   - defaults
 
 dependencies:
@@ -13,13 +12,12 @@ dependencies:
   - bedtools
   - click
   - cromwell
+  - crossmap
   - htslib
-  - ngs_utils
   - pandoc
-  - python>=3.7
+  - python>=3.6
   - pythonpy
   - samtools
-  - tabix
   - vcflib
   - r-base>=3.5
   - r-bookdown
@@ -29,7 +27,6 @@ dependencies:
   - r-knitr
   - r-kableextra
   - r-pebbles
-  - r-radix
   - r-rock
   - r-rmarkdown
   - r-tidyverse
