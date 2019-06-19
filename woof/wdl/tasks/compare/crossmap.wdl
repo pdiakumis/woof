@@ -82,10 +82,14 @@ workflow test {
         vcf_in = grch37_to_hg19.out,
         chain_hg19tohg38 = "/g/data3/gx8/extras/hg19ToHg38.over.chain.gz",
         hg38_fasta = "/g/data/gx8/local/development/bcbio/genomes/Hsapiens/hg38/seq/hg38.fa",
-        outdir = woofdir
+        outdir = woofdir + sample[0] + "/" + sample[1] + "/"
     }
 
-    call hg38_sort { input: vcf_in = hg19_to_hg38_unsorted.out, outdir = woofdir }
+    call hg38_sort {
+      input:
+        vcf_in = hg19_to_hg38_unsorted.out,
+        outdir = woofdir + sample[0] + "/" + sample[1] + "/"
+    }
   }
 }
 
