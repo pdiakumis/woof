@@ -69,27 +69,23 @@ task hg38_sort {
 
 workflow test {
   input {
+    File inputSamplesFile
+    Array[Array[File]] inputSamples = read_tsv(inputSamplesFile) # samplename, varcaller, filepath
     String woofdir = "/g/data3/gx8/projects/Diakumis/woof/woof/wdl/tasks/compare/test/"
   }
 
-  call grch37_to_hg19 {
-    input:
-      vcf_in = "/g/data3/gx8/projects/Hofmann_Cromwell/sync/bcbio_116a0_GRCh37_native_umccriseDev/Temp/bcbio_GRCh37/CUP-Pairs8/final/2019-04-26_2019-02-01T0241_Cromwell_WGS_CUP-Pairs8-merged/CUP-Pairs8-ensemble-annotated.vcf.gz",
-      outdir = woofdir
-  }
+  scatter (sample in inputSamples) {
+    call grch37_to_hg19 { input: vcf_in = sample[2], outdir = woofdir + sample[0] + "/" + sample[1] + "/" }
 
-  call hg19_to_hg38_unsorted {
-    input:
-      vcf_in = grch37_to_hg19.out,
-      chain_hg19tohg38 = "/g/data3/gx8/extras/hg19ToHg38.over.chain.gz",
-      hg38_fasta = "/g/data/gx8/local/development/bcbio/genomes/Hsapiens/hg38/seq/hg38.fa",
-      outdir = woofdir
-  }
+    call hg19_to_hg38_unsorted {
+      input:
+        vcf_in = grch37_to_hg19.out,
+        chain_hg19tohg38 = "/g/data3/gx8/extras/hg19ToHg38.over.chain.gz",
+        hg38_fasta = "/g/data/gx8/local/development/bcbio/genomes/Hsapiens/hg38/seq/hg38.fa",
+        outdir = woofdir
+    }
 
-  call hg38_sort {
-    input:
-      vcf_in = hg19_to_hg38_unsorted.out,
-      outdir = woofdir
+    call hg38_sort { input: vcf_in = hg19_to_hg38_unsorted.out, outdir = woofdir }
   }
 }
 
