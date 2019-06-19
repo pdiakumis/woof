@@ -53,7 +53,7 @@ task hg38_sort {
     File vcf_in
     File hg38_noalt_bed = "/g/data3/gx8/extras/hg38_noalt.bed"
     String outdir # woof/final/crossmap/<f1-or-f2>/<vcf_type>/grch37_to_hg19
-    String vcf_out = outdir + basename(vcf_in, ".vcf.gz") + "_hg38_sort.vcf"
+    String vcf_out = outdir + basename(vcf_in, "_hg19_hg38_unsorted.vcf") + ".vcf.gz" # give same name as original input
   }
 
   command {
@@ -69,7 +69,7 @@ task hg38_sort {
 
 workflow test {
   input {
-    File inputSamplesFile
+    File inputSamplesFile = "inputs_grch37-to-hg38.tsv"
     Array[Array[File]] inputSamples = read_tsv(inputSamplesFile) # samplename, varcaller, filepath
     String woofdir = "/g/data3/gx8/projects/Diakumis/woof/woof/wdl/tasks/compare/test/"
   }
