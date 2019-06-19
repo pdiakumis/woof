@@ -32,7 +32,7 @@ task hg19_to_hg38_unsorted {
     File hg38_fasta
     String outdir # woof/final/crossmap/<f1-or-f2>/<vcf_type>/grch37_to_hg19
     String vcf_out = outdir + basename(vcf_in, ".vcf.gz") + "_hg38_unsorted.vcf"
-    String vcf_out_unmap = vcf_out + ".unmap"
+    String vcf_out_unmap = outdir + basename(vcf_in, ".vcf.gz") + "_hg38_unsorted.vcf.unmap"
   }
 
   command {
