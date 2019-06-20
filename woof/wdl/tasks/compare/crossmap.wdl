@@ -57,8 +57,8 @@ task hg38_sort {
   }
 
   command {
-    bcftools view ~{vcf_in} -T ~{hg38_noalt_bed} | \
-    bcftools sort -Oz -o ~{vcf_out} && tabix -p vcf ~{vcf_out}
+    bcftools view -Oz -o ~{vcf_out} ~{vcf_in} -T ~{hg38_noalt_bed} && \
+    tabix -p vcf ~{vcf_out}
   }
 
   output {
