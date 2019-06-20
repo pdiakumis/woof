@@ -53,7 +53,7 @@ task hg38_sort {
     File vcf_in
     File hg38_noalt_bed = "/g/data3/gx8/extras/hg38_noalt.bed"
     String outdir # woof/final/crossmap/<f1-or-f2>/<vcf_type>/grch37_to_hg19
-    String vcf_out = outdir + basename(vcf_in, "_hg19_hg38_unsorted.vcf") + ".vcf.gz" # give same name as original input
+    String vcf_out = outdir + basename(vcf_in, "_hg19_hg38_unsorted.vcf") + "_hg38.vcf.gz"
   }
 
   command {
