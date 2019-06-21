@@ -70,7 +70,7 @@ task hg38_sort_final {
   input {
     File vcf_in
     String outdir # woof/final/crossmap/<f1-or-f2>/<vcf_type>/grch37_to_hg19
-    String vcf_out = outdir + basename(vcf_in, "_hg38_unsorted_noalt.vcf") + "_hg38_final.vcf.gz"
+    String vcf_out = outdir + basename(vcf_in, "_hg38_unsorted_noalt.vcf.gz") + "_hg38_final.vcf.gz"
   }
 
   command {
