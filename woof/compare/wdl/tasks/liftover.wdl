@@ -35,6 +35,7 @@ task gatk_liftover_grch37_to_hg38 {
 
   output {
     File out = vcf_out
+    File out_index = vcf_out + ".tbi"
     File out_rejected = vcf_out_rejected
   }
 }
@@ -43,6 +44,7 @@ task gatk_selectvariants_noalt {
 
   input {
     File vcf_in
+    File vcf_in_index = vcf_in + ".tbi"
     File hg38_ref = "/g/data/gx8/local/development/bcbio/genomes/Hsapiens/hg38/seq/hg38.fa"
     File hg38_refindex = "/g/data/gx8/local/development/bcbio/genomes/Hsapiens/hg38/seq/hg38.fa.fai"
     File hg38_refdict = "/g/data/gx8/local/development/bcbio/genomes/Hsapiens/hg38/seq/hg38.dict"
