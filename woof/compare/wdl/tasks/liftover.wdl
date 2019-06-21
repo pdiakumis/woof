@@ -11,8 +11,9 @@ version 1.0
 task gatk_liftover_grch37_to_hg38 {
   input {
     File vcf_in
-    File hg38_fasta = "/g/data/gx8/local/development/bcbio/genomes/Hsapiens/hg38/seq/hg38.fa"
     File chain_grch37_to_hg38
+    File hg38_ref = "/g/data/gx8/local/development/bcbio/genomes/Hsapiens/hg38/seq/hg38.fa"
+    File hg38_refdict = "/g/data/gx8/local/development/bcbio/genomes/Hsapiens/hg38/seq/hg38.dict"
     String outdir # woof/final/crossmap/<f1-or-f2>/<vcf_type>/grch37_to_hg19
     String vcf_out = outdir + basename(vcf_in, ".vcf.gz") + "_hg38.vcf.gz"
     String vcf_out_rejected = outdir + basename(vcf_in, ".vcf.gz") + "_rejected_liftover.vcf.gz"
@@ -28,7 +29,7 @@ task gatk_liftover_grch37_to_hg38 {
       --OUTPUT=~{vcf_out} \
       --REJECT=~{vcf_out_rejected} \
       --CHAIN=~{chain_grch37_to_hg38} \
-      --REFERENCE_SEQUENCE=~{hg38_fasta}
+      --REFERENCE_SEQUENCE=~{hg38_ref}
   }
 
   output {
@@ -41,7 +42,8 @@ task gatk_selectvariants_noalt {
 
   input {
     File vcf_in
-    File hg38_fasta = "/g/data/gx8/local/development/bcbio/genomes/Hsapiens/hg38/seq/hg38.fa"
+    File hg38_ref = "/g/data/gx8/local/development/bcbio/genomes/Hsapiens/hg38/seq/hg38.fa"
+    File hg38_refdict = "/g/data/gx8/local/development/bcbio/genomes/Hsapiens/hg38/seq/hg38.dict"
     File hg38_noalt_bed = "/g/data3/gx8/extras/hg38_noalt.bed"
     String outdir # woof/final/crossmap/<f1-or-f2>/<vcf_type>/grch37_to_hg19
     String vcf_out = outdir + basename(vcf_in, "_hg38.vcf.gz") + "_hg38_noalt.vcf.gz"
@@ -51,7 +53,7 @@ task gatk_selectvariants_noalt {
     gatk SelectVariants \
       --variant ~{vcf_in} \
       --output ~{vcf_out} \
-      --reference ~{hg38_fasta} \
+      --reference ~{hg38_ref} \
       --intervals ~{hg38_noalt_bed}
   }
 
