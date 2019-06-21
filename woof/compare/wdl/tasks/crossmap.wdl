@@ -71,7 +71,7 @@ workflow test {
   input {
     File inputSamplesFile = "inputs_grch37-to-hg38.tsv"
     Array[Array[File]] inputSamples = read_tsv(inputSamplesFile) # samplename, varcaller, filepath
-    String woofdir = "/g/data3/gx8/projects/Diakumis/woof/woof/wdl/tasks/compare/test/"
+    String woofdir = "/g/data3/gx8/projects/Diakumis/woof/test_woof/crossmap/"
   }
 
   scatter (sample in inputSamples) {
