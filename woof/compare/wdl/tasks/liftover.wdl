@@ -12,9 +12,9 @@ task gatk_liftover_grch37_to_hg38 {
   input {
     File vcf_in
     File chain_grch37_to_hg38
-    File hg38_ref
-    File hg38_refindex
-    File hg38_refdict
+    File hg38_ref = "/g/data/gx8/local/development/bcbio/genomes/Hsapiens/hg38/seq/hg38.fa"
+    File hg38_refindex = "/g/data/gx8/local/development/bcbio/genomes/Hsapiens/hg38/seq/hg38.fa.fai"
+    File hg38_refdict = "/g/data/gx8/local/development/bcbio/genomes/Hsapiens/hg38/seq/hg38.dict"
     String outdir # woof/final/crossmap/<f1-or-f2>/<vcf_type>/grch37_to_hg19
     String vcf_out = outdir + basename(vcf_in, ".vcf.gz") + "_hg38.vcf.gz"
     String vcf_out_rejected = outdir + basename(vcf_in, ".vcf.gz") + "_rejected_liftover.vcf.gz"
@@ -43,9 +43,9 @@ task gatk_selectvariants_noalt {
 
   input {
     File vcf_in
-    File hg38_ref
-    File hg38_refindex
-    File hg38_refdict
+    File hg38_ref = "/g/data/gx8/local/development/bcbio/genomes/Hsapiens/hg38/seq/hg38.fa"
+    File hg38_refindex = "/g/data/gx8/local/development/bcbio/genomes/Hsapiens/hg38/seq/hg38.fa.fai"
+    File hg38_refdict = "/g/data/gx8/local/development/bcbio/genomes/Hsapiens/hg38/seq/hg38.dict"
     File hg38_noalt_bed = "/g/data3/gx8/extras/hg38_noalt.bed"
     String outdir # woof/final/crossmap/<f1-or-f2>/<vcf_type>/grch37_to_hg19
     String vcf_out = outdir + basename(vcf_in, "_hg38.vcf.gz") + "_hg38_noalt.vcf.gz"
@@ -70,9 +70,6 @@ workflow liftover {
     File inputSamplesFile = "/g/data3/gx8/projects/Diakumis/woof/test_woof/compare/inputs_grch37-to-hg38_10.tsv"
     Array[Array[File]] inputSamples = read_tsv(inputSamplesFile) # samplename, varcaller, filepath
     String woofdir = "/g/data3/gx8/projects/Diakumis/woof/test_woof/crossmap/"
-    File hg38_ref = "/g/data/gx8/local/development/bcbio/genomes/Hsapiens/hg38/seq/hg38.fa"
-    File hg38_refindex = "/g/data/gx8/local/development/bcbio/genomes/Hsapiens/hg38/seq/hg38.fa.fai"
-    File hg38_refdict = "/g/data/gx8/local/development/bcbio/genomes/Hsapiens/hg38/seq/hg38.dict"
   }
 
   scatter (sample in inputSamples) {
