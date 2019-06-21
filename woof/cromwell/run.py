@@ -102,9 +102,9 @@ def copy_wdl_files(outdir):
     """Copy recursively WDL files (workflows + tasks) from 'woof/woof/wdl' to 'outdir/wdl'
     """
     outdir = utils.adjust_path(outdir)
-    if not pkg_resources.resource_exists('woof', 'wdl'):
-        utils.critical("Error: 'woof/wdl' directory does not exist!")
-    d = pkg_resources.resource_filename('woof', 'wdl')
+    if not pkg_resources.resource_exists('woof', 'compare/wdl'):
+        utils.critical("Error: 'woof/compare/wdl' directory does not exist!")
+    d = pkg_resources.resource_filename('woof', 'compare/wdl')
     utils.copy_recursive(d, os.path.join(outdir, 'wdl'))
 
 

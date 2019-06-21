@@ -10,6 +10,7 @@ dependencies:
   - awscli
   - bcftools
   - bedtools
+  - boto3
   - click
   - cromwell
   - crossmap

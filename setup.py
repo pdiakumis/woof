@@ -5,7 +5,7 @@ import os
 import woof
 import woof.utils
 
-__version__ = "0.0.0.1"
+__version__ = "0.0.1"
 
 with open("./README.md", "r") as readme:
     long_description = readme.read()
@@ -40,7 +40,7 @@ setup(
     packages=find_packages(),
     install_requires=install_requires,
     package_data={
-        'woof': woof.utils.find_package_files('wdl', 'woof')
+        'woof': woof.utils.find_package_files('compare/wdl', 'woof', ['.R', '.json', '.tsv'])
     },
     entry_points='''
         [console_scripts]
