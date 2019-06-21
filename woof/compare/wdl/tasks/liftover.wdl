@@ -21,8 +21,8 @@ task gatk_liftover_grch37_to_hg38 {
   }
 
   command {
-    #conda activate woof
 
+    conda activate woof
     mkdir -p ~{outdir}
 
     gatk LiftoverVcf \
@@ -52,6 +52,9 @@ task gatk_selectvariants_noalt {
   }
 
   command {
+
+    conda activate woof
+
     gatk SelectVariants \
       --variant ~{vcf_in} \
       --output ~{vcf_out} \
