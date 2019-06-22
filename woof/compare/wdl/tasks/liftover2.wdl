@@ -70,7 +70,7 @@ task hg38_filter_noalt {
 
 workflow test {
   input {
-    File inputSamplesFile = "/g/data3/gx8/projects/Diakumis/woof/test_woof/compare/inputs_grch37-to-hg38_10.tsv"
+    File inputSamplesFile = "/g/data3/gx8/projects/Diakumis/woof/test_woof/compare/inputs_grch37-to-hg38.tsv"
     Array[Array[File]] inputSamples = read_tsv(inputSamplesFile) # samplename, varcaller, filepath
     String woofdir = "/g/data3/gx8/projects/Diakumis/woof/test_woof/crossmap/"
   }

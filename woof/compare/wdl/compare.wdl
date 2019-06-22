@@ -1,15 +1,16 @@
 version 1.0
 
-import "tasks/compare/count_vcf_lines.wdl" as count
-import "tasks/compare/bcftools.wdl" as bcftools
-import "tasks/compare/eval_vcf.wdl" as eval_vcf
+import "tasks/count_vcf_lines.wdl" as count
+import "tasks/bcftools.wdl" as bcftools
+import "tasks/eval_vcf.wdl" as eval_vcf
 
 workflow compare_vcf_files {
 
   input {
-    File inputSamplesFile # sample, ftype, run1, run2
+    # sample, ftype, run1, run2
+    File inputSamplesFile = "/g/data3/gx8/projects/Diakumis/woof_compare/bcbio_116a0_GRCh37_native-vs-bcbio_116a0_GRCh38_native/input_samples.tsv"
     Array[Array[File]] inputSamples = read_tsv(inputSamplesFile)
-    String outdir # /abspath/to/woof/final/
+    String outdir = "/g/data3/gx8/projects/Diakumis/woof_compare/bcbio_116a0_GRCh37_native-vs-bcbio_116a0_GRCh38_native/woof/" # /abspath/to/woof/final/
     String count_outdir = outdir + "vcf_counts/"
   }
 
