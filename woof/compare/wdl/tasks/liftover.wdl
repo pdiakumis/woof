@@ -40,6 +40,30 @@ task gatk_liftover_grch37_to_hg38 {
   }
 }
 
+task pcgr_remove_space {
+  input {
+    File vcf_in
+    File vcf_in_index = vcf_in + ".tbi"
+    String outdir
+    String vcf_out = outdir + basename(vcf_in, ".vcf.gz") + "_rm_space.vcf.gz"
+  }
+
+  command {
+
+  conda activate woof
+
+  gunzip -c ~{vcf_in} | \
+    sed 's/Clinical /Clinical_/g' | \
+    bgzip > ~{vcf_out} && \
+    tabix -p vcf ~{vcf_out}
+  }
+
+  output {
+    File out = vcf_out
+    File out_index = vcf_out + ".tbi"
+  }
+}
+
 task gatk_selectvariants_noalt {
 
   input {
@@ -79,19 +103,37 @@ workflow liftover {
 
   scatter (sample in inputSamples) {
 
-    call gatk_liftover_grch37_to_hg38 {
-      input:
-        vcf_in = sample[2],
-        outdir = woofdir + sample[0] + "/" + sample[1] + "/",
-        chain_grch37_to_hg38 = "/g/data3/gx8/extras/liftover_chains/b37ToHg38.over.chain"
+    # need to handle PCGR input separately
+    if (sample[1] == "pcgr") {
+      call pcgr_remove_space { input: vcf_in = sample[2], outdir = woofdir + sample[0] + "/" + sample[1] + "/"}
+      call gatk_liftover_grch37_to_hg38 {
+        input:
+          vcf_in = pcgr_remove_space.out,
+          outdir = woofdir + sample[0] + "/" + sample[1] + "/",
+          chain_grch37_to_hg38 = "/g/data3/gx8/extras/liftover_chains/b37ToHg38.over.chain"
+      }
+
+      call gatk_selectvariants_noalt {
+        input:
+          vcf_in = gatk_liftover_grch37_to_hg38.out,
+          outdir = woofdir + sample[0] + "/" + sample[1] + "/"
+      }
     }
 
-    call gatk_selectvariants_noalt {
-      input:
-        vcf_in = gatk_liftover_grch37_to_hg38.out,
-        outdir = woofdir + sample[0] + "/" + sample[1] + "/"
-    }
+    if (sample[1] != "pcgr") {
+      call gatk_liftover_grch37_to_hg38 {
+        input:
+          vcf_in = sample[2],
+          outdir = woofdir + sample[0] + "/" + sample[1] + "/",
+          chain_grch37_to_hg38 = "/g/data3/gx8/extras/liftover_chains/b37ToHg38.over.chain"
+      }
 
+      call gatk_selectvariants_noalt {
+        input:
+          vcf_in = gatk_liftover_grch37_to_hg38.out,
+          outdir = woofdir + sample[0] + "/" + sample[1] + "/"
+      }
+    }
   }
 }
 
