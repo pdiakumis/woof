@@ -8,7 +8,7 @@ task grch37_to_hg19 {
   }
 
   command {
-    #conda activate woof
+    conda activate woof
 
     mkdir -p ~{outdir}
 
@@ -36,7 +36,7 @@ task crossmap_hg19_to_hg38_unsorted {
   }
 
   command {
-    #conda activate woof
+    conda activate woof
 
     CrossMap.py vcf ~{chain_hg19tohg38} ~{vcf_in} ~{hg38_fasta} ~{vcf_out}
   }
@@ -58,6 +58,8 @@ task hg38_filter_noalt {
   }
 
   command {
+    conda activate woof
+
     bcftools view -Oz -o ~{vcf_out} ~{vcf_in} -T ~{hg38_noalt_bed}
   }
 
