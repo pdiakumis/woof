@@ -1,9 +1,9 @@
 version 1.0
 
-import "tasks/validate/md5sum.wdl" as md5sum
-import "tasks/validate/fqtools.wdl" as fqtools
-import "tasks/validate/samtools.wdl" as samtools
-import "tasks/validate/bcftools.wdl" as bcftools
+import "tasks/md5sum.wdl" as md5sum
+import "tasks/fqtools.wdl" as fqtools
+import "tasks/samtools.wdl" as samtools
+import "tasks/bcftools.wdl" as bcftools
 
 workflow validate_files {
 
