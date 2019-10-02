@@ -1,4 +1,4 @@
 {
-  "validate_files.input_data_tsv": "s3://umccr-cromwell-peter-results/fastq_24.tsv"
+  "validate_files.input_data_tsv": "s3://cromwell-agha/cromwell-inputs/fastq_8.tsv"
 }
 
