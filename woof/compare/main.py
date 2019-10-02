@@ -7,28 +7,39 @@ from click import echo, style
 from woof import utils
 from woof.cromwell import run
 
+comp_opts = {
+    "types": [
+        "bcbio_dna", "bcbio_rna",
+        "umccrise_dna", "umccrise_rna",
+        "dragen_dna", "dragen_rna"],
+    "genomes": ["grch37", "hg38"],
+}
 
 @click.command()
 @click.argument("r1", type=click.Path(exists=True), metavar="<run1>")
 @click.argument("r2", type=click.Path(exists=True), metavar="<run2>")
+@click.option("-t", "--type", default="bcbio_dna", type=click.Choice(comp_opts["types"]), help="Type of comparison [def: bcbio_dna]")
 @click.option("-o", "--outdir", help="Output directory [def: ./woof].", default="woof")
-def compare(r1, r2, outdir):
-    """Compare two bcbio or umccrise runs <r1> and <r2>.
-    Both run paths need to end in 'final' (if bcbio) or 'umccrised/<sample>' (if umccrise).
+def compare(r1, r2, type, outdir):
+    """Compare two bcbio/umccrise/dragen runs.
     """
     echo(click.style(f"[{utils.timestamp()}] woof-compare start", fg="yellow"))
+
+
     r1 = utils.adjust_path(r1)
     r2 = utils.adjust_path(r2)
     echo(style(f"r1 is {r1}\nr2 is {r2}", fg="green"))
+    echo(style(f"outdir is {outdir}\ntype is {type}", fg="yellow"))
+
 
     comp_type = bcbio_or_umccrise(r1, r2)
     echo(style(f"comparison type is {comp_type}", fg="green"))
 
-    work_dir, final_dir = utils.setup_woof_dirs(outdir)
-    input_file = create_cromwell_input(r1, r2, work_dir, final_dir, comp_type)
-    wdl_workflow = os.path.join(work_dir, "wdl", "compare.wdl")
-    run.run_cromwell(outdir, input_file, wdl_workflow)
-    echo(style(f"[{utils.timestamp()}] woof-compare end", fg="yellow"))
+    #work_dir, final_dir = utils.setup_woof_dirs(outdir)
+    #input_file = create_cromwell_input(r1, r2, work_dir, final_dir, comp_type)
+    #wdl_workflow = os.path.join(work_dir, "wdl", "compare.wdl")
+    #run.run_cromwell(outdir, input_file, wdl_workflow)
+    #echo(style(f"[{utils.timestamp()}] woof-compare end", fg="yellow"))
 
 def bcbio_or_umccrise(r1, r2):
 
