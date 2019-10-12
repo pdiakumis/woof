@@ -74,7 +74,7 @@ def find_package_files(dirpath, package, skip_exts=None):
     return paths
 
 def timestamp():
-    return datetime.datetime.now().strftime("%Y-%m-%d-%H:%M:%S")
+    return datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
 
 def file_exists(fname):
     """Check if a file exists and is non-empty.
