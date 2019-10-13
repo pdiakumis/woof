@@ -36,7 +36,7 @@ def compare(r1, r2, type, sample, outdir):
     echo(style(f"comparison type is {comp_type}", fg="green"))
     echo(style(f"sample is {sample}", fg="green"))
 
-    work_dir, final_dir = utils.setup_woof_dirs(outdir)
+    work_dir, final_dir = utils.setup_woof_dirs(outdir, sample)
     input_file = create_cromwell_input(r1, r2, sample, work_dir, final_dir, comp_type)
     wdl_workflow = os.path.join(work_dir, "wdl", "compare.wdl")
     run.run_cromwell(outdir, input_file, wdl_workflow)

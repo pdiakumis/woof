@@ -12,10 +12,10 @@ import datetime
 import shutil
 import contextlib
 
-def setup_woof_dirs(d):
-    """Create woof/final and woof/work dirs"""
+def setup_woof_dirs(d, sample):
+    """Create woof/final and woof/work/<sample> dirs"""
     d = adjust_path(d)
-    work_dir = os.path.join(d, "work")
+    work_dir = os.path.join(d, "work", sample)
     final_dir = os.path.join(d, "final")
     safe_mkdir(work_dir)
     safe_mkdir(final_dir)
