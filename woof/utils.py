@@ -9,7 +9,7 @@ import re
 import sys
 import json
 import datetime
-import shutil
+import distutils
 import contextlib
 
 def setup_woof_dirs(d, sample):
@@ -136,16 +136,11 @@ def remove_quotes(s):
 
 def copy_recursive(src, dest):
     """Copy directory recursively
-    https://www.pythoncentral.io/how-to-recursively-copy-a-directory-folder-in-python/
+    From https://stackoverflow.com/a/31039095/2169986
     """
-    try:
-        shutil.copytree(src, dest)
-    # Directories are the same
-    except shutil.Error as e:
-        critical(f'Directory not copied. Error: {e}')
-    # Any error saying that the directory doesn't exist
-    except OSError as e:
-        critical(f'Directory not copied. Error: {e}')
+    distutils.dir_util.copy_tree(src, dest)
+
+
 
 @contextlib.contextmanager
 def chdir(new_dir):
