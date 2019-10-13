@@ -108,7 +108,7 @@ def copy_wdl_files(outdir):
     utils.copy_recursive(d, os.path.join(outdir, 'wdl'))
 
 
-def run_cromwell(outdir, sample, inputs, workflow):
+def run_cromwell(outdir, sample, inputs, workflow, justprep):
     """Run Cromwell
 
     cromwell run \
@@ -134,7 +134,9 @@ def run_cromwell(outdir, sample, inputs, workflow):
          f"{workflow} " \
          f"2>&1 | tee -a {cf['log_file']} "
 
-    #with utils.chdir(os.path.join(outdir, "work")):
-    #    subprocess.run(cc, stdout=subprocess.PIPE, encoding='utf-8', shell=True)
     print(cc)
+
+    if not justprep:
+        with utils.chdir(os.path.join(outdir, "work", sample)):
+            subprocess.run(cc, stdout=subprocess.PIPE, encoding='utf-8', shell=True)
 

@@ -22,7 +22,8 @@ comp_opts = {
 @click.option("-t", "--type", default="bc_dna", type=click.Choice(comp_opts["types"]), help="[NOT USED YET] Type of comparison [def: bc_dna]")
 @click.option("-s", "--sample", "sample", required=True, help="Sample/batch name")
 @click.option("-o", "--outdir", help="Output directory [def: ./woof]", default="woof")
-def compare(r1, r2, type, sample, outdir):
+@click.option("-p", "--justprep", "justprep", is_flag=True, help="Just prepare Cromwell inputs and print the Cromwell command to STDOUT")
+def compare(r1, r2, type, sample, outdir, justprep=False):
     """Compare two bcbio/umccrise/dragen WGS/WTS runs.
 
     DRAGEN, WTS: TODO
@@ -39,7 +40,7 @@ def compare(r1, r2, type, sample, outdir):
     work_dir, final_dir = utils.setup_woof_dirs(outdir, sample)
     input_file = create_cromwell_input(r1, r2, sample, work_dir, final_dir, comp_type)
     wdl_workflow = os.path.join(work_dir, "wdl", "compare.wdl")
-    run.run_cromwell(outdir, sample, input_file, wdl_workflow)
+    run.run_cromwell(outdir, sample, input_file, wdl_workflow, justprep)
     echo(style(f"[{utils.timestamp()}] woof-compare end", fg="yellow"))
 
 def comparison_type_check(r1, r2):
