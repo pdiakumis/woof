@@ -9,7 +9,7 @@ import re
 import sys
 import json
 import datetime
-import distutils
+from distutils.dir_util import copy_tree
 import contextlib
 
 def setup_woof_dirs(d, sample):
@@ -138,7 +138,7 @@ def copy_recursive(src, dest):
     """Copy directory recursively
     From https://stackoverflow.com/a/31039095/2169986
     """
-    distutils.dir_util.copy_tree(src, dest)
+    copy_tree(src, dest)
 
 
 
