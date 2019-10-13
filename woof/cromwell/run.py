@@ -8,16 +8,16 @@ import pkg_resources
 from woof import utils
 from woof.cromwell import configs
 
-def create_cromwell_files(outdir):
+def create_cromwell_files(outdir, sample):
     """
-    Writes following to <outdir>/work:
+    Writes following to <outdir>/work/<sample>:
     1. config
     2. options
     3. all WDL files
     """
 
     outdir = utils.adjust_path(outdir)
-    work_dir = os.path.join(outdir, "work")
+    work_dir = os.path.join(outdir, "work", sample)
     final_dir = os.path.join(outdir, "final")
 
     # config
@@ -99,7 +99,7 @@ def create_cromwell_config(outdir):
     return configs.CROMWELL_CONFIG % main_config
 
 def copy_wdl_files(outdir):
-    """Copy recursively WDL files (workflows + tasks) from 'woof/woof/wdl' to 'outdir/wdl'
+    """Copy recursively WDL files (workflows + tasks) from 'woof/compare/wdl' to 'outdir/wdl'
     """
     outdir = utils.adjust_path(outdir)
     if not pkg_resources.resource_exists('woof', 'compare/wdl'):
@@ -108,7 +108,7 @@ def copy_wdl_files(outdir):
     utils.copy_recursive(d, os.path.join(outdir, 'wdl'))
 
 
-def run_cromwell(outdir, inputs, workflow):
+def run_cromwell(outdir, sample, inputs, workflow):
     """Run Cromwell
 
     cromwell run \
@@ -122,8 +122,8 @@ def run_cromwell(outdir, inputs, workflow):
 
     # The only things that change depending on project_name are inputs and workflow.
 
-    copy_wdl_files(os.path.join(outdir, "work"))
-    cf = create_cromwell_files(outdir)
+    copy_wdl_files(os.path.join(outdir, "work", sample))
+    cf = create_cromwell_files(outdir, sample)
 
     cc = f"cromwell -Xms1g -Xmx3g run " \
          f"-Dconfig.file={cf['config_file']} " \
