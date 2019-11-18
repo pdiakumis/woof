@@ -37,6 +37,8 @@ def get_filesystem():
         fs = 'SPARTAN'
     elif re.match(r'^raijin|(r\d+$)', hostname):
         fs = 'RAIJIN'
+    elif re.match(r'gadi', hostname):
+        fs = 'RAIJIN'
     elif re.match(r'^5180L-133629-M.local$', hostname) or re.match(r'^x86_64-apple-darwin13.4.0$', hostname):
         fs = 'PETER'
     elif re.match(r'^ip*', hostname):
