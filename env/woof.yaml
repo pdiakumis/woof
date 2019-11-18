@@ -20,14 +20,14 @@ dependencies:
   - samtools
   - vcflib
   - r-base>=3.6
+  - r-bedr
   - r-bookdown
   - r-devtools
   - r-diagrammer
   - r-dt
   - r-knitr
   - r-kableextra
-#- r-pebbles
-#- r-rock
+  - r-rock
   - r-rmarkdown
   - r-tidyverse
   - r-woofr
