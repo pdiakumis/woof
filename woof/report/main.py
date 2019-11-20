@@ -12,10 +12,10 @@ report_opts = {
 }
 
 @click.command()
-@click.option("-t", "--type", type=click.Choice(report_opts["types"]), help="Type of report", default="compare")
+@click.option("-t", "--type", type=click.Choice(report_opts["types"]), help="Type of report (def: compare)", default="compare")
 @click.option("-w", "--woof-final", "woof_final", type=click.Path(exists=True), help="Path to woof/final directory")
-@click.option("--r1", "--run1-name", "run1_name", help="Run1 name", default="run1")
-@click.option("--r2", "--run2-name", "run2_name", help="Run2 name", default="run2")
+@click.option("--r1", "--run1-name", "run1_name", help="Run1 name (def: run1)", default="run1")
+@click.option("--r2", "--run2-name", "run2_name", help="Run2 name (def: run2)", default="run2")
 @click.option("-o", "--output", help="Output HTML file name")
 def report(type, output, woof_final, run1_name, run2_name):
     echo(click.style(f"[{utils.timestamp()}] woof-report start", fg="yellow"))
