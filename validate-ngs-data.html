@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>woof: WooorkFlooows for Bioinformatics</title>
+  <title>Section 3 Validate NGS data | woof: WooorkFlooows for Bioinformatics</title>
   <meta name="description" content="Bioinformatic Workflows with WDL and Cromwell" />
   <meta name="generator" content="bookdown 0.15 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="woof: WooorkFlooows for Bioinformatics" />
+  <meta property="og:title" content="Section 3 Validate NGS data | woof: WooorkFlooows for Bioinformatics" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="woof: WooorkFlooows for Bioinformatics" />
+  <meta name="twitter:title" content="Section 3 Validate NGS data | woof: WooorkFlooows for Bioinformatics" />
   
   <meta name="twitter:description" content="Bioinformatic Workflows with WDL and Cromwell" />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
+<link rel="prev" href="compare-bcbioumccrise-runs.html"/>
 
-<link rel="next" href="compare-bcbioumccrise-runs.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -175,29 +175,86 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">woof: WooorkFlooows for Bioinformatics</h1>
-<p class="author"><em>Peter Diakumis</em></p>
-<p class="date"><em>Fri 2019-Nov-29</em></p>
+<div id="validate-ngs-data" class="section level1">
+<h1><span class="header-section-number">Section 3</span> Validate NGS data</h1>
+<div id="step-1" class="section level2">
+<h2><span class="header-section-number">3.1</span> Step 1</h2>
+<ul>
+<li>Use <code>woofr::validation_outputs</code> to generate a TSV file with the following columns:
+<ul>
+<li><code>col1</code> - type of file
+<ol style="list-style-type: decimal">
+<li>VCF</li>
+<li>BAM</li>
+<li>FASTQ</li>
+<li>Other</li>
+</ol></li>
+<li><code>col2</code> - path to file</li>
+</ul></li>
+</ul>
 </div>
-<div id="introduction" class="section level1">
-<h1><span class="header-section-number">Section 1</span> Introduction</h1>
-<p><code>woof</code> is a Python application for running bioinformatic workflows with
-<a href="https://software.broadinstitute.org/wdl/">Cromwell and WDL</a></p>
-<div id="installation" class="section level2 unnumbered">
-<h2>Installation</h2>
-<div id="step-1-clone-woof-repo" class="section level3 unnumbered">
-<h3>Step 1: Clone woof repo</h3>
-<pre><code>git clone https://github.com/umccr/woof</code></pre>
+<div id="step-2" class="section level2">
+<h2><span class="header-section-number">3.2</span> Step 2</h2>
+<ul>
+<li>Now we can iterate through each row of the TSV according to its type:
+<ul>
+<li><code>VCF</code>:
+<ul>
+<li><code>head</code></li>
+<li><a href="https://github.com/EBIvariation/vcf-validator">vcf-validator</a></li>
+</ul></li>
+<li><code>BAM</code>:
+<ul>
+<li><a href="http://www.htslib.org/doc/samtools.html">samtools quickcheck</a></li>
+<li>GATK ValidateSamFile <a href="https://software.broadinstitute.org/gatk/documentation/article.php?id=7571">link1</a>,
+<a href="http://broadinstitute.github.io/picard/command-line-overview.html#ValidateSamFile">link2</a></li>
+<li>UMich <a href="https://genome.sph.umich.edu/wiki/BamUtil:_validate">BamUtil validate</a></li>
+</ul></li>
+<li><code>FASTQ</code>:
+<ul>
+<li><a href="https://github.com/alastair-droop/fqtools">fqtools validate</a></li>
+</ul></li>
+</ul></li>
+</ul>
 </div>
-<div id="step-2-create-conda-environment" class="section level3 unnumbered">
-<h3>Step 2: Create conda environment</h3>
-<pre><code>wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
-bash miniconda.sh
-conda update -n base -c defaults conda
-conda env create -f woof/env/woof.yaml</code></pre>
+<div id="output" class="section level2">
+<h2><span class="header-section-number">3.3</span> Output</h2>
+<pre><code>woof-validation1/final
+    |--- vcf/
+         |--- tool_1/
+              |--- results_fileA.txt
+              |--- results_fileB.txt
+         |--- tool_2/
+              |--- results_fileA.txt
+              |--- results_fileB.txt
+    |--- bam/
+         |--- tool_1/
+              |--- results_fileC.txt
+              |--- results_fileD.txt
+         |--- tool_2/
+              |--- results_fileC.txt
+              |--- results_fileD.txt
+    |--- fastq/
+         |--- tool_1/
+              |--- results_fileE.txt
+              |--- results_fileF.txt
+         |--- tool_2/
+              |--- results_fileE.txt
+              |--- results_fileF.txt
+    |--- md5/
+         |--- vcf/
+              |--- md5_fileA.txt
+              |--- md5_fileB.txt
+         |--- bam/
+              |--- md5_fileC.txt
+              |--- md5_fileD.txt
+         |--- fastq/
+              |--- md5_fileE.txt
+              |--- md5_fileF.txt
+         |--- other/
+              |--- md5_fileG.txt
+              |--- md5_fileH.txt</code></pre>
 
-</div>
 </div>
 </div>
             </section>
@@ -205,8 +262,8 @@ conda env create -f woof/env/woof.yaml</code></pre>
           </div>
         </div>
       </div>
+<a href="compare-bcbioumccrise-runs.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
-<a href="compare-bcbioumccrise-runs.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
