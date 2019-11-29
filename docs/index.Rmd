@@ -1,9 +1,9 @@
---- 
-title: "woof: Workflows for Bioinformatics"
+---
+title: "woof: WooorkFlooows for Bioinformatics"
 author: "Peter Diakumis"
 date: "`r format(Sys.time(), '%a %Y-%b-%d')`"
 site: bookdown::bookdown_site
-description: "Bioinformatic Workflows with Cromwell"
+description: "Bioinformatic Workflows with WDL and Cromwell"
 ---
 
 # Introduction
@@ -17,10 +17,8 @@ require(tidyverse)
 require(DiagrammeR)
 ```
 
-`woof` is an application for running workflows with 
-[Cromwell](https://cromwell.readthedocs.io/en/stable/)
-
-
+`woof` is a Python application for running bioinformatic workflows with
+[Cromwell and WDL](https://software.broadinstitute.org/wdl/)
 
 
 ## Installation
@@ -28,7 +26,7 @@ require(DiagrammeR)
 ### Step 1: Clone woof repo
 
 ```
-git clone git@github.com:pdiakumis/woof.git
+git clone https://github.com/umccr/woof
 ```
 
 ### Step 2: Create conda environment
@@ -39,3 +37,82 @@ bash miniconda.sh
 conda update -n base -c defaults conda
 conda env create -f woof/env/woof.yaml
 ```
+
+## Running on Raijin/Gadi
+
+
+### Step 1: Grab an interactive node
+
+* Most memory is for `bcftools isec`
+
+```
+qsub -I -q normalbw -l ncpus=28,walltime=02:00:00,mem=80gb
+```
+
+
+### Step 2: Create woof run environment
+
+```
+source /g/data3/gx8/extras/woof/load_woof.sh
+```
+
+
+### Step 3: Run woof compare
+
+* Supports only SNVs/INDELs for now.
+
+```bash
+# compare bcbio runs
+woof compare --sample sample_label path/to/run1/final path/to/run2/final
+
+# compare umccrise runs
+woof compare --sample sample_label path/to/run1/umccrised/sample path/to/run2/umccrised/sample
+```
+
+* The above will create the following directory structure (example):
+
+```
+|-- final
+|   |-- 2016.249.17.MH.P033
+|   |   |-- bcftools_isec
+|   |   |-- vcf_counts
+|   |   |-- vcf_eval
+|   |   `-- vcf_pass
+|   `-- CUP-Pairs8
+|       |-- bcftools_isec
+|       |-- vcf_counts
+|       |-- vcf_eval
+|       `-- vcf_pass
+`-- work
+    |-- 2016.249.17.MH.P033
+    |   |-- cromwell-executions
+    |   |-- cromwell-workflow-logs
+    |   |-- cromwell_config.conf
+    |   |-- cromwell_inputs.json
+    |   |-- cromwell_log.log
+    |   |-- cromwell_meta.json
+    |   |-- cromwell_opts.json
+    |   |-- cromwell_samples.tsv
+    |   |-- persist
+    |   `-- wdl
+    `-- CUP-Pairs8
+        |-- cromwell-executions
+        |-- cromwell-workflow-logs
+        |-- cromwell_config.conf
+        |-- cromwell_inputs.json
+        |-- cromwell_log.log
+        |-- cromwell_meta.json
+        |-- cromwell_opts.json
+        |-- cromwell_samples.tsv
+        |-- persist
+        `-- wdl
+```
+
+The final evaluation results are in `final/<sample>/vcf_eval/<vcf_type>/<ALL-or-PASS>/eval_stats.tsv`
+
+### Step 4: Run woof report
+
+```bash
+woof report -w path/to/woof/final --r1 <run1_label> --r2 <run2_label>
+```
+
