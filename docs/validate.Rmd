@@ -1,7 +1,7 @@
 # Validate NGS data
 
-Step 1
-------
+## Step 1
+
 
 * Use `woofr::validation_outputs` to generate a TSV file with the following columns:
   - `col1` - type of file
@@ -11,8 +11,8 @@ Step 1
     4. Other
   - `col2` - path to file
 
-Step 2
-------
+## Step 2
+
 
 * Now we can iterate through each row of the TSV according to its type:
   - `VCF`:
@@ -26,8 +26,8 @@ Step 2
   - `FASTQ`: 
     - [fqtools validate](https://github.com/alastair-droop/fqtools)
 
-Output
-------
+## Output
+
 
 ```
 woof-validation1/final

@@ -1,5 +1,6 @@
 rmd_files: ["index.Rmd", "compare.Rmd", "validate.Rmd"]
 delete_merged_file: true
+numbering: false
 language:
   ui:
     chapter_name: "Section "
