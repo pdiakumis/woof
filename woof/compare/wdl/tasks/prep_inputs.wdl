@@ -39,49 +39,10 @@ struct VarcallerFiles {
     Map[String, Run1Run2Files] vc
 }
 
-task cat_both2 {
-  input {
-    VarcallerFiles varcaller_map
-    String out1 = basename(varcaller_map["vc"]["run1"]) + "_output1.txt"
-    String out2 = basename(varcaller.vc["run2"]) + "_output2.txt"
-  }
-
-  command {
-    cat ~{varcaller.vc["run1"]} > ~{out1}
-    cat ~{varcaller.vc["run2"]} > ~{out2}
-  }
-
-  output {
-    File out_file1 = out1
-    File out_file2 = out2 
-  }
-}
-
-task cat_both {
-  input {
-    Run1Run2Files varcaller
-    String out1 = basename(varcaller.run1) + "_output1.txt"
-    String out2 = basename(varcaller.run2) + "_output2.txt"
-  }
-
-  command {
-    cat ~{varcaller.run1} > ~{out1}
-    cat ~{varcaller.run2} > ~{out2}
-  }
-
-  output {
-    File out_file1 = out1
-    File out_file2 = out2 
-    }
-}
 
 workflow test {
   input {
-    Map[String, VarcallerFiles] varcallers = read_json("/Users/pdiakumis/Desktop/projects/umccr/woof/woof/wdl/tasks/compare/tmp.json")
-    }
-
-    scatter (vc in varcallers) {
-      call cat_both2 { input: varcaller = vc }
+    Map[String, VarcallerFiles] varcallers = read_json("/Users/pdiakumis/Desktop/projects/umccr/woof/woof/compare/wdl/test/tmp.json")
     }
 }
 

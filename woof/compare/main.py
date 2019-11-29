@@ -20,7 +20,7 @@ comp_opts = {
 @click.argument("r1", type=click.Path(exists=True), metavar="<run1>")
 @click.argument("r2", type=click.Path(exists=True), metavar="<run2>")
 @click.option("-t", "--type", default="bc_dna", type=click.Choice(comp_opts["types"]), help="[NOT USED YET] Type of comparison [def: bc_dna]")
-@click.option("-s", "--sample", "sample", required=True, help="Sample/batch name")
+@click.option("-s", "--sample", "sample", required=True, help="Sample/batch name used for labeling")
 @click.option("-o", "--outdir", help="Output directory [def: ./woof]", default="woof")
 @click.option("-p", "--justprep", "justprep", is_flag=True, help="Just prepare Cromwell inputs and print the Cromwell command to STDOUT")
 def compare(r1, r2, type, sample, outdir, justprep=False):
