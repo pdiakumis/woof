@@ -5,7 +5,7 @@ task eval {
     File fp_vcf
     File fn_vcf
     File tp_vcf
-    String outdir # woof/final/vcf_eval/<vcf-type>/<pass-or-all>/
+    String outdir # woof/final/<sample>/vcf_eval/<flabel>/<pass-or-all>/
     String tsv = outdir + "eval_stats.tsv"
   }
 

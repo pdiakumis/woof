@@ -5,7 +5,7 @@ task count_vars {
     input {
         File vcf
         File vcf_tbi = vcf + ".tbi"
-        String outdir # woof/final/vcf_counts/<f1-or-f2>/<vcf-typeX>/<all-or-pass>/
+        String outdir # woof/final/<sample>/vcf_counts/<f1-or-f2>/<flabel>/<all-or-pass>/
         String txt = outdir + "count_vars.txt"
     }
 

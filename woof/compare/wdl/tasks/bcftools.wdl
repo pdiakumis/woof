@@ -8,7 +8,7 @@ task isec {
     # indices required
     File vcf1_tbi = vcf1 + ".tbi"
     File vcf2_tbi = vcf2 + ".tbi"
-    String outdir # woof/final/bcftools_isec/<vcf_type>/<all-or-pass>
+    String outdir # woof/final/<sample>/bcftools_isec/<flabel>/<all-or-pass>
   }
 
   command {
@@ -26,7 +26,7 @@ task isec {
 task filter_pass {
     input {
         File vcf_in
-        String outdir # woof/final/vcf_pass/<f1-or-f2>/<vcf_type>
+        String outdir # woof/final/<sample>/vcf_pass/<f1-or-f2>/<flabel>
         String vcf_out = outdir + "_PASS.vcf.gz"
     }
 
