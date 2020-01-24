@@ -16,11 +16,11 @@ dependencies:
   - cromwell
   - htslib
   - pandoc
-  - python>=3.6
+  - python
   - pythonpy
   - samtools
   - vcflib
-  - r-base>=3.6
+  - r-base
   - r-bedr
   - r-bookdown
   - r-devtools
