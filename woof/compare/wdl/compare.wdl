@@ -57,4 +57,3 @@ workflow compare_vcf_files {
     }
   }
 }
-

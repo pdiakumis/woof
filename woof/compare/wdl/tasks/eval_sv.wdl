@@ -19,7 +19,9 @@ task eval {
       mi <- manta_isec('~{vcf1}', '~{vcf2}')
       mi_stats <- manta_isec_stats(mi, '~{sample}', '~{flab}')
       get_circos(mi, '~{sample}', '~{outputdir}')
+      fpfn <- dplyr::bind_rows(mi[c("fp", "fn")], .id = "FP_or_FN")
       utils::write.table(mi_stats, file = file.path('~{outputdir}', "isec_stats.tsv"), quote = FALSE, sep = "\t", row.names = FALSE, col.names = TRUE)
+      utils::write.table(fpfn, file = file.path('~{outputdir}', "fpfn.tsv"), quote = FALSE, sep = "\t", row.names = FALSE, col.names = TRUE)
       CODE
   }
 
