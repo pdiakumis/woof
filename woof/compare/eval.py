@@ -7,7 +7,7 @@ from woof import utils
 
 # Mostly from umccr/vcf_stuff
 
-def eval(fp_vcf, fn_vcf, tp_vcf, out):
+def eval(fp_vcf, fn_vcf, tp_vcf, out, sample, flab):
     fpc = count_variants(fp_vcf)
     fnc = count_variants(fn_vcf)
     tpc = count_variants(tp_vcf)
@@ -37,10 +37,12 @@ def eval(fp_vcf, fn_vcf, tp_vcf, out):
     with open(out, 'w') as f:
         writer = csv.writer(f, delimiter='\t')
         writer.writerow([
+            'sample', 'flabel',
             'SNP_Truth', 'SNP_TP', 'SNP_FP', 'SNP_FN', 'SNP_Recall', 'SNP_Precision', 'SNP_f1', 'SNP_f2', 'SNP_f3',
             'IND_Truth', 'IND_TP', 'IND_FP', 'IND_FN', 'IND_Recall', 'IND_Precision', 'IND_f1', 'IND_f2', 'IND_f3',
         ])
         writer.writerow([
+            sample, flab,
             snp_truth, tp_snp, fp_snp, fn_snp, snp_recall, snp_precision, snp_f1, snp_f2, snp_f3,
             ind_truth, tp_ind, fp_ind, fn_ind, ind_recall, ind_precision, ind_f1, ind_f2, ind_f3
         ])
