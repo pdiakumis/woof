@@ -8,7 +8,7 @@ task eval {
     String outdir # woof/final/<sample>/vcf_eval/<flabel>/<pass-or-all>/
     String tsv = outdir + "eval_stats.tsv"
     String sample
-    String flab # e.g. manta_bc
+    String flabel # e.g. manta_bc
   }
 
   command {
@@ -18,7 +18,7 @@ task eval {
 
     python <<CODE
     from woof.compare import eval
-    eval.eval("~{fp_vcf}", "~{fn_vcf}", "~{tp_vcf}", "~{tsv}", "~{sample}", "~{flab}")
+    eval.eval("~{fp_vcf}", "~{fn_vcf}", "~{tp_vcf}", "~{tsv}", "~{sample}", "~{flabel}")
     CODE
   }
 

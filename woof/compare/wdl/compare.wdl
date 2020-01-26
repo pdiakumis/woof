@@ -53,26 +53,28 @@ workflow compare_vcf_files {
           fn_vcf = isec_all.false_neg,
           tp_vcf = isec_all.true_pos,
           sample = sample[0],
-          flab = sample[2]
+          flabel = sample[2]
       }
       call eval_snv.eval as eval_snv_pass {
         input:
           outdir = outdir + sample[0] + "/snv_eval/" + sample[2] + "/PASS/",
           fp_vcf = isec_pass.false_pos,
           fn_vcf = isec_pass.false_neg,
-          tp_vcf = isec_pass.true_pos
+          tp_vcf = isec_pass.true_pos,
+          sample = sample[0],
+          flabel = sample[2]
       }
     }
 
     # SV handling
     if (sample[1] == "SV") {
-      call eval_sv.eval {
+      call eval_sv.eval as eval_sv {
         input:
           sample = sample[0],
-          flab = sample[2],
+          flabel = sample[2],
           vcf1 = sample[3],
           vcf2 = sample[4],
-          outputdir = outdir + sample[0] + "/sv_eval/" + sample[2]
+          outdir = outdir + sample[0] + "/sv_eval/" + sample[2]
       }
     }
   }

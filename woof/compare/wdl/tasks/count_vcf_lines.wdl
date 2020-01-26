@@ -8,14 +8,14 @@ task count_vars {
         String outdir # woof/final/<sample>/vcf_counts/<f1-or-f2>/<flabel>/<all-or-pass>/
         String txt = outdir + "count_vars.txt"
         String sample
-        String flab
+        String flabel
     }
 
     command {
         mkdir -p ~{outdir}
         count=$(gunzip -c ~{vcf} | grep -v "^#" | wc -l | xargs )
         printf "sample\tflabel\tcount\n" > ~{txt}
-        printf "~{sample}\t~{flab}\t$count\n" >> ~{txt}
+        printf "~{sample}\t~{flabel}\t$count\n" >> ~{txt}
     }
 
     output {

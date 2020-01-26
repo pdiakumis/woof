@@ -8,6 +8,7 @@ import pkg_resources
 from woof import utils
 from woof.cromwell import configs
 
+
 def create_cromwell_files(outdir, sample):
     """
     Writes following to <outdir>/work/<sample>:
@@ -29,7 +30,7 @@ def create_cromwell_files(outdir, sample):
     # opts
     opts = configs.OPTIONS
     # maybe remove final_dir as option and work based on work_dir
-    #opts["final_workflow_outputs_dir"] = final_dir
+    # opts["final_workflow_outputs_dir"] = final_dir
     option_file = os.path.join(work_dir, "cromwell_opts.json")
     with open(option_file, "w") as out_handle:
         json.dump(opts, out_handle)
@@ -43,7 +44,7 @@ def create_cromwell_files(outdir, sample):
         "option_file": option_file,
         "log_file": log_file,
         "metadata_file": metadata_file,
-        }
+    }
 
     return res
 
@@ -78,34 +79,41 @@ def create_cromwell_config(outdir):
 
         return out
 
-    joblimit = 16 # need to play with this
-    filesystem = utils.get_filesystem() # SPARTAN/RAIJIN/AWS/OTHER - dealing with single fs for now
+    joblimit = 16  # need to play with this
+    filesystem = (
+        utils.get_filesystem()
+    )  # SPARTAN/RAIJIN/AWS/OTHER - dealing with single fs for now
     file_types = set(["s3" if filesystem == "AWS" else "local"])
-    std_args = {"docker_attrs": "",
-                "submit_docker": 'submit-docker: ""',
-                "joblimit": f'concurrent-job-limit = {joblimit if joblimit > 0 else ""}',
-                "filesystem": _get_filesystem_config(file_types),
-                "database": configs.DATABASE_CONFIG % {"outdir": outdir}}
+    std_args = {
+        "docker_attrs": "",
+        "submit_docker": 'submit-docker: ""',
+        "joblimit": f'concurrent-job-limit = {joblimit if joblimit > 0 else ""}',
+        "filesystem": _get_filesystem_config(file_types),
+        "database": configs.DATABASE_CONFIG % {"outdir": outdir},
+    }
     conf_args = {}
     std_args["engine"] = _get_engine_filesystem_config(file_types)
     conf_args.update(std_args)
     scheduler = None
     cloud_type = None
-    main_config = {"hpc": (configs.HPC_CONFIGS[scheduler] % conf_args) if scheduler else "",
-                   "cloud": (configs.CLOUD_CONFIGS[cloud_type] % conf_args) if cloud_type else "",
-                   "work_dir": outdir}
+    main_config = {
+        "hpc": (configs.HPC_CONFIGS[scheduler] % conf_args) if scheduler else "",
+        "cloud": (configs.CLOUD_CONFIGS[cloud_type] % conf_args) if cloud_type else "",
+        "work_dir": outdir,
+    }
     main_config.update(std_args)
 
     return configs.CROMWELL_CONFIG % main_config
+
 
 def copy_wdl_files(outdir):
     """Copy recursively WDL files (workflows + tasks) from 'woof/compare/wdl' to 'outdir/wdl'
     """
     outdir = utils.adjust_path(outdir)
-    if not pkg_resources.resource_exists('woof', 'compare/wdl'):
+    if not pkg_resources.resource_exists("woof", "compare/wdl"):
         utils.critical("Error: 'woof/compare/wdl' directory does not exist!")
-    d = pkg_resources.resource_filename('woof', 'compare/wdl')
-    utils.copy_recursive(d, os.path.join(outdir, 'wdl'))
+    d = pkg_resources.resource_filename("woof", "compare/wdl")
+    utils.copy_recursive(d, os.path.join(outdir, "wdl"))
 
 
 def run_cromwell(outdir, sample, inputs, workflow, justprep):
@@ -125,18 +133,20 @@ def run_cromwell(outdir, sample, inputs, workflow, justprep):
     copy_wdl_files(os.path.join(outdir, "work", sample))
     cf = create_cromwell_files(outdir, sample)
 
-    cc = f"cromwell -Xms1g -Xmx3g run " \
-         f"-Dconfig.file={cf['config_file']} " \
-         f"-DLOG_LEVEL=ERROR -DLOG_LEVEL=WARN " \
-         f"--metadata-output {cf['metadata_file']} " \
-         f"--options {cf['option_file']} " \
-         f"--inputs {inputs} " \
-         f"{workflow} " \
-         f"2>&1 | tee -a {cf['log_file']} "
+    cc = (
+        f"cromwell -Xms1g -Xmx3g run "
+        f"-Dconfig.file={cf['config_file']} "
+        f"--metadata-output {cf['metadata_file']} "
+        f"--options {cf['option_file']} "
+        f"--inputs {inputs} "
+        f"{workflow} "
+        f"2>&1 | tee -a {cf['log_file']} "
+    )
+    #  f"-DLOG_LEVEL=ERROR -DLOG_LEVEL=WARN " \
 
     print(cc)
 
     if not justprep:
         with utils.chdir(os.path.join(outdir, "work", sample)):
-            subprocess.run(cc, stdout=subprocess.PIPE, encoding='utf-8', shell=True)
+            subprocess.run(cc, stdout=subprocess.PIPE, encoding="utf-8", shell=True)
 

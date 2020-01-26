@@ -71,9 +71,9 @@ def create_cromwell_input(r1, r2, sample, outdir, final_dir, comp_type):
     def _create_cromwell_samples(r1, r2, sample, outdir, comp_type):
         r_cmd = None
         if comp_type == "bcbio":
-            r_cmd = f"Rscript --no-environ -e \"library(woofr); woofr::merge_bcbio_outputs('{r1}', '{r2}', '{sample}')\""
+            r_cmd = f"Rscript --vanilla -e \"library(woofr); woofr::merge_bcbio_outputs('{r1}', '{r2}', '{sample}')\""
         elif comp_type == "umccrise":
-            r_cmd = f"Rscript --no-environ -e \"library(woofr); woofr::merge_umccrise_outputs('{r1}', '{r2}', '{sample}')\""
+            r_cmd = f"Rscript --vanilla -e \"library(woofr); woofr::merge_umccrise_outputs('{r1}', '{r2}', '{sample}')\""
         cmd = subprocess.run(r_cmd, stdout=subprocess.PIPE, encoding="utf-8", shell=True)
         fname = os.path.join(outdir, "cromwell_samples.tsv")
         with open(fname, "w") as out_handle:

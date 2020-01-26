@@ -6,9 +6,9 @@ task eval {
     File vcf2
     File vcf1_tbi = vcf1 + ".tbi"
     File vcf2_tbi = vcf2 + ".tbi"
-    String outputdir # woof/final/<sample>/sv_eval/<flabel>
+    String outdir # woof/final/<sample>/sv_eval/<flabel>
     String sample
-    String flab # e.g. manta_bc
+    String flabel # e.g. manta_bc
     }
 
   command {
@@ -17,18 +17,19 @@ task eval {
       R --vanilla <<CODE
       library(woofr)
       library(dplyr)
-      mi <- manta_isec('~{vcf1}', '~{vcf2}')
-      mi_stats <- manta_isec_stats(mi, '~{sample}', '~{flab}')
-      get_circos(mi, '~{sample}', '~{outputdir}')
+      mi <- manta_isec('~{vcf1}', '~{vcf2}', '~{sample}', '~{flabel}')
+      mi_stats <- manta_isec_stats(mi, '~{sample}', '~{flabel}')
+      get_circos(mi, '~{sample}', '~{outdir}')
       fpfn <- dplyr::bind_rows(mi[c("fp", "fn")], .id = "FP_or_FN")
-      utils::write.table(mi_stats, file = file.path('~{outputdir}', "eval_metrics.tsv"), quote = FALSE, sep = "\t", row.names = FALSE, col.names = TRUE)
-      utils::write.table(fpfn, file = file.path('~{outputdir}', "fpfn.tsv"), quote = FALSE, sep = "\t", row.names = FALSE, col.names = TRUE)
+      utils::write.table(mi_stats, file = file.path('~{outdir}', "eval_metrics.tsv"), quote = FALSE, sep = "\t", row.names = FALSE, col.names = TRUE)
+      utils::write.table(fpfn, file = file.path('~{outdir}', "fpfn.tsv"), quote = FALSE, sep = "\t", row.names = FALSE, col.names = TRUE)
       CODE
   }
 
   output {
-    File isec_stats = "~{outputdir}/isec_stats.tsv"
-    File circos = "~{outputdir}/circos_~{sample}.png"
+    File isec_stats = "~{outdir}/eval_metrics.tsv"
+    File fpfn = "~{outdir}/fpfn.tsv"
+    File circos = "~{outdir}/circos_~{sample}.png"
   }
 }
 
