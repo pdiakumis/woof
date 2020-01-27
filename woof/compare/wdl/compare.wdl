@@ -4,6 +4,7 @@ import "tasks/count_vcf_lines.wdl" as count
 import "tasks/bcftools.wdl" as bcftools
 import "tasks/eval_snv.wdl" as eval_snv
 import "tasks/eval_sv.wdl" as eval_sv
+import "tasks/conda.wdl" as conda
 
 workflow compare_vcf_files {
 
@@ -14,6 +15,7 @@ workflow compare_vcf_files {
     String outdir # /abspath/to/woof/final/
   }
 
+  call conda.list { input: outdir = outdir + "conda/"}
   scatter (sample in inputSamples) {
     # SNV handling
     if (sample[1] == "SNV") {
