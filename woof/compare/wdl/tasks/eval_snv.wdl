@@ -9,6 +9,7 @@ task eval {
     String tsv = outdir + "eval_stats.tsv"
     String sample
     String flabel # e.g. manta_bc
+    String subset
   }
 
   command {
@@ -18,7 +19,7 @@ task eval {
 
     python <<CODE
     from woof.compare import eval
-    eval.eval("~{fp_vcf}", "~{fn_vcf}", "~{tp_vcf}", "~{tsv}", "~{sample}", "~{flabel}")
+    eval.eval("~{fp_vcf}", "~{fn_vcf}", "~{tp_vcf}", "~{tsv}", "~{sample}", "~{flabel}", "~{subset}")
     CODE
   }
 
