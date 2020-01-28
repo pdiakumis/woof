@@ -12,6 +12,8 @@ task eval {
   command {
       #conda activate woof
 
+      mkdir -p ~{outdir}
+
       R --vanilla <<CODE
       library(woofr)
       compare_purple_gene_files('~{cnv1}', '~{cnv2}', '~{out_cn_diff}', '~{out_coord_diff}')
