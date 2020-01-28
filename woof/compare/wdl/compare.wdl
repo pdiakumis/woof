@@ -4,6 +4,7 @@ import "tasks/count_vcf_lines.wdl" as count
 import "tasks/bcftools.wdl" as bcftools
 import "tasks/eval_snv.wdl" as eval_snv
 import "tasks/eval_sv.wdl" as eval_sv
+import "tasks/eval_cnv.wdl" as eval_cnv
 import "tasks/conda.wdl" as conda
 
 workflow compare_vcf_files {
@@ -81,6 +82,16 @@ workflow compare_vcf_files {
           vcf1 = sample[3],
           vcf2 = sample[4],
           outdir = outdir_sample + sample[0] + "/sv_eval/" + sample[2]
+      }
+    }
+
+    # CNV handling
+    if (sample[1] == "CNV") {
+      call eval_cnv.eval as eval_cnv {
+        input:
+          cnv1 = sample[3],
+          cnv2 = sample[4],
+          outdir = outdir_sample + sample[0] + "/cnv_eval/" + sample[2]
       }
     }
   }
