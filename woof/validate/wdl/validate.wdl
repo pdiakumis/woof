@@ -4,6 +4,7 @@ import "tasks/md5sum.wdl" as md5sum
 import "tasks/fqtools.wdl" as fqtools
 import "tasks/samtools.wdl" as samtools
 import "tasks/bcftools.wdl" as bcftools
+import "tasks/tabix.wdl" as tabix
 
 workflow validate_files {
 
@@ -25,6 +26,12 @@ workflow validate_files {
 
     if (f[2] == "VCF") {
       call bcftools.querysamplenames { input: in_file = f[1], prefix = f[0] }
+    }
+    if (f[2] == "VCF_unz") {
+      call tabix.bgzipTabix { input: inputFile = f[1], outputDir = "bgzipedTabixed"}
+    }
+    if (f[2] == "VCF_gz") {
+      call tabix.tabix { input: inputFile = f[1] }
     }
   }
 }
