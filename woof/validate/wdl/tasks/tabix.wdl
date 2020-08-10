@@ -3,21 +3,17 @@ version 1.0
 task tabix {
     input {
         File inputFile
-        String outputFilePath = "indexed.vcf.gz"
     }
 
+    String inputFileBasename = basename(inputFile)
+
     command {
-        set -e
-        if [ ! -f ~{outputFilePath} ]
-        then
-            ln ~{inputFile} ~{outputFilePath}
-        fi
-        tabix ~{outputFilePath} -p "vcf"
+        ln ~{inputFile} ~{inputFileBasename}
+        tabix ~{inputFileBasename} -p "vcf"
     }
 
     output {
-        File indexedFile = outputFilePath
-        File index = outputFilePath + ".tbi"
+        File index = inputFileBasename + ".tbi"
     }
 
 
