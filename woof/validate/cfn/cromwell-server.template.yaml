@@ -301,8 +301,8 @@ Resources:
                     AWSBATCH {
                       actor-factory = "cromwell.backend.impl.aws.AwsBatchBackendLifecycleActorFactory"
                       config {
-                        numSubmitAttempts = 10
-                        numCreateDefinitionAttempts = 10
+                        numSubmitAttempts = 6
+                        numCreateDefinitionAttempts = 6
                         root = "s3://${S3BucketName}/cromwell-execution"
                         auth = "default"
                         default-runtime-attributes { queueArn = "${BatchQueue}" }
