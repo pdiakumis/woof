@@ -24,12 +24,12 @@ workflow validate_files {
       call samtools.quickcheck { input: in_file = f[1], prefix = f[0] }
     }
 
-    if (f[2] == "VCF") {
+    if (f[2] == "VCF_gz" || f[2] == "VCF_unz") {
       call bcftools.querysamplenames { input: in_file = f[1], prefix = f[0] }
     }
-    if (f[2] == "VCF_unz") {
-      call tabix.bgzipTabix { input: inputFile = f[1], outputDir = "bgzipedTabixed"}
-    }
+    #if (f[2] == "VCF_unz") {
+    #  call tabix.bgzipTabix { input: inputFile = f[1], outputDir = "bgzipedTabixed"}
+    #}
     if (f[2] == "VCF_gz") {
       call tabix.tabix { input: inputFile = f[1] }
     }
