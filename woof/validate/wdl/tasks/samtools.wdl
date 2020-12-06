@@ -16,7 +16,7 @@ task quickcheck {
 
   runtime {
     docker: "quay.io/biocontainers/samtools:1.9--h8571acd_11"
-    memory: "3GB"
+    memory: "4GB"
     cpu: 1
   }
 }
