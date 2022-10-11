@@ -1,19 +1,17 @@
 name: woof
 
 channels:
-  - pdiakumis
+  - umccr
   - conda-forge
   - bioconda
   - defaults
 
 dependencies:
-  - awscli
   - bcftools
   - bedtools
-  - boto3
   - circos
   - click
-  - cromwell
+  - conda-forge::cromwell=48 # this ancient one still works
   - htslib
   - pandoc
   - python
@@ -28,7 +26,6 @@ dependencies:
   - r-dt
   - r-knitr
   - r-kableextra
-  - r-rock
   - r-rmarkdown
   - r-tidyverse
-  - r-woofr
+  - umccr::r-woofr
