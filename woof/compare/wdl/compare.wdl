@@ -5,6 +5,7 @@ import "tasks/bcftools.wdl" as bcftools
 import "tasks/eval_snv.wdl" as eval_snv
 import "tasks/eval_sv.wdl" as eval_sv
 import "tasks/eval_cnv.wdl" as eval_cnv
+import "tasks/eval_hrd.wdl" as eval_hrd
 import "tasks/conda.wdl" as conda
 
 workflow compare_vcf_files {
@@ -19,8 +20,8 @@ workflow compare_vcf_files {
 
   call conda.list { input: outdir = outdir + "conda/"}
   scatter (sample in inputSamples) {
-    # SNV handling
-    if (sample[1] == "SNV") {
+    # SNV VCF handling
+    if (sample[1] == "snv") {
 
       call bcftools.filter_pass as filter_f1 { input: vcf_in = sample[3], outdir = outdir_sample + sample[0] + "/snv_pass/f1/" + sample[2] }
       call bcftools.filter_pass as filter_f2 { input: vcf_in = sample[4], outdir = outdir_sample + sample[0] + "/snv_pass/f2/" + sample[2] }
@@ -74,7 +75,7 @@ workflow compare_vcf_files {
     }
 
     # SV handling
-    if (sample[1] == "SV") {
+    if (sample[1] == "sv") {
       call eval_sv.eval as eval_sv {
         input:
           sample = sample[0],
@@ -86,7 +87,7 @@ workflow compare_vcf_files {
     }
 
     # CNV handling
-    if (sample[1] == "CNV") {
+    if (sample[1] == "cnv") {
       call eval_cnv.eval as eval_cnv {
         input:
           cnv1 = sample[3],
@@ -94,5 +95,17 @@ workflow compare_vcf_files {
           outdir = outdir_sample + sample[0] + "/cnv_eval/" + sample[2]
       }
     }
+
+    # HRD handling
+    if (sample[1] == "hrd") {
+      call eval_hrd.eval as eval_hrd {
+        input:
+          tool = sample[2],
+          hrd1 = sample[3],
+          hrd2 = sample[4],
+          outdir = outdir_sample + sample[0] + "/hrd_eval/" + sample[2]
+      }
+    }
+
   }
 }
