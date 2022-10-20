@@ -7,6 +7,7 @@ import "tasks/eval_sv.wdl" as eval_sv
 import "tasks/eval_cnv.wdl" as eval_cnv
 import "tasks/eval_hrd.wdl" as eval_hrd
 import "tasks/multiqc.wdl" as multiqc_cmp
+import "tasks/canrep_qcsum.wdl" as canrep_qcsum_cmp
 import "tasks/conda.wdl" as conda
 
 workflow compare_vcf_files {
@@ -115,6 +116,16 @@ workflow compare_vcf_files {
           f1 = sample[3],
           f2 = sample[4],
           outdir = outdir_sample + sample[0] + "/multiqc_cmp/" + sample[2]
+      }
+    }
+
+    # QC summary table handling
+    if (sample[1] == "canrep_qcsum") {
+      call canrep_qcsum_cmp.cmp {
+        input:
+          f1 = sample[3],
+          f2 = sample[4],
+          outdir = outdir_sample + sample[0] + "/canrep_qcsum_cmp/" + sample[2]
       }
     }
 
