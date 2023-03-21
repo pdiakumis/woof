@@ -9,6 +9,7 @@ import "tasks/eval_hrd.wdl" as eval_hrd
 import "tasks/multiqc.wdl" as multiqc_cmp
 import "tasks/canrep_qcsum.wdl" as canrep_qcsum_cmp
 import "tasks/conda.wdl" as conda
+import "tasks/eval_pcgr.wdl" as pcgr
 
 workflow compare_vcf_files {
 
@@ -121,11 +122,21 @@ workflow compare_vcf_files {
 
     # QC summary table handling
     if (sample[1] == "canrep_qcsum") {
-      call canrep_qcsum_cmp.cmp {
+      call canrep_qcsum_cmp.cmp as canrep_qcsum_cmp {
         input:
           f1 = sample[3],
           f2 = sample[4],
           outdir = outdir_sample + sample[0] + "/canrep_qcsum_cmp/" + sample[2]
+      }
+    }
+
+    # PCGR TSV handling
+    if (sample[1] == "pcgr_tsv") {
+      call pcgr.cmp as pcgr_cmp {
+        input:
+          f1 = sample[3],
+          f2 = sample[4],
+          outdir = outdir_sample + sample[0] + "/pcgr_eval/" + sample[2]
       }
     }
 
