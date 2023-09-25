@@ -55,9 +55,14 @@ def comparison_type_check(r1, r2):
     def _is_umccrise_sample(d):
         return os.path.basename(os.path.dirname(d)) == "umccrised"
 
+    def _is_umccrise_sample2(d):
+        return True
+
     if _is_bcbio_final(r1) and _is_bcbio_final(r2):
         comparison_type = "bcbio"
     elif _is_umccrise_sample(r1) and _is_umccrise_sample(r2):
+        comparison_type = "umccrise"
+    elif _is_umccrise_sample2(r1) and _is_umccrise_sample2(r2):
         comparison_type = "umccrise"
     else:
         utils.critical(f"ERROR: you need to point to 'final' or 'umccrised/<sample>' paths.")
