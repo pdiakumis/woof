@@ -33,13 +33,9 @@ def get_hostname():
 def get_filesystem():
 
     hostname = get_hostname()
-    if re.match(r'spartan*', hostname):
-        fs = 'SPARTAN'
-    elif re.match(r'^raijin|(r\d+$)', hostname):
+    if re.match(r'gadi', hostname):
         fs = 'RAIJIN'
-    elif re.match(r'gadi', hostname):
-        fs = 'RAIJIN'
-    elif re.match(r'^5180L-133629-M.local$', hostname) or re.match(r'^x86_64-apple-darwin13.4.0$', hostname):
+    elif re.match(r'^Peter', hostname) or re.match(r'^x86_64-apple-darwin13.4.0$', hostname):
         fs = 'PETER'
     elif re.match(r'^ip*', hostname):
         fs = 'AWS'
